@@ -1,0 +1,374 @@
+% Curated references for Projection-Retraction MPPI (PR-MPPI).
+% (separate from the template's references.bib)
+
+@inproceedings{williams2017mppi,
+  author    = {Williams, Grady and Wagener, Nolan and Goldfain, Brian and Drews, Paul and Rehg, James M. and Boots, Byron and Theodorou, Evangelos A.},
+  title     = {Information theoretic {MPC} for model-based reinforcement learning},
+  booktitle = {Proc. IEEE Int. Conf. Robot. Autom. (ICRA)},
+  pages     = {1714--1721},
+  year      = {2017}
+}
+
+@article{williams2018mppi,
+  author  = {Williams, Grady and Aldrich, Andrew and Theodorou, Evangelos A.},
+  title   = {Model predictive path integral control: From theory to parallel computation},
+  journal = {J. Guid. Control Dyn.},
+  volume  = {40},
+  number  = {2},
+  pages   = {344--357},
+  year    = {2017}
+}
+
+% --- Bilinear Koopman MPPI paper refs (VERIFY exact bibliographic details before submission) ---
+@article{iacob2024,
+  author  = {Iacob, Lucian C. and T{\'o}th, Roland and Schoukens, Maarten},
+  title   = {Koopman form of nonlinear systems with inputs},
+  journal = {Automatica},
+  volume  = {162},
+  pages   = {111525},
+  year    = {2024}
+}
+
+@article{strasser2026,
+  author  = {Str{\"a}sser, Robin and Schaller, Manuel and Worthmann, Karl and Berberich, Julian and Allg{\"o}wer, Frank},
+  title   = {An overview of {Koopman}-based control: From error bounds to closed-loop guarantees},
+  journal = {Annual Reviews in Control},
+  volume  = {61},
+  pages   = {101035},
+  year    = {2026}
+}
+
+@inproceedings{mppidk2026,
+  author = {Hao, Wenjian and Fang, Yuxuan and Lu, Zehui and Mou, Shaoshuai},
+  title  = {Accelerating Sampling-Based Control via Learned Linear {Koopman} Dynamics},
+  booktitle = {Proc. IEEE/RSJ Int. Conf. Intell. Robots Syst. (IROS)},
+  year   = {2026},
+}
+
+@misc{safedmd2024,
+  author = {Str{\"a}sser, Robin and Schaller, Manuel and Worthmann, Karl and Berberich, Julian and Allg{\"o}wer, Frank},
+  title  = {{SafEDMD}: A certified learning architecture tailored to data-driven control of nonlinear dynamical systems},
+  howpublished = {arXiv:2411.10359},
+  year   = {2024}
+}
+
+% ---- MPPI / path-integral foundations and variants ----
+@inproceedings{williams2016aggressive,
+  author = {Williams, Grady and Drews, Paul and Goldfain, Brian and Rehg, James M. and Theodorou, Evangelos A.},
+  title  = {Aggressive driving with model predictive path integral control},
+  booktitle = {Proc. IEEE Int. Conf. Robot. Autom. (ICRA)}, pages = {1433--1440}, year = {2016}
+}
+@article{kappen2005,
+  author = {Kappen, Hilbert J.},
+  title  = {Path integrals and symmetry breaking for optimal control theory},
+  journal = {J. Stat. Mech.: Theory Exp.}, pages = {P11011}, year = {2005}
+}
+@article{theodorou2010,
+  author = {Theodorou, Evangelos A. and Buchli, Jonas and Schaal, Stefan},
+  title  = {A generalized path integral control approach to reinforcement learning},
+  journal = {J. Mach. Learn. Res.}, volume = {11}, pages = {3137--3181}, year = {2010}
+}
+@inproceedings{williams2018robust,
+  author = {Williams, Grady and Goldfain, Brian and Drews, Paul and Saigol, Kamil and Rehg, James M. and Theodorou, Evangelos A.},
+  title  = {Robust sampling based model predictive control with sparse objective information},
+  booktitle = {Robotics: Science and Systems (RSS)}, year = {2018}
+}
+@article{kim2022smooth,
+  author = {Kim, Taekyung and Park, Gyuhyun and Kwak, Kiho and Bae, Jihwan and Lee, Wonsuk},
+  title  = {Smooth model predictive path integral control without smoothing},
+  journal = {IEEE Robot. Autom. Lett.}, volume = {7}, number = {4}, pages = {10406--10413}, year = {2022}
+}
+
+% ---- Koopman operator theory, identification, and control ----
+@article{koopman1931,
+  author = {Koopman, B. O.}, title = {Hamiltonian systems and transformation in {Hilbert} space},
+  journal = {Proc. Natl. Acad. Sci.}, volume = {17}, number = {5}, pages = {315--318}, year = {1931}
+}
+@article{mezic2005,
+  author = {Mezi{\'c}, Igor},
+  title  = {Spectral properties of dynamical systems, model reduction and decompositions},
+  journal = {Nonlinear Dyn.}, volume = {41}, pages = {309--325}, year = {2005}
+}
+@article{williams2015edmd,
+  author = {Williams, Matthew O. and Kevrekidis, Ioannis G. and Rowley, Clarence W.},
+  title  = {A data-driven approximation of the {Koopman} operator: Extending dynamic mode decomposition},
+  journal = {J. Nonlinear Sci.}, volume = {25}, number = {6}, pages = {1307--1346}, year = {2015}
+}
+@article{proctor2016dmdc,
+  author = {Proctor, Joshua L. and Brunton, Steven L. and Kutz, J. Nathan},
+  title  = {Dynamic mode decomposition with control},
+  journal = {SIAM J. Appl. Dyn. Syst.}, volume = {15}, number = {1}, pages = {142--161}, year = {2016}
+}
+@article{korda2018mpc,
+  author = {Korda, Milan and Mezi{\'c}, Igor},
+  title  = {Linear predictors for nonlinear dynamical systems: {Koopman} operator meets model predictive control},
+  journal = {Automatica}, volume = {93}, pages = {149--160}, year = {2018}
+}
+@article{lusch2018deep,
+  author = {Lusch, Bethany and Kutz, J. Nathan and Brunton, Steven L.},
+  title  = {Deep learning for universal linear embeddings of nonlinear dynamics},
+  journal = {Nat. Commun.}, volume = {9}, pages = {4950}, year = {2018}
+}
+@article{bruder2021bilinear,
+  author = {Bruder, Daniel and Fu, Xun and Vasudevan, Ram},
+  title  = {Advantages of bilinear {Koopman} realizations for the modeling and control of systems with unknown dynamics},
+  journal = {IEEE Robot. Autom. Lett.}, volume = {6}, number = {3}, pages = {4369--4376}, year = {2021}
+}
+@inproceedings{folkestad2021,
+  author = {Folkestad, Carl and Burdick, Joel W.},
+  title  = {{Koopman} {NMPC}: {Koopman}-based learning and nonlinear model predictive control of control-affine systems},
+  booktitle = {Proc. IEEE Int. Conf. Robot. Autom. (ICRA)}, pages = {7350--7356}, year = {2021}
+}
+@inproceedings{mamakoukas2019,
+  author = {Mamakoukas, Giorgos and Castano, Maria L. and Tan, Xiaobo and Murphey, Todd D.},
+  title  = {Local {Koopman} operators for data-driven control of robotic systems},
+  booktitle = {Robotics: Science and Systems (RSS)}, year = {2019}
+}
+@inproceedings{mujoco2012,
+  author = {Todorov, Emanuel and Erez, Tom and Tassa, Yuval},
+  title  = {{MuJoCo}: A physics engine for model-based control},
+  booktitle = {Proc. IEEE/RSJ Int. Conf. Intell. Robots Syst. (IROS)}, pages = {5026--5033}, year = {2012}
+}
+
+@misc{park2026review,
+  author = {Park, Leesai and Jang, Keunwoo and Kim, Sanghyun},
+  title  = {A Systematic Survey of Model Predictive Path Integral Control: From Stochastic Theory to Real-Time Robotics},
+  note   = {Under review, ISA Transactions},
+  year   = {2026}
+}
+
+@article{zhao2025mppitan,
+  author  = {Zhao, Guangbao and Jin, Ninglong and Wu, Jianhua and Xiong, Zhenhua},
+  title   = {Online Motion Generation via Tangential Sampling-Based {MPC} Around Nonconvex Obstacles},
+  journal = {IEEE Robot. Autom. Lett.},
+  volume  = {10},
+  number  = {6},
+  pages   = {5537--5544},
+  year    = {2025}
+}
+
+@article{koptev2023neural,
+  author  = {Koptev, Mikhail and Figueroa, Nadia and Billard, Aude},
+  title   = {Neural Joint Space Implicit Signed Distance Functions for Reactive Robot Manipulator Control},
+  journal = {IEEE Robot. Autom. Lett.},
+  volume  = {8},
+  number  = {2},
+  pages   = {480--487},
+  year    = {2023}
+}
+
+@article{andrejev2025pimppi,
+  author  = {Andrejev, Edvin Martin and Manoharan, Amith and Unt, Karl-Eerik and Singh, Arun Kumar},
+  title   = {{$\pi$-MPPI}: A Projection-based Model Predictive Path Integral Scheme for Smooth Optimal Control of Fixed-Wing Aerial Vehicles},
+  journal = {IEEE Robot. Autom. Lett.},
+  volume  = {10},
+  number  = {6},
+  year    = {2025}
+}
+
+@article{rastgar2023priest,
+  author  = {Rastgar, Fatemeh and Masnavi, Houman and Sharma, Basant and Aabloo, Alvo and Swevers, Jan and Singh, Arun Kumar},
+  title   = {{PRIEST}: Projection Guided Sampling-Based Optimization for Autonomous Navigation},
+  journal = {arXiv preprint arXiv:2309.08235},
+  year    = {2023}
+}
+
+@article{zhu2026real,
+  title     = {Real-time dual-arm cooperative manipulation under multiple constraints: A two-stage sampling {MPC} approach},
+  author    = {Zhu, Tianqi and Mao, Jianliang and Yang, Jun and Li, Shihua},
+  journal   = {IEEE Transactions on Robotics},
+  year      = {2026},
+  publisher = {IEEE}
+}
+
+@article{yin2023shield,
+  author  = {Yin, Ji and Dawson, Charles and Fan, Chuchu and Tsiotras, Panagiotis},
+  title   = {Shield Model Predictive Path Integral: A Computationally Efficient Robust {MPC} Method Using Control Barrier Functions},
+  journal = {IEEE Robot. Autom. Lett.},
+  volume  = {8},
+  number  = {11},
+  pages   = {7106--7113},
+  year    = {2023}
+}
+
+@inproceedings{yin2024chance,
+  author    = {Yin, Ji and Tsiotras, Panagiotis and Berntorp, Karl},
+  title     = {Chance-constrained information-theoretic stochastic model predictive control with safety shielding},
+  booktitle = {Proc. IEEE Conf. Decision and Control (CDC)},
+  pages     = {653--658},
+  year      = {2024}
+}
+
+@inproceedings{berenson2009cbirrt,
+  author    = {Berenson, Dmitry and Srinivasa, Siddhartha S. and Ferguson, Dave and Kuffner, James J.},
+  title     = {Manipulation planning on constraint manifolds},
+  booktitle = {Proc. IEEE Int. Conf. Robot. Autom. (ICRA)},
+  pages     = {625--632},
+  year      = {2009}
+}
+
+@article{jaillet2013manifolds,
+  author  = {Jaillet, L\'eonard and Porta, Josep M.},
+  title   = {Path planning under kinematic constraints by rapidly exploring manifolds},
+  journal = {IEEE Trans. Robot.},
+  volume  = {29},
+  number  = {1},
+  pages   = {105--117},
+  year    = {2013}
+}
+
+@article{kingston2019implicit,
+  author  = {Kingston, Zachary and Moll, Mark and Kavraki, Lydia E.},
+  title   = {Exploring implicit spaces for constrained sampling-based planning},
+  journal = {Int. J. Robot. Res.},
+  volume  = {38},
+  number  = {10--11},
+  pages   = {1151--1178},
+  year    = {2019}
+}
+
+@article{lee2026mcmppi,
+  author  = {Lee, Seulchan and Kim, Sanghyun},
+  title   = {Manifold-Constrained Model Predictive Path Integral Control},
+  journal = {arXiv preprint arXiv:2605.24813},
+  year    = {2026}
+}
+
+@inproceedings{dariush2010cclik,
+  author    = {Dariush, Behzad and Zhu, Youding and Arumbakkam, Arjun and Fujimura, Kikuo},
+  title     = {Constrained Closed Loop Inverse Kinematics},
+  booktitle = {Proc. IEEE Int. Conf. Robot. Autom. (ICRA)},
+  pages     = {2499--2506},
+  year      = {2010}
+}
+
+@article{chan1995weighted,
+  author  = {Chan, Tan Fung and Dubey, Rajiv V.},
+  title   = {A weighted least-norm solution based scheme for avoiding joint limits for redundant joint manipulators},
+  journal = {IEEE Trans. Robot. Autom.},
+  volume  = {11},
+  number  = {2},
+  pages   = {286--292},
+  year    = {1995}
+}
+
+@inproceedings{bhardwaj2022storm,
+  author    = {Bhardwaj, Mohak and Sundaralingam, Balakumar and Mousavian, Arsalan and Ratliff, Nathan D. and Fox, Dieter and Ramos, Fabio and Boots, Byron},
+  title     = {{STORM}: An Integrated Framework for Fast Joint-Space Model-Predictive Control for Reactive Manipulation},
+  booktitle = {Proc. Conf. Robot Learn. (CoRL)},
+  pages     = {750--759},
+  year      = {2022}
+}
+
+@article{carius2022constrained,
+  author  = {Carius, Jan and Ranftl, Ren\'e and Farshidian, Farbod and Hutter, Marco},
+  title   = {Constrained stochastic optimal control with learned importance sampling: A path integral approach},
+  journal = {Int. J. Robot. Res.},
+  volume  = {41},
+  number  = {2},
+  pages   = {189--209},
+  year    = {2022}
+}
+
+@article{nakamura1986singularity,
+  author  = {Nakamura, Yoshihiko and Hanafusa, Hideo},
+  title   = {Inverse kinematic solutions with singularity robustness for robot manipulator control},
+  journal = {J. Dyn. Syst. Meas. Control},
+  volume  = {108},
+  number  = {3},
+  pages   = {163--171},
+  year    = {1986}
+}
+
+@inproceedings{siciliano1991taskpriority,
+  author    = {Siciliano, Bruno and Slotine, Jean-Jacques E.},
+  title     = {A general framework for managing multiple tasks in highly redundant robotic systems},
+  booktitle = {Proc. Int. Conf. Adv. Robot. (ICAR)},
+  pages     = {1211--1216},
+  year      = {1991}
+}
+
+@article{park2025cscmppi,
+  author  = {Park, Leesai and Jang, Keunwoo and Kim, Sanghyun},
+  title   = {{CSC-MPPI}: A Novel Constrained {MPPI} Framework with {DBSCAN} for Reliable Obstacle Avoidance},
+  journal = {arXiv preprint arXiv:2506.16386},
+  year    = {2025}
+}
+
+% ===== Added for Dynamic Projection-Retraction MPPI (DPR-MPPI) =====
+
+@article{khatib1987osf,
+  author  = {Khatib, Oussama},
+  title   = {A unified approach for motion and force control of robot manipulators: The operational space formulation},
+  journal = {IEEE J. Robot. Autom.},
+  volume  = {3},
+  number  = {1},
+  pages   = {43--53},
+  year    = {1987}
+}
+
+@article{mistry2010inertia,
+  author  = {Mistry, Michael and Buchli, Jonas and Schaal, Stefan},
+  title   = {Inverse dynamics control of floating base systems using orthogonal decomposition},
+  journal = {Proc. IEEE Int. Conf. Robot. Autom. (ICRA)},
+  pages   = {3406--3412},
+  year    = {2010}
+}
+
+@article{baumgarte1972stab,
+  author  = {Baumgarte, Joachim},
+  title   = {Stabilization of constraints and integrals of motion in dynamical systems},
+  journal = {Comput. Methods Appl. Mech. Eng.},
+  volume  = {1},
+  number  = {1},
+  pages   = {1--16},
+  year    = {1972}
+}
+
+@inproceedings{posa2014lcp,
+  author    = {Posa, Michael and Cantu, Cecilia and Tedrake, Russ},
+  title     = {A direct method for trajectory optimization of rigid bodies through contact},
+  booktitle = {Int. J. Robot. Res.},
+  volume    = {33},
+  number    = {1},
+  pages     = {69--81},
+  year      = {2014}
+}
+
+@inproceedings{howell2022predictive,
+  author    = {Howell, Taylor and Gileadi, Nimrod and Tunyasuvunakool, Saran and Zakka, Kevin and Erez, Tom and Tassa, Yuval},
+  title     = {Predictive sampling: Real-time behaviour synthesis with {MuJoCo}},
+  booktitle = {arXiv preprint arXiv:2212.00541},
+  year      = {2022}
+}
+
+@book{brogliato2016nonsmooth,
+  author    = {Brogliato, Bernard},
+  title     = {Nonsmooth Mechanics: Models, Dynamics and Control},
+  edition   = {3rd},
+  publisher = {Springer},
+  year      = {2016}
+}
+
+@book{hairer2006geometric,
+  author    = {Hairer, Ernst and Lubich, Christian and Wanner, Gerhard},
+  title     = {Geometric Numerical Integration: Structure-Preserving Algorithms for Ordinary Differential Equations},
+  edition   = {2nd},
+  publisher = {Springer},
+  year      = {2006}
+}
+
+@article{todorov2012mujoco,
+  author  = {Todorov, Emanuel and Erez, Tom and Tassa, Yuval},
+  title   = {{MuJoCo}: A physics engine for model-based control},
+  journal = {Proc. IEEE/RSJ Int. Conf. Intell. Robots Syst. (IROS)},
+  pages   = {5026--5033},
+  year    = {2012}
+}
+
+@inproceedings{pezzato2023isaacgym,
+  author    = {Pezzato, Corrado and Salmi, Chadi and Trevisan, Elia and Mora, Javier and Hern{\'a}ndez Corbato, Carlos and Alonso-Mora, Javier},
+  title     = {Sampling-based {MPC} using a {GPU}-parallelizable physics simulator as dynamic model},
+  booktitle = {Embracing Contacts Workshop at IEEE ICRA},
+  year      = {2023}
+}

@@ -1,0 +1,71 @@
+\documentclass[lettersize,journal]{IEEEtran}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{array}
+%\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\usepackage[caption=false,font=normalsize]{subfig}
+\usepackage{textcomp}
+\usepackage{stfloats}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{hyperref}
+\usepackage{bm}
+\usepackage{amsthm}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+% \usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\newcommand{\rev}[1]{\textcolor{blue}{#1}}      % mark revisions
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}} % inline TODO marker
+\hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
+
+\begin{document}
+
+\title{Projection-Retraction MPPI: \\ Exact Constraint-Manifold Control for Manipulators}
+
+% Author intentionally omitted for blind first submission.
+% For the camera-ready, add:
+% \author{Author Name(s)\thanks{Affiliation / funding note.}}
+
+\maketitle
+
+\begin{abstract}
+In many manipulation tasks a robot must hold a hard kinematic equality constraint throughout the
+\end{abstract}
+
+\begin{IEEEkeywords}
+Sampling-based model predictive control, model predictive path integral, equality-constrained
+control, null-space projection, dual-arm manipulation, constrained motion control.
+\end{IEEEkeywords}
+
+%==============================================================
+\section{INTRODUCTION}
+\label{sec:intro}
+%==============================================================
+\IEEEPARstart{M}{any} manipulation tasks ask the robot to do more than reach a goal: they require
+it to hold a kinematic equality constraint on its configuration throughout the motion. A wiping or
+polishing tool must stay on the work surface; a carried tray or glass must stay level; two arms
+that rigidly hold the same object form a closed kinematic chain whose relative pose must not
+change. Each case ties the joint configuration to a fixed relationship that must hold
+\emph{exactly} rather than on average---a closed chain that drifts even slightly
+builds up internal wrenches or loses the grasp, and a tray that tilts a few degrees spills. The
+controller must therefore keep the robot on the constraint at every step while it makes progress on
+the task.
+
+
+%==============================================================
+\section{CONCLUSION}
+\label{sec:conclusion}
+%==============================================================
+test\cite{bishop2006pattern}
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv, references, ours}
+
+\end{document}

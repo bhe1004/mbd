@@ -1,0 +1,38 @@
+
+################## SYSTEM: vanderpol ##################
+[fit ] D=12000  1-step lifted RMSE  linear=6.6054e-01  bilinear=4.8482e-01  (lin/bi=1.36x)
+[bnd ] c_x=0.4409 c_u=0.0115  ||A||2=1.3841 ||B1||2=0.1600
+[1.tube] in-region : max(||D||/e)=0.706  viol=0/8200 (0.00%)
+[1.tube] out-region: max(||D||/e)=1.005  viol=1/8200 (0.01%)  <- R1 stress
+[2.pred] test trajs=200
+[2.pred] H= 5  bilinear=0.0328  linear=0.0381  ratio(lin/bi)=1.16x
+[2.pred] H=10  bilinear=0.1055  linear=0.1170  ratio(lin/bi)=1.11x
+[2.pred] H=20  bilinear=0.3808  linear=0.3909  ratio(lin/bi)=1.03x
+[2.pred] H=40  bilinear=0.7064  linear=0.7091  ratio(lin/bi)=1.00x
+[3.mppi] final ||x|| vs beta: 0.0->0.048  0.02->0.007  0.05->0.007  0.1->0.007  0.2->0.007  0.5->0.007
+[3.mppi] best beta*=0.05 (||x||=0.0074);  beta=0 (pure KMPPI)=0.0484
+
+################## SYSTEM: pendulum_sdg ##################
+[fit ] D=12000  1-step lifted RMSE  linear=2.5742e-01  bilinear=1.4681e-01  (lin/bi=1.75x)
+[bnd ] c_x=0.1294 c_u=0.0575  ||A||2=1.1188 ||B1||2=0.1041
+[1.tube] in-region : max(||D||/e)=0.965  viol=0/8200 (0.00%)
+[1.tube] out-region: max(||D||/e)=0.864  viol=0/7421 (0.00%)  <- R1 stress
+[2.pred] test trajs=200
+[2.pred] H= 5  bilinear=0.0263  linear=0.0500  ratio(lin/bi)=1.90x
+[2.pred] H=10  bilinear=0.0386  linear=0.0725  ratio(lin/bi)=1.88x
+[2.pred] H=20  bilinear=0.0495  linear=0.1057  ratio(lin/bi)=2.14x
+[2.pred] H=40  bilinear=0.2377  linear=0.2414  ratio(lin/bi)=1.02x
+[3.mppi] final ||x|| vs beta: 0.0->0.203  0.02->0.466  0.05->0.517  0.1->0.705  0.2->0.629  0.5->0.644
+[3.mppi] best beta*=0.0 (||x||=0.2033);  beta=0 (pure KMPPI)=0.2033
+
+================= VERDICT =================
+[vanderpol]
+   [1] tube in-region : PASS (viol=0);  out-region viol=0.01% (R1 caveat -> expect >0)
+   [2] bilinear<linear: H=40 bi=0.706 vs lin=0.709  (PASS); best ratio=1.46x
+   [3] MPPI stabilized: PASS (best beta*=0.05, ||x||=0.0074); too-large beta over-conservative -> see sweep
+[pendulum_sdg]
+   [1] tube in-region : PASS (viol=0);  out-region viol=0.00% (R1 caveat -> expect >0)
+   [2] bilinear<linear: H=40 bi=0.238 vs lin=0.241  (PASS); best ratio=2.18x
+   [3] MPPI stabilized: PASS (best beta*=0.0, ||x||=0.2033); too-large beta over-conservative -> see sweep
+
+outputs -> /work/out

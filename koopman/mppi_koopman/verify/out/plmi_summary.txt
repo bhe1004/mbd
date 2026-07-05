@@ -1,0 +1,19 @@
+
+################## synthetic (known small c_x) ##################
+[synth] ||A||2=2.31 spec.rad=0.85  c_x=0.001 c_u=0.005
+[synth] P-LMI rho*=0.9277 kappa_P=36.7 coef=0.9644 (<1 -> CONTRACTIVE)  valid=True
+[synth] e_max  Euclid=1.612e+12  P-LMI=3.684e+00  -> sec6 tightens 4.38e+11x
+
+################## pendulum_sdg ##################
+[vanilla] ||A||2=1.119 spec.rad(A)=1.0431 -> P-LMI INFEASIBLE (unstable lifted A)
+[eigclip] spec.rad(A)=0.9500 ||A||2=1.111  spec.rad(M(+-0.5))=0.9570  (1-step RMSE 1.468e-01->8.856e-01)
+[sec6  ] P-LMI rho*=0.9950 kappa_P=3.0 coef(rho+kP*cx)=1.7440  valid(eP>=||Delta||)=True
+[result] e_max  Euclid(vanilla)=9.42e+03  Euclid(stable)=3.06e+05  P-LMI(sec6)=4723518098.394  ->  sec6 tightens 6.5e-05x vs Euclid-stable
+
+################## vanderpol ##################
+[vanilla] ||A||2=1.384 spec.rad(A)=1.0015 -> P-LMI INFEASIBLE (unstable lifted A)
+[eigclip] spec.rad(A)=0.9500 ||A||2=1.328  spec.rad(M(+-0.5))=0.9545  (1-step RMSE 4.848e-01->6.522e-01)
+[sec6  ] P-LMI rho*=0.9950 kappa_P=4.0 coef(rho+kP*cx)=2.6836  valid(eP>=||Delta||)=True
+[result] e_max  Euclid(vanilla)=3.69e+10  Euclid(stable)=6.45e+09  P-LMI(sec6)=141361318364569488.000  ->  sec6 tightens 4.6e-08x vs Euclid-stable
+
+outputs -> /work/out/plmi_tube.png

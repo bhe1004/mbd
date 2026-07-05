@@ -1,0 +1,4 @@
+task,model,seed,data_seed,lift_dim,rollout_horizon,epochs,train_loss,val_multistep_error,open_loop_rmse_mean,open_loop_rmse_final,train_time_s,checkpoint
+franka,dk,0,1,20,15,300,0.006783457146957517,0.00618339516222477,0.07036231236195377,0.12646517681141792,25.485722746001557,/home/home/playground/mbd/koopman/mbd_koopman/out/franka/models/dk_seed0.pt
+franka,bk,0,1,20,15,300,0.0035333103267475964,0.0036121883895248175,0.05410404359339893,0.09714268034229699,41.193828284041956,/home/home/playground/mbd/koopman/mbd_koopman/out/franka/models/bk_seed0.pt
+franka,dk_split,0,1,17,15,300,0.00143371342564933,0.0009134026477113366,0.02785918728318542,0.05244589939676469,24.849230961874127,/home/home/playground/mbd/koopman/mbd_koopman/out/franka/models/dk_split_seed0.pt

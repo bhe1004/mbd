@@ -1,0 +1,2 @@
+method,num_trials,success_rate,final_error_mean,final_error_std,final_error_mean_success,planning_time_ms_mean,koopman_open_loop_error_mean,tube_cost_mean,max_tube
+bk_mbd,35,1.0,0.02296829518069812,0.0019246127307689738,0.02296829518069812,64.3797045093611,0.05511288181432414,0.003044807341114043,30.954866409301758

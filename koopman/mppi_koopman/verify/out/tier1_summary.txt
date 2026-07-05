@@ -1,0 +1,18 @@
+[id ] N=5 m=2 D=12000  1-step lifted RMSE  linear=6.1139e-02  bilinear=1.3682e-03  (lin/bi=44.7x)
+[bnd] c_x=0.0004 c_u=0.0018  ||A||2=1.0000  spec.rad(A)=1.0000
+
+[1.tube] trajs=300  max(||Delta||/e)=0.937  violations=0/12300 (0.00%)
+[2.pred] open-loop error in (x,y,theta):
+[2.pred] H= 5  bilinear=0.0017  linear=0.0780  ratio(lin/bi)=46.2x
+[2.pred] H=10  bilinear=0.0026  linear=0.1153  ratio(lin/bi)=44.2x
+[2.pred] H=20  bilinear=0.0037  linear=0.1407  ratio(lin/bi)=37.5x
+[2.pred] H=40  bilinear=0.0058  linear=0.2172  ratio(lin/bi)=37.4x
+
+[3.mppi] parking from (1.5,1.0,0.5): final (x,y,theta)=(-0.005,0.162,-0.013)  ||pos||=0.1624
+
+================= VERDICT =================
+[1] tube: PASS (max ratio 0.937)
+[2] C1 bilinear<<linear: H=20 bi=0.004 vs lin=0.141  (37.5x)  PASS
+[3] MPPI parking: PASS
+
+outputs -> /work/out/tier1_unicycle.png

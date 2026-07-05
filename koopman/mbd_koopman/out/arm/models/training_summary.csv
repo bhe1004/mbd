@@ -1,0 +1,3 @@
+task,model,seed,data_seed,lift_dim,rollout_horizon,epochs,train_loss,val_multistep_error,open_loop_rmse_mean,open_loop_rmse_final,train_time_s,checkpoint
+arm,dk,0,1,20,15,300,0.0093295494094491,0.008990691974759102,0.08590380677373237,0.14457399028452086,24.3034633139614,/home/home/playground/mbd/koopman/mbd_koopman/out/arm/models/dk_seed0.pt
+arm,bk,0,1,20,15,300,0.0038444030331447722,0.004282394889742136,0.05892683767409565,0.10176340430693182,39.55410708207637,/home/home/playground/mbd/koopman/mbd_koopman/out/arm/models/bk_seed0.pt

@@ -1,0 +1,3 @@
+task,model,seed,data_seed,lift_dim,rollout_horizon,epochs,train_loss,val_multistep_error,open_loop_rmse_mean,open_loop_rmse_final,train_time_s,checkpoint
+unicycle,dk,0,1,8,15,200,0.007854289625986265,0.007408690173178911,0.08218002648035845,0.11886207411614837,18.46491161501035,/home/home/playground/mbd/koopman/mbd_koopman/out/unicycle/models/dk_seed0.pt
+unicycle,bk,0,1,8,15,200,5.706545450196315e-06,4.409671419125516e-06,0.0019864061367784753,0.0029770108627438538,31.020336162066087,/home/home/playground/mbd/koopman/mbd_koopman/out/unicycle/models/bk_seed0.pt

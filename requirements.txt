@@ -1,0 +1,24 @@
+# Requirements for the koopman/ experiments (torch-based Koopman MPC / MPPI).
+# Versions pinned to the conda `playground` env used to run these scripts.
+# Python 3.11
+#
+# Note: model-based-diffusion/ is upstream JAX/Brax code with its own setup.py
+# and is NOT covered here.
+
+numpy==2.4.6
+scipy==1.15.3
+matplotlib==3.10.3
+tqdm==4.68.3
+mujoco==3.9.0
+
+# torch: playground has the CUDA 12.8 build (2.7.0+cu128).
+# On Linux `pip install torch==2.7.0` already pulls a CUDA wheel.
+# For a specific CUDA build use:
+#   pip install torch==2.7.0 --index-url https://download.pytorch.org/whl/cu128
+torch==2.7.0
+
+# Optional — only needed for two peripheral scripts, not installed in playground:
+#   mppi_koopman/verify/plmi_tube.py  -> cvxpy
+#   mppi_koopman/verify/pdf_dump.py   -> pypdf
+# cvxpy
+# pypdf
