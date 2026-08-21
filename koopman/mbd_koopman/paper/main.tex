@@ -1,28 +1,28 @@
-\documentclass[lettersize,journal]{IEEEtran}
+\documentclass[letterpaper,10pt,conference]{ieeeconf}
+\overrideIEEEmargins
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{algorithmic}
 \usepackage{algorithm}
 \usepackage{array}
 \usepackage{tabularx}
-\usepackage[caption=false,font=normalsize]{subfig}
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
 \usepackage{textcomp}
 \usepackage{stfloats}
 \usepackage{url}
 \usepackage{verbatim}
 \usepackage{graphicx}
 \usepackage{cite}
-\usepackage{hyperref}
+
 \usepackage{bm}
 \usepackage{pifont}
-\usepackage{amsthm}
 \newtheorem{lemma}{Lemma}
-\newtheorem{proposition}{Proposition}
-\newtheorem{theorem}{Theorem}
-\newtheorem{corollary}{Corollary}
-\theoremstyle{remark}
 \newtheorem{remark}{Remark}
 \usepackage{xcolor}
 \newcommand{\rev}[1]{\textcolor{blue}{#1}}
+\newcommand{\nd}[1]{\textcolor{red}{#1}}
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
 \newcommand{\draftnote}[1]{\par\noindent\textcolor{red}{\textbf{$\blacktriangleright$ DRAFT: #1}}\par\medskip}
 \newcommand{\figph}[2]{\fcolorbox{red}{gray!8}{\parbox[c][#1][c]{0.96\linewidth}{\centering
@@ -35,12 +35,19 @@
 \newcommand{\dkmbd}{\textsc{DK-MBD}}
 \newcommand{\dksplit}{\textsc{DK-MBD-split}}
 \newcommand{\bkmbd}{\textsc{BK-MBD}}
+\newcommand{\dklarge}{\textsc{DK-MBD-large}}
+\newcommand{\mlpmbd}{\textsc{MLP-MBD}}
+
+% \usepackage[hidelinks]{hyperref}
+\usepackage{hyperref}
+\usepackage{subcaption}
+% (a)/(b) subfigure labels in Times New Roman (ptm = Times); caption text unchanged
+\DeclareCaptionFont{timesnr}{\fontfamily{ptm}\selectfont}
+\captionsetup[subfigure]{labelfont=timesnr}
 
 \begin{document}
 
-\title{Real-Time Model-Based Diffusion Control\\
-with Bilinear Deep Koopman Rollouts}
-% \todo{Provisional title -- revisit after abstract is written.}
+\title{Koopman-Accelerated Model-Based Diffusion for Real-Time Robot Control}
 
 % Author intentionally omitted for blind submission.
 % \author{Author Name(s)\thanks{Affiliation / funding.}}
@@ -48,937 +55,619 @@ with Bilinear Deep Koopman Rollouts}
 \maketitle
 
 \begin{abstract}
-Model-Based Diffusion (MBD) solves optimal control problems by annealed,
-sampling-based score ascent, but it evaluates its rollout model thousands
-of times per control step, restricting it to platforms where a physics
-simulation is affordable at the control rate. We propose \bkmbd{}, which
-replaces the simulator rollout with a learned \emph{bilinear} deep
-Koopman surrogate, augmented by a quantile-fitted model-error tube, at a
-per-step cost fixed by the lifting dimension. The bilinear form is
-essential: we show that whenever a configuration-dependent gain, such
-as a vehicle's heading rotation or a manipulator's Jacobian, lies
-between the command and the tracked output, the constant input map of a
-\emph{linear} Koopman model incurs an irreducible one-step error equal
-to the dispersion of that gain. Closed-loop experiments on SE(2) parking and on
-end-effector reaching with a kinematic $7$-DOF arm and a physics-simulated
-Franka FR3 confirm the analysis in both directions. The linear rollout
-fails or stalls ($0/20$, $0/35$, and $7/35$ strict on the FR3), whereas
-the bilinear rollout matches the true-dynamics oracle in all $90$ trials
-and reduces the FR3 planning step from $4.1$\,s to $64$\,ms, within
-$1.3\times$ of the control period. An optimizer ablation attributes the
-final-precision gains to the annealed schedule itself.
+
 \end{abstract}
 
-\begin{IEEEkeywords}
-Koopman operator, sampling-based control, model-based diffusion, data-driven
-control, model learning for control.
-\end{IEEEkeywords}
+\noindent\textbf{Keywords---}Koopman operator, sampling-based control,
+model-based diffusion, data-driven control, model learning for control.
 
 %==============================================================
 \section{Introduction}\label{sec:intro}
 %==============================================================
-\IEEEPARstart{S}{ampling-based} optimal control has become a standard
-choice for robotic systems with complex nonlinear dynamics. Instead of solving a
-deterministic program at every step, controllers such as Model Predictive
-Path Integral (MPPI) control~\cite{kappen2005, theodorou2010,
-williams2017mppi, williams2016aggressive} and, more recently, Model-Based
-Diffusion (MBD)~\cite{pan2024model, xue2025full} evaluate hundreds of
-sampled control sequences by forward simulation and update the nominal
-sequence by a cost-weighted average.
-MBD reinterprets this population-and-reweight primitive as one step of
-reverse diffusion: in this view, the weighted mean is a Monte-Carlo
-estimate of the score of a Gaussian-smoothed target
-distribution~\cite{song2019generative, song2020score}, and repeating it
-along a decreasing noise schedule yields an annealed, coarse-to-fine
-search. Because the update requires neither gradients nor structural
-assumptions on the dynamics or the cost, and parallelizes naturally on
-modern hardware, the approach is broadly applicable. However, the
-\emph{rollout model}, evaluated thousands of times at every control
-step, carries almost the entire computational burden and thus dictates
-the attainable control rate. MBD in particular
-inherits its rollouts from a physics simulator~\cite{pan2024model}, which
-confines it to offline trajectory optimization or to platforms where a
-full simulation step is affordable at the sampling rate.
 
-Koopman operator theory~\cite{koopman1931, mezic2005} provides a
-principled way to alleviate this bottleneck by embedding the state in a
-space of observables, classically hand-designed~\cite{williams2015edmd,
-proctor2016dmdc} and more recently parametrized by deep
-networks~\cite{lusch2018deep}, in which the evolution is (near-)linear.
-A candidate trajectory can then be propagated by a fixed cascade of
-matrix--vector products whose expense is set by the embedding size,
-\emph{independently of the complexity of the underlying dynamics}.
-\emph{Linear} lifted predictors dominate this literature, since, within
-model predictive control (MPC), only a linear predictor yields a convex
-program by construction~\cite{korda2018mpc, strasser2026}. MPPI, in
-turn, has recently been paired with a learned linear deep Koopman
-model, with reported control performance close to true-dynamics MPPI at
-a fraction of its cost~\cite{mppidk2026}.
+Sampling-based predictive control is widely used on robotic systems with nonlinear dynamics.
+MPPI~\cite{kappen2005, theodorou2010, williams2017mppi, williams2016aggressive} and Model-Based Diffusion (MBD)~\cite{pan2024model} score a population of candidate control sequences by forward rollout and update the nominal sequence by a cost-weighted average.
+MBD reads that update as one step of reverse diffusion.
+The weighted mean estimates the score of a Gaussian-smoothed target~\cite{song2019generative, song2020score}, and a decreasing noise schedule moves the search from coarse to fine.
+Neither the cost nor the feasible set has to be differentiable or convex.
 
-The linearity of the lift, however, forces the input to act through
-one constant matrix that does not change with the robot's
-configuration. This premise fails for a large class of robots. A
-wheeled vehicle's speed command displaces it along its current heading,
-and a manipulator's joint-velocity command moves the end-effector
-through the Jacobian evaluated at its present posture. In both cases
-the effect of the command on the tracked output is modulated by a
-\emph{configuration-dependent gain}, and this modulation cannot be
-represented by any constant matrix. Notably, in the experimental
-settings of the linear-lift controllers above, the model is never
-required to represent such a coupling, because the inputs (body-frame
-forces or accelerations, with the attitude kinematics integrated
-analytically) enter the learned dynamics without state dependence.
-We show in Sec.~\ref{sec:method} that the restriction is a model-class
-property: the best constant surrogate is the \emph{mean} of the gain
-along the visited states, leaving an irreducible one-step error equal
-to the gain's dispersion. Sec.~\ref{sec:exp} then shows that its
-closed-loop consequence is severe: the linear rollout fails outright on
-an analytic SE(2) testbed, stalls short of the strict tolerance on a
-physics-simulated manipulator, and recovers only when the coupling is
-removed from the learning problem by hand-supplied analytic structure,
-which the model-free setting withholds.
+The rollout model keeps MBD out of the control loop.
+One control step evaluates the rollout once per candidate at every annealing stage, and receding-horizon control draws a new population after each executed action.
+MBD is posed as an offline trajectory optimizer, and its use under receding horizon is left open~\cite{pan2024model}.
+Rolling a population through a simulation of the plant is the dominant cost of a control step, and Xue et al.~\cite{xue2025full} later carried that cost on a vectorized physics engine, running annealed sampling at the control rate and leaving the rollout model unchanged.
+Reaching the control rate on a CPU requires a rollout model cheaper than a simulation of the plant.
 
-For control-affine systems, Koopman theory itself supplies the repair:
-the exact Koopman form carries a state-dependent input
-map~\cite{iacob2024}, whose smallest realization is the bilinear class.
-Bilinear realizations have shown clear modeling and control
-advantages~\cite{bruder2021bilinear, folkestad2021, mamakoukas2019},
-although these demonstrations lie within MPC, where the bilinear term
-destroys the convexity that motivates the linear restriction in the
-first place.
-A sampling-based optimizer, by contrast, involves no convex program, so
-this restriction is no longer necessary: the bilinear model can serve
-directly as the rollout, at a matrix--vector cost comparable to that of
-the linear model.
-Hence, in this paper, we propose \bkmbd{}, a sampling-based control
-framework that embeds a learned \emph{bilinear} deep Koopman rollout
-inside the annealed diffusion-style update of MBD. At every control
-step, the current output is lifted once, every candidate control
-sequence is evaluated in the lifted space through the bilinear
-recursion, and the annealed update refines the nominal sequence over a
-decreasing noise schedule before the first control is executed. Since
-the same lifted rollout could equally drive a single-stage MPPI update,
-we also ask what the annealed schedule itself contributes, and answer
-this question by ablation in Sec.~\ref{subsec:exp_anneal}. A scalar error tube, fitted
-to the model's one-step residuals in the spirit of proportional error
-bounds for certified Koopman control~\cite{strasser2026, safedmd2024}, is
-propagated along each candidate and added to the cost, discouraging the
-search from regions where the surrogate is least trustworthy.
-Unlike diffusion models used as \emph{learned} motion
-priors~\cite{janner2022planning, chi2025diffusion, carvalho2023motion}, no
-trajectory distribution is learned here: the diffusion machinery serves
-purely as an optimizer, and the learning problem concerns the rollout
-dynamics.
+Replacing the simulator raises a question the simulator never posed.
+Where must the surrogate be accurate?
+The sampling weights read only differences of cost within a population, and the candidates differ in the control sequence alone.
+An error the surrogate commits independently of the input leaves the weights unchanged.
+An error in the path by which the input reaches the tracked output reorders the candidates.
 
-The contributions of this paper are as follows:
+A Koopman lift supplies such a surrogate.
+Lifting the state through hand-designed~\cite{williams2015edmd, proctor2016dmdc} or learned~\cite{lusch2018deep} observables turns a nonlinear rollout into repeated matrix--vector products whose cost the lifted dimension sets.
+Hao et al.~\cite{mppidk2026} placed a learned linear Koopman model inside an MPPI loop for this reason.
+A linear lift receives the input through a constant matrix, so a command moves the tracked output in the same way at every configuration.
+On a velocity-commanded platform the command is issued in a joint or body frame and the tracked output lives in the world frame.
+The map between the two frames turns with the configuration and ranges over its full extent across the postures a task visits.
+A constant matrix matches it at one posture.
+
+Bilinear Koopman realizations multiply the lifted state by the input and restore a configuration-dependent input map~\cite{iacob2024}.
+Lifted predictive control nonetheless builds mostly on the linear form, for which the online problem is a quadratic program~\cite{korda2018mpc}.
+Bruder et al.~\cite{bruder2021bilinear} identified a bilinear model from data, but the bilinear term breaks convexity, so they froze the lifted state along a nominal trajectory.
+That remedy removes the state dependence the bilinear form was adopted for.
+The optimizer, not the model, has kept the bilinear class out of this role.
+A sampling planner scores whole candidate sequences by the cost they achieve, so it requires convexity of neither the model nor the free space and uses the bilinear lift as it stands.
+
+A learned rollout introduces a second difficulty.
+The optimizer may descend into a minimum that belongs to the surrogate rather than to the plant, and the robot executes whatever the sampler settles on.
+The annealed schedule mitigates this sensitivity rather than removing the error.
+The noise level sets how widely one stage spreads its candidates, and it sets how much the cost that stage reads has been smoothed.
+A wide level exposes the optimizer to a broader neighborhood of the current plan, while a narrow level gives the final update a less-smoothed cost and a smaller displacement.
+The schedule opens wide and closes narrow, separating exploration from refinement.
+This role is most relevant when the rollout is learned, so we compare fixed and annealed schedules under a learned rollout and repeat the schedules on an exact rollout as a control.
+
+The diffusion in MBD is a property of the optimizer.
+Diffusion models used as motion priors~\cite{janner2022planning, chi2025diffusion, carvalho2023motion} instead learn a trajectory distribution tied to the training tasks, so a new goal or cost calls for retraining.
+Here the rollout model is the only learned object.
+
+We propose Bilinear Koopman Model-Based Diffusion (\bkmbd{}), which rolls out a bilinear deep Koopman model inside the annealed sampling loop of MBD.
+The model is identified from interaction data alone by multi-step training.
+We evaluate \bkmbd{} on two velocity-commanded platforms in simulation and on physical hardware, exchanging one component at a time and holding the rest fixed.
+The primary contributions of this study are as follows.
+
 \begin{itemize}
-\item \textbf{\bkmbd{}: MBD at the timescale of the control period.} We
-embed a learned bilinear deep Koopman rollout inside the annealed MBD
-update, with a quantile-fitted error tube keeping the planner aware of
-the surrogate's trust region. The lifted rollout decouples the planning
-cost from the complexity of the true dynamics: it is $64\times$ cheaper
-than the physics-engine oracle on the FR3, turning a $4.1$\,s planning
-step into a $64$\,ms one at no loss in final accuracy.
-\item \textbf{Controlled closed-loop validation in both directions.}
-Within a single MBD stack that varies only the rollout model, the linear
-rollout fails or stalls ($0/20$ and $0/35$ on kinematic testbeds; $7/35$
-strict on a physics-simulated Franka FR3), whereas \bkmbd{} matches the
-true-dynamics oracle in all $90$ trials at oracle-level final errors
-with no analytic model. A structure-informed linear baseline granted
-the analytic coupling also succeeds ($90/90$), which isolates the
-failure to the model class and delimits what the linear lift would
-require in deployment.
-\item \textbf{Isolating the contribution of the annealed schedule.}
-Holding the learned surrogate fixed and replacing only the update
-schedule, we measure what the annealed, multi-stage schedule of MBD
-adds over the single-stage MPPI operating point. Strict success climbs
-monotonically ($25 \to 28 \to 32 \to 35$ of $35$), and a
-Gaussian-homotopy and precision-floor analysis shows that the schedule
-matters exactly when the required precision approaches the noise floor
-of a fixed-scale sampler (Sec.~\ref{subsec:exp_anneal}).
-\item \textbf{Representability analysis of the linear lift.} Supporting
-the design, we trace the linear rollout's failure to a model-class
-property: the best constant input map is the mean of the
-configuration-dependent gain, with an irreducible one-step error equal
-to the gain's dispersion. The bilinear lift restores exactly the
-structure that the linear lift discards.
+\item \textbf{Model-Based Diffusion at the control rate.}
+We run annealed sampling within the control period on a CPU by lifting the measured state once per control step and propagating every candidate in the lifted space, where one rollout step is a fixed number of matrix--vector products.
+The full planning computation for \bkmbd{}, including all five annealing stages, candidate generation, lifted rollouts, cost evaluation, softmax weighting, weighted averaging, nominal updates and extraction of $u_0$, returns in $11.0$\,ms median and $14.7$\,ms worst case with no miss of a $50$\,ms period.
+
+\item \textbf{Annealing for learned-rollout robustness.}
+We show that fixed-noise sampling must trade broad exploration against low-noise refinement, while a decreasing schedule separates these roles.
+Under a learned rollout this separation substantially improves closed-loop accuracy and reduces sensitivity to surrogate-induced minima.
+The advantage disappears with exact dynamics, isolating the effect to rollout error rather than to the sampler alone.
+
+\item \textbf{What convexity costs a Koopman predictive controller.}
+We isolate the price of convexifying the free space by giving one trained model to two optimizers on a task no single convex region covers.
+A quadratic program uses a bilinear lift only after convexification, and it requires convexity of the free space as well.
+Holding the model fixed separates that cost from the effects of the model and of the frozen dynamics.
 \end{itemize}
+
+Section~\ref{sec:prelim} formulates the control problem and reviews the MBD update and lifted rollouts, Section~\ref{sec:method} develops \bkmbd{}, and Section~\ref{sec:exp} presents the experiments.
 
 %==============================================================
 \section{Preliminaries}\label{sec:prelim}
 %==============================================================
 
-\begin{table}[t]
-\centering
-\caption{Notation and Symbols}
-\label{tab:notation}
-\begin{tabularx}{\linewidth}{l X}
-\hline
-Symbol & Description \\
-\hline
-$s \in \mathbb{R}^n$, $u \in \mathcal{U} \subset \mathbb{R}^m$ & system state and control input \\
-$b = b(s) \in \mathbb{R}^d$ & tracked output / Koopman training state \\
-$U = (u_0, \dots, u_{T-1})$ & control sequence over horizon $T$ \\
-$J(U)$ & task cost of the rolled-out sequence \\
-$z = \Psi_\theta(b) \in \mathbb{R}^r$ & lifted state, $r \ge d$ \\
-$C$ & decoder, $Cz = z_{1:d} = b$ \\
-$A, B_0, B_i$ & lifted dynamics matrices \\
-$M(u) = A + \sum_i u_i B_i$ & input-dependent transition matrix \\
-$\sigma_s,\ \alpha$ & annealing noise scale, weight temperature \\
-$e_k,\ c_x,\ c_u,\ \beta_e$ & error tube and its constants / weight \\
-\hline
-\end{tabularx}
-\end{table}
+In this section we formulate the control problem, review the MBD update, and state the two classes of lifted rollout that the study compares.
 
 \subsection{Problem Formulation}\label{subsec:problem}
 
-Table~\ref{tab:notation} summarizes the notation used throughout the
-paper. Consider the discrete-time system
+Consider the discrete-time system
 \begin{equation}
 s_{t+1} = f(s_t, u_t), \qquad
 s_t \in \mathcal{X} \subset \mathbb{R}^{n},\quad
 u_t \in \mathcal{U} = [\underline{u}, \bar{u}]^{m},
 \label{eq:sys}
 \end{equation}
-in the \emph{model-free, real-time} setting: the dynamics $f$ cannot be
-evaluated at the control rate, whether because they are unidentified or
-because their simulation is too slow. The true dynamics therefore serve
-only as an offline \emph{oracle} reference and cannot themselves be
-deployed as the controller, and model learning must proceed from
-interaction data $\mathcal{D} = \{(s_i, u_i, s_i^{+})\}$ alone.
+obtained from a control period $\Delta t$.
+Here $f$ is unknown or too costly to integrate at the sampling rate, so a true-dynamics rollout serves as an oracle reference alone, and the rollout model is learned from interaction data $\mathcal{D} = \{(s_i, u_i, s_i^{+})\}$.
+Throughout, $\mathcal{X}$ is the operating set, the region of the state space to which the task confines the plant, and every statement below is made over it.
+The task defines features $b(s) \in \mathbb{R}^{d}$, which the rollout model predicts and the cost reads.
+The controller tracks an output $y = S_y\, b(s) \in \mathbb{R}^{d_y}$ selected from those features by a constant $S_y$ of full row rank.
 
-Each task defines observable features $b(s) \in \mathbb{R}^{d}$ used both as
-the Koopman training state and in the cost (unicycle:
-$b = [x, y, \sin\theta, \cos\theta - 1]$; manipulator:
-$b = [q, p_{\mathrm{tcp}}]$, joints and tool-center-point position). The controller operates in a receding
-horizon: at state $s_t$ it seeks a control sequence
-$U \in \mathbb{R}^{mT}$ minimizing
+The plants considered here are control-affine and velocity-commanded, $\dot{s} = f_c(s) + G(s)u$ with output $y = h(s)$.
+Integrating over one control period under a zero-order hold gives the response of the tracked output,
 \begin{equation}
-J(U; s_t) = \sum_{k=1}^{T} c\big(\hat{b}_k, u_{k-1}\big)
-+ \phi\big(\hat{b}_T\big),
-\label{eq:cost}
+y_{t+1} - y_t = \big(\omega(s_t) + \Phi(s_t)\, u_t\big)\Delta t + O(\Delta t^{2}),
+\label{eq:resp}
 \end{equation}
-where $\hat b_k$ is produced by the rollout model under study, applies the
-first control $u_0$ to \eqref{eq:sys}, and replans.
+with drift response $\omega = \nabla h\, f_c \in \mathbb{R}^{d_y}$ and \emph{input gain} $\Phi = \nabla h\, G \in \mathbb{R}^{d_y \times m}$.
+Two features of \eqref{eq:resp} are used later.
+The drift response is a function of the state alone and a model of the state may absorb it, so $\Phi(s)u$ is the only term in which the state and the input meet.
+The input gain is in general state-dependent.
+How much it varies over $\mathcal{X}$ is a property of the plant and the task rather than of the controller applied to them.
 
-\subsection{Model-Based Diffusion: A Review}\label{subsec:mbd}
+Everything the controller optimizes is produced by a \emph{rollout model} $\mathcal{R}: (b_t, U) \mapsto (\hat{b}_1, \dots, \hat{b}_T)$ acting on a candidate sequence $U = (u_0, \dots, u_{T-1})$.
+The cost depends on the candidate only through $\mathcal{R}$, so two controllers that share an optimizer differ exactly in $\mathcal{R}$.
+At state $s_t$ the controller solves
+\begin{equation}
+\begin{aligned}
+\min_{U} \;\; & J(U) = \sum_{k=1}^{T} c(\hat{b}_k, u_{k-1}) + \ell_T(\hat{b}_T) \\
+\text{s.t.} \;\; & U \in \mathcal{U}^{T}, \quad \hat{b}_k \in \mathcal{F}, \quad k = 1, \dots, T ,
+\end{aligned}
+\label{eq:ocp}
+\end{equation}
+where $\mathcal{F}$ is the free set the task admits.
+It then applies $u_0$ to \eqref{eq:sys} and replans at the next period.
 
-MBD~\cite{pan2024model} treats \eqref{eq:cost} as sampling from the
-Boltzmann target
+Two properties of \eqref{eq:ocp} are stated as what is \emph{not} assumed.
+Neither $c$ nor $\ell_T$ has to be differentiable or convex in $U$, and $\mathcal{F}$ has to be neither convex nor connected.
+Since no structure is imposed on $\mathcal{F}$, an optimizer may enforce it as a constraint or absorb it into the cost as a penalty.
+The controller is real-time in the sense that $u_0$ must be returned within $\Delta t$, so the admissibility of a rollout model depends on what the optimizer asks of it in one control step.
+
+\subsection{The Model-Based Diffusion Update}\label{subsec:mbd}
+
+MBD~\cite{pan2024model} treats \eqref{eq:ocp} as sampling from the Boltzmann target $p_0(U) \propto \exp(-J(U)/\alpha)$ with temperature $\alpha > 0$.
+It descends a ladder of Gaussian-smoothed marginals $p_{\sigma} = p_0 * \varphi_{\sigma}$ over a decreasing schedule $\sigma_1 > \cdots > \sigma_S$.\footnote{We write the ladder in variance-exploding form, in which the smoothing kernel alone carries the schedule. The formulation of~\cite{pan2024model} additionally rescales the iterate, which affects no statement below.}
+Applying Tweedie's formula to a smoothed marginal expresses its score as a denoising mean shift,
 \begin{equation}
-p_0(U) \;\propto\; \exp\!\big(-J(U)/\alpha\big)
-\label{eq:target}
-\end{equation}
-and descends an annealing ladder of Gaussian-smoothed marginals
-\begin{equation}
-p_{\sigma}(U) = \big(p_0 * \varphi_{\sigma}\big)(U)
-= \mathbb{E}_{\varepsilon \sim \mathcal{N}(0, \sigma^{2} I)}
-\big[\, p_0(U - \varepsilon) \,\big],
-\label{eq:smooth}
-\end{equation}
-with $\sigma_1 > \dots > \sigma_S$. By Tweedie's formula, the score of the
-smoothed target is a denoising mean shift,
-\begin{equation}
-\nabla_U \log p_{\sigma}(U)
-= \frac{\mathbb{E}\big[\,U_0 \mid U\,\big] - U}{\sigma^{2}} .
+\nabla_U \log p_{\sigma}(U) = \big(\mathbb{E}[\,U_0 \mid U\,] - U\big)\big/\sigma^{2} .
 \label{eq:tweedie}
 \end{equation}
-Because the smoothing kernel $\varphi_\sigma(U - U')$ is itself the density
-of the proposal $U' \sim \mathcal{N}(U, \sigma^{2} I)$, the posterior mean
-in \eqref{eq:tweedie} is a ratio of expectations under the proposal, and
-with $N$ candidates $U_k = U + \sigma \varepsilon_k$,
-$\varepsilon_k \sim \mathcal{N}(0, I)$, projected onto $\mathcal{U}^{T}$,
-the self-normalized estimator is the cost-weighted mean
+The smoothing kernel $\varphi_\sigma(U - U')$ is the density of the proposal $U' \sim \mathcal{N}(U, \sigma^2 I)$, so the posterior mean in \eqref{eq:tweedie} is a ratio of expectations under that proposal.
+Drawing $N$ candidates $U_k = U + \sigma \varepsilon_k$ with $\varepsilon_k \sim \mathcal{N}(0,I)$ and projecting them onto $\mathcal{U}^{T}$ gives its self-normalized estimator,
 \begin{equation}
-\widehat{\mathbb{E}}\big[U_0 \mid U\big] = \sum_{k=1}^{N} w_k U_k,
+\widehat{\mathbb{E}}[U_0 \mid U] = \sum_{k=1}^{N} w_k U_k,
 \quad
-w_k = \frac{e^{-(J(U_k) - J_{\min})/\alpha}}
-           {\sum_{j} e^{-(J(U_j) - J_{\min})/\alpha}} .
+w_k = \frac{e^{-(J(U_k) - J_{\min})/\alpha}}{\sum_{l} e^{-(J(U_l) - J_{\min})/\alpha}} .
 \label{eq:weights}
 \end{equation}
-Under the box projection the candidates are no longer exactly Gaussian
-about $U$, so \eqref{eq:weights} estimates the score of the
-correspondingly projected smoothing rather than \eqref{eq:smooth} itself;
-every compared method shares the identical projection.
-The update at stage $s$ is a preconditioned score step with optional
-Langevin noise, \emph{with the step size tied to the noise level}:
+The update at stage $j$ is a preconditioned score step with optional Langevin noise,
 \begin{equation}
-U \leftarrow U + \eta_s\, \widehat{\nabla_U \log p_{\sigma_s}}(U)
-+ \sqrt{2 \eta_s}\, \xi,
-\qquad
-\eta_s = \eta\, \sigma_s^{2} .
+U \leftarrow U + \eta_j\, \widehat{\nabla_U \log p_{\sigma_j}}(U) + \sqrt{2 \eta_j}\, \xi,
+\qquad \eta_j = \eta\, \sigma_j^{2},
 \label{eq:update}
 \end{equation}
-With $\eta = 1$ and no Langevin noise, \eqref{eq:update} reduces exactly to
-the weighted-mean update $U \leftarrow \sum_k w_k U_k$.
+At $\eta = 1$ and without Langevin noise, \eqref{eq:update} reduces to the cost-weighted mean $U \leftarrow \sum_k w_k U_k$.
 
-%==============================================================
-\section{Proposed Method}\label{sec:method}
-%==============================================================
+Three properties of \eqref{eq:update} are used later, and none of them depends on the rollout model that supplies $J$.
+First, the weights \eqref{eq:weights} are invariant to any term shared by the population.
+Only differences of cost within a population enter the update, and the candidates of a population differ in $U$ alone.
+Second, the $S$ stages are serial, since stage $j$ samples around the iterate produced by stage $j-1$.
+The $N$ candidates within a stage and the $T$ steps of a rollout admit batching.
+Third, a single stage at a fixed noise level, with $\eta = 1$ and no Langevin noise, is one cost-weighted average over a Gaussian population drawn around the warm-started iterate.
+That average is the MPPI update~\cite{williams2017mppi}, so the annealed schedule is the property separating \eqref{eq:update} from the planner it generalizes, and a comparison at a matched total sample budget is available by construction.
 
-\subsection{Deep Koopman Lifting and Rollout Models}\label{subsec:models}
+These properties fix the cost of one control step.
+The rollout model is evaluated once per candidate at every stage and over the full horizon, so a control step issues $N S T$ queries to $\mathcal{R}$.
+Among them the $S$ stages lie on a serial chain that added parallel hardware cannot shorten.
 
-All learned rollout models share a deep lift with an exact-decoder
-convention. With $d = \dim b$,
-\begin{equation}
-z = \Psi_\theta(b) =
-\begin{bmatrix} b \\ \psi_\theta\big(\tau(b)\big) \end{bmatrix}
-\in \mathbb{R}^{r},
-\qquad
-C z = z_{1:d} = b,
-\label{eq:lift}
-\end{equation}
-where $\psi_\theta$ is a small $\tanh$ network and $\tau$ a fixed task
-input map (unicycle: $\tau = \mathrm{id}$, $r = 8$; FR3:
-$\tau(b) = [\sin q, \cos q]$, $r = 20$). Slicing the decoder avoids
-learning a fragile reconstruction and ties the first $d$ lifted coordinates
-to the physical output. Two lifted dynamics classes are compared:
+\subsection{Linear and Bilinear Lifted Rollouts}\label{subsec:koopman}
+
+The Koopman operator~\cite{koopman1931, mezic2005} advances observables of the state along the flow and is linear on the space of observables, but it is infinite-dimensional.
+For a system driven by an input, an exact realization requires observables of the input as well as of the state~\cite{iacob2024}.
+A finite-dimensional realization therefore truncates the representation of the state and, separately, fixes the form in which the input enters the lifted dynamics.
+The two classes below agree in the first respect and differ in the second.
+
+We use a learned lift with an exact-decoder convention, $z = \Psi_\theta(b) \in \mathbb{R}^{r}$, whose leading $d$ coordinates hold $b$ itself and whose remainder is learned.
+Placing the features in the leading coordinates makes the decoder $C$ with $Cz = b$ a constant selector, and composing it with the output map gives the constant readout $C_y = S_y C \in \mathbb{R}^{d_y \times r}$.
+Two classes of lifted dynamics are available,
 \begin{align}
-\textbf{linear (DK):}\quad
-& z^{+} = A z + B u ,
+\text{linear:} \quad & z^{+} = A z + B u ,
 \label{eq:lin}\\[2pt]
-\textbf{bilinear (BK):}\quad
-& z^{+} = A z + B_0 u + \sum_{i=1}^{m} u_i B_i z ,
+\text{bilinear:} \quad & z^{+} = A z + B_0 u + \textstyle\sum_{i=1}^{m} u_i B_i z ,
 \label{eq:bil}
 \end{align}
-where, collecting the state-multiplying terms into
-$M(u) = A + \sum_i u_i B_i$, one step of \eqref{eq:bil} reads
-$z^{+} = M(u)\, z + B_0 u$: the transition matrix acquires an input
-dependence, while each step still consists of a small, fixed number of
-matrix--vector products. For control-affine systems the exact Koopman
-form carries a state-dependent input map~\cite{iacob2024}; the bilinear
-class is its smallest realization, restricting that dependence to be
-linear in the lifted state. The two classes differ in their input
-tangent maps: for \eqref{eq:bil},
-$\partial z^{+} / \partial u_i = B_0 e_i + B_i z$ varies with the
-lifted state through $B_i z$, whereas the tangent map of the linear
-form is the fixed matrix $B$. At planning time the
-current output is lifted once, $z_0 = \Psi_\theta(b(s_t))$, and every
-candidate is propagated entirely in the lifted space.
+the latter written compactly as $z^{+} = M(u)z + B_0 u$ with $M(u) = A + \sum_i u_i B_i$.
+For control-affine systems the continuous-time Koopman generator carries a bilinear input structure~\cite{iacob2024}, of which \eqref{eq:bil} is the finite-dimensional, discrete-time counterpart.
+Realizations of this form have been identified from data and used for robot control~\cite{bruder2021bilinear}.
 
-\subsection{Why a Constant Input Map Cannot Represent the Coupling}\label{subsec:representability}
+The two classes differ in exactly one place, the input tangent map.
+For \eqref{eq:bil}, $\partial z^{+}/\partial u_i = B_0 e_i + B_i z$ depends on the state through $B_i z$.
+For \eqref{eq:lin}, $\partial z^{+}/\partial u = B$ is one matrix for the whole of $\mathcal{X}$.
+Both remain in the same computational regime, a bilinear step costing $m+1$ matrix--vector products of size $r$ against one for the linear form.
+The cost of a rollout step is therefore set by the lifted dimension and the number of input channels alone.
 
-Suppose the increment of the tracked output is first-order in the input,
-$\Delta y = \Phi(s)\, u\, \Delta t + O(\Delta t^{2})$, where the gain
-$\Phi(s)$ varies across configurations (the heading rotation for the
-unicycle; the end-effector rows of the Jacobian $J(q)$ for the
-manipulator). A linear lift routes the input to the output exclusively through
-constant matrices: $CB$ at one step, and the Markov parameters
-$C A^{k} B$ at every lag. Since none of these matrices depends on the
-state, the full input--output response of \eqref{eq:lin} is linear
-time-invariant, however expressive the lifted drift may be.
+%==============================================================
+\section{Bilinear Koopman Model-Based Diffusion}\label{sec:method}
+%==============================================================
 
-\begin{proposition}[Irreducible error of a constant gain]
-\label{prop:const}
-Let inputs satisfy $\mathbb{E}[u u^{\top}] = \lambda I$ independently of
-the state $s \sim \rho$. Then
+\bkmbd{} is the optimizer of Sec.~\ref{subsec:mbd} with every rollout performed by a lifted surrogate of Sec.~\ref{subsec:koopman}.
+Sec.~\ref{subsec:bilinear} fixes the class of that surrogate and Sec.~\ref{subsec:training} identifies a model of that class from data.
+The rollout is then a learned object rather than a simulator, and Sec.~\ref{subsec:anneal} treats what the noise schedule has to do as a result.
+Throughout this section $\|\cdot\|$ denotes the induced $2$-norm.
+
+\subsection{The Bilinear Rollout}\label{subsec:bilinear}
+
+Sec.~\ref{subsec:koopman} leaves the learned coordinates of the lift unspecified.
+We take
 \begin{equation}
-\arg\min_{X}\, \mathbb{E}_{s,u}\big\|(\Phi(s) - X) u\big\|^{2}
-= \mathbb{E}_{s \sim \rho}\big[\Phi(s)\big],
-\label{eq:meangain}
+z = \Psi_\theta(b) = \begin{bmatrix} b \\ \psi_\theta\big(\tau(b)\big) \end{bmatrix} \in \mathbb{R}^{r},
+\label{eq:lift}
 \end{equation}
-and the minimum equals
-$\lambda\, \mathbb{E}_{s \sim \rho}\big\| \Phi(s) -
-\mathbb{E}[\Phi] \big\|_{F}^{2}$.
-\end{proposition}
+where $\psi_\theta$ is a small neural network and $\tau$ is a fixed task input map that supplies features the learned part would otherwise have to construct.
+We write $\Psi_i$ for the $i$th component of $\Psi_\theta$.
+
+The weights \eqref{eq:weights} read only differences of cost within a population whose members differ in the control sequence alone.
+What governs the optimizer is therefore the response the rollout predicts to an applied input.
+Decoding one step of the linear class \eqref{eq:lin} gives $C_y z^{+} = C_y A z + C_y B u$, so that response has sensitivity $C_y B$, a single matrix over the whole of $\mathcal{X}$.
+The lifted dimension $r$ and the encoder $\Psi_\theta$ change the value of $C_y B$ and leave it a single matrix, since $C_y$ is a constant selector and $B$ carries no dependence on the state.
+The plant answers with $\Delta t\, \Phi(s)$ by \eqref{eq:resp}, which takes a different value at every configuration.
+
+\begin{lemma}[Irreducible input-channel error of a linear lift~\cite{kim2026bilinear}]
+\label{lem:linear}
+Let $\nu_\Phi = \sup_{s, s' \in \mathcal{X}} \| \Phi(s) - \Phi(s') \|$ denote the variation of the input gain over the operating set.
+For every constant matrix $M \in \mathbb{R}^{d_y \times m}$,
+\begin{equation}
+\sup_{s \in \mathcal{X}} \big\| \Delta t\, \Phi(s) - M \big\|
+\;\ge\; \tfrac{1}{2}\, \nu_\Phi\, \Delta t .
+\label{eq:bound}
+\end{equation}
+In particular the bound holds at $M = C_y B$ for every pair $(A, B)$ of \eqref{eq:lin}, and therefore at every lifted dimension and for every encoder.
+\end{lemma}
+
 \begin{proof}
-$\mathbb{E}_u \|(\Phi - X) u\|^{2}
-= \operatorname{tr}\big((\Phi - X)\, \mathbb{E}[u u^{\top}]\,
-(\Phi - X)^{\top}\big) = \lambda \|\Phi(s) - X\|_{F}^{2}$; minimizing its
-expectation over $s$, a quadratic in $X$, gives the mean, with the variance
-as the residual.
+For any $s, s' \in \mathcal{X}$ the triangle inequality gives
+\begin{equation*}
+\big\| \Delta t\, \Phi(s) - M \big\| + \big\| \Delta t\, \Phi(s') - M \big\|
+\;\ge\; \Delta t \big\| \Phi(s) - \Phi(s') \big\| ,
+\end{equation*}
+so the larger of the two terms is at least $\tfrac{\Delta t}{2}\|\Phi(s) - \Phi(s')\|$.
+Taking the supremum over pairs $(s, s')$ yields \eqref{eq:bound}.
+The decoded input sensitivity of \eqref{eq:lin} is one such constant matrix at every lifted dimension and for every encoder, which gives the final claim.
 \end{proof}
 
-The best constant surrogate is the \emph{mean gain}, and the irreducible
-error equals the \emph{dispersion of the gain along the visited
-distribution}---a model-class property that no amount of training can
-remove. The unicycle is the extreme case: over a parking maneuver the
-heading traverses the entire circle, so
-$\mathbb{E}[(\cos\theta, \sin\theta)] \approx 0$ and the best constant
-input channel for the speed command is \emph{zero}---the
-model discards the actuator. The bilinear class instead realizes the
-state-dependent gain $u \mapsto C\big(\sum_i u_i B_i z\big)$, whose
-columns $C B_i z$ are linear in $z$. The heading rotation is therefore
-exactly expressible, since $\sin\theta$ and $\cos\theta$ are (affine)
-coordinates of $z$, and the manipulator Jacobian, whose entries are
-multilinear in $\{\sin q_i, \cos q_i\}$ across joints, is expressible
-once the learned features supply the cross-products. We emphasize that
-Proposition~\ref{prop:const} is a representability statement about the
-one-step, first-order input channel under the stated excitation, not a
-closed-loop theorem. How this representability gap is amplified into
-closed-loop failure once an optimizer selects controls through the
-model is traced empirically in Sec.~\ref{subsec:exp_mechanism}.
+The bound depends on the variation of the plant gain alone.
+Nor is the deficit confined to the first step, since $\partial (C_y z_k)/\partial u_j = C_y A^{\,k-j-1} B$ depends on the elapsed steps $k-j$ and not on the state at which the input is applied.
+A linear rollout therefore predicts the same response to a given input at every configuration a candidate visits.
 
-\subsection{The Structure-Informed Alternative and Its Cost}\label{subsec:split}
+The bilinear class removes the bound.
+Its decoded input sensitivity
+\begin{equation}
+\frac{\partial (C_y z^{+})}{\partial u_i} = C_y b_{0,i} + C_y B_i z ,
+\qquad i = 1, \dots, m,
+\label{eq:bilsens}
+\end{equation}
+is affine in the lifted state, with $b_{0,i}$ the $i$th column of $B_0$.
+The predicted response then matches \eqref{eq:resp} to first order at every configuration whenever
+\begin{equation}
+C_y b_{0,i} + C_y B_i\, \Psi_\theta\big(b(s)\big) = \Delta t\, \Phi_i(s),
+\qquad s \in \mathcal{X},
+\label{eq:match}
+\end{equation}
+where $\Phi_i$ is the $i$th column of $\Phi$.
+Since $C_y = S_y C$ composes two selectors of full row rank, \eqref{eq:match} is satisfiable whenever the entries of $\Phi$ lie in the span of $\{1, \Psi_1, \dots, \Psi_r\}$ over $\mathcal{X}$.
+Any class whose input sensitivity may depend on the state satisfies \eqref{eq:match} as well, an unstructured network among them.
+What \eqref{eq:bil} adds is that the dependence enters in the affine form that \eqref{eq:resp} exhibits.
 
-Proposition~\ref{prop:const} indicates that the only repair available
-to the linear class is to remove the coupling from the learning
-problem. We formalize
-this as the \dksplit{} baseline, which mirrors the experimental
-structure of linear-lift controllers~\cite{mppidk2026, korda2018mpc}.
-For the unicycle, a linear map $G$ is fitted by least squares from the
-input to the \emph{body-frame} displacement,
-$[\Delta p_{\mathrm{body}}; \Delta\theta] = G u$ with
-$\Delta p_{\mathrm{body}} = R(-\theta_k)(p_{k+1} - p_k)$, and rollouts
-compose the prediction analytically with the current heading (an
-$SE(2)$ composition). For the manipulator, a linear deep Koopman model
-is trained on the joint state only, and the analytic forward kinematics
-is applied to the decoded joints when evaluating the cost. In both cases the input then
-enters the \emph{learned} part state-independently, and
-Proposition~\ref{prop:const} no longer binds. \dksplit{} is the fair
-representative of what linear-lift control actually deploys, and its
-requirement is precisely the analytic rotation or forward kinematics
-that the model-free setting withholds. The bilinear rollout
-\eqref{eq:bil} needs neither.
+On a velocity-commanded platform the map from the command frame to the world frame turns as the platform reconfigures.
+It ranges over its full extent across the postures a task visits, so $\nu_\Phi$ stays bounded away from zero and \eqref{eq:bound} bars the linear class.
+Such a map is built from sines and cosines of the configuration angles and is multilinear in those terms.
+Letting $\tau$ supply those trigonometric functions places the leading terms in the lift and leaves $\psi_\theta$ to carry the products among them, which is the form \eqref{eq:match} asks for.
+On a plant whose gain varies little the bound is small, and \cite{kim2026bilinear} turns the variation of $\Phi$ into a test on a given operating set.
 
-\subsection{Multi-Step Training}\label{subsec:training}
+The cost of the resulting rollout follows from the count of Sec.~\ref{subsec:mbd}.
+One control step lifts the measured features once and propagates every candidate in the lifted space afterwards, so the encoder is evaluated once per control step rather than once per candidate.
+Each propagation step costs $m+1$ matrix--vector products of size $r$.
+The $S$ stages run in series, so the control period is divided among $S$ batched rollouts of $N$ candidates over $T$ steps.
 
-The planner consumes $T$-step rollouts, so the surrogate must remain
-accurate over a horizon rather than at a single transition. Models
-fitted by plain one-step regression drift away from the data
-distribution before the planning horizon is reached. All learned models are
-therefore trained on random-rollout snippets by the same $H$-step loss
-($H = 15$),
+\subsection{Identification}\label{subsec:training}
+
+The lifted features and the matrices of the lifted dynamics are fitted jointly to recorded trajectories.
+Koopman models are ordinarily identified by a one-step fit~\cite{lusch2018deep}, which suits a model queried one step at a time.
+A sampling planner instead propagates a candidate over the whole horizon and separates candidates by the cost that propagation accumulates.
+A model that is accurate at one step and drifts over $T$ has its drift read as a property of the plant.
+We therefore set $H$ to the planning horizon and fit every model on length-$H$ snippets by
 \begin{equation}
 \mathcal{L} = \frac{1}{H} \sum_{h=1}^{H}
 \Big[ \big\| C \hat{z}_h - b_h \big\|^{2}
-+ \gamma \big\| \hat{z}_h - \Psi_\theta(b_h)^{\mathrm{sg}} \big\|^{2}
-\Big],
++ \gamma \big\| \hat{z}_h - \Psi_\theta(b_h)^{\mathrm{sg}} \big\|^{2} \Big] ,
 \label{eq:loss}
 \end{equation}
-with $\hat z_0 = \Psi_\theta(b_0)$, $\hat z_{h+1}$ given by
-\eqref{eq:lin} or \eqref{eq:bil}, $\gamma = 0.1$, and stop-gradient
-($\mathrm{sg}$) on the latent target. On the 7-DOF manipulator the $m$
-per-channel matrices make the bilinear recursion prone to instability
-during training. Setting $B_i = 0$ at initialization resolves this
-issue, because the optimization then begins at the linear model and
-introduces bilinear structure only where the data requires it.
-Datasets are generated once and shared across every learned model and
-training seed, so that the compared classes differ in nothing but the
-lifted dynamics \eqref{eq:lin} vs.\ \eqref{eq:bil}.
+starting the rollout at $\hat z_0 = \Psi_\theta(b_0)$ and proceeding by \eqref{eq:lin} or \eqref{eq:bil}.
+The first term measures the prediction error of the decoded features, which is the quantity the cost reads.
+The second term, weighted by $\gamma > 0$, holds the propagated latent state to the image of the encoder, which \eqref{eq:lin} and \eqref{eq:bil} leave it free to leave.
+The stop-gradient on the latent target prevents the encoder from lowering the loss by pulling the target toward the prediction.
 
-\subsection{Model-Error Tube}\label{subsec:tube}
+The bilinear input matrices are initialized at $B_i = 0$.
+Training then begins exactly at the linear model \eqref{eq:lin}, and the coupling term departs from zero only to the extent that the data support it.
+The two classes share a starting point, an encoder, a dataset and an objective, and they differ in whether the coupling term is permitted to move.
 
-To make the planner aware of where the surrogate can be trusted, the
-one-step lifted residuals on the training set,
-$r_k = \Psi_\theta(b_{k+1}) - \big(M(u_k)\Psi_\theta(b_k) + B_0 u_k\big)$,
-are covered by a proportional bound
-$\|r_k\| \le c_x \|z_k\| + c_u \|u_k\|$ fitted at quantile coverage. A
-least-squares fit of $(\hat c_x, \hat c_u)$ to the residual norms is
-rescaled by the empirical $(1-\delta)$-quantile of the coverage ratios,
-\begin{equation}
-\begin{aligned}
-s_\delta &= Q_{1-\delta}\!\left[
-\frac{\|r_k\|}{\hat c_x \|z_k\| + \hat c_u \|u_k\|}
-\right], \\
-(c_x, c_u) &= \max(s_\delta, 1) \,(\hat c_x, \hat c_u),
-\end{aligned}
-\label{eq:tubefit}
-\end{equation}
-with $\delta = 10^{-3}$. Quantile coverage, rather than a worst-case fit
-over every residual, keeps the constants proportional to the typical
-model error. Sec.~\ref{subsec:exp_cost} quantifies how a worst-case fit
-lets a few rest-to-motion transients dominate the planning cost.
-During planning a scalar tube is propagated along each candidate with the
-precomputed norm bound
-$\bar m(u) = \|A\|_2 + \sum_i |u_i| \|B_i\|_2 \ge \|M(u)\|_2$:
-\begin{equation}
-e_{k+1} = \big(\bar m(u_k) + c_x\big) e_k
-+ c_x \|\hat z_k\| + c_u \|u_k\|,
-\qquad e_0 = 0 .
-\label{eq:tube}
-\end{equation}
-On any segment where the fitted bound holds, an induction over the exact
-error dynamics $\delta_{k+1} = M(u_k)\delta_k + r_k$ of the bilinear
-rollout shows that the recursion dominates the true-vs-predicted lifted
-error: $e_k \ge \|\delta_k\|$ with
-$\delta_k = \Psi_\theta(b_k) - \hat z_k$.
-The planner then minimizes the tube-augmented cost
-\begin{equation}
-\tilde J(U) = J(U) + \beta_e \sum_{k} e_k ,
-\label{eq:tubecost}
-\end{equation}
-where $\beta_e$ scales with the task cost magnitude; switching the
-penalty off ($\beta_e = 0$) leaves the plain \bkmbd{} planner. The
-constants $(c_x, c_u)$ are coverage estimates fitted from data, and we
-attach no identification-theoretic certificate to them.
+\subsection{Annealing under a Learned Rollout}\label{subsec:anneal}
 
-In summary, a \bkmbd{} control step proceeds as follows. The measured
-output is encoded once via \eqref{eq:lift}. Each annealing stage
-$s = 1, \dots, S$ then draws $N$ candidate sequences, scores them by
-running \eqref{eq:bil} in the lifted space while accumulating
-\eqref{eq:tube}, forms the weights \eqref{eq:weights} on the
-tube-augmented cost \eqref{eq:tubecost}, and applies \eqref{eq:update}
-to the nominal sequence. Finally the first control is executed, and the
-sequence is shifted by one step to warm-start the next replan.
+A learned rollout evaluates $\hat{J} = J + \Delta J$, where $\Delta J$ collects the effect of model error.
+The weights \eqref{eq:weights} are invariant to the part of $\Delta J$ common to the population, and the remaining part reorders candidates.
+A learned rollout therefore admits minima of its own, and under receding horizon the robot executes whatever the sampler settles on.
+The schedule cannot remove this error from the rollout.
+Its role is instead to reduce how strongly one control step depends on a single local view of the surrogate cost.
+
+Two properties of the update \eqref{eq:update} bear on this, and both belong to the sampling rather than to the model.
+The first is how widely one stage samples.
+The proposals $U_k = U + \sigma \varepsilon_k$ are spread about the current plan at a scale set by $\sigma$, so $\sigma$ fixes how far from that plan the cost is evaluated at all.
+The same scale bounds the update, which is a convex combination of those proposals.
+A Gaussian tail bound followed by a union bound gives
+\begin{equation}
+\big|\langle U^{+} - U, v\rangle\big| \;\le\; \sigma \sqrt{2 \log (N/\rho)}
+\label{eq:reach}
+\end{equation}
+along any unit direction $v$ with probability at least $1-\rho$.
+The width a stage explores is therefore set primarily by the noise level.
+Inequality \eqref{eq:reach} is an upper limit rather than a description, and a stage whose population holds nothing better than the current plan returns a weighted mean close to that plan at any $\sigma$.
+
+The second is what one stage does with that width.
+The update moves the nominal by $\sigma \sum_k w_k \varepsilon_k$, whose per-axis size is
+\begin{equation}
+\big|\langle U^{+} - U, v\rangle\big| \;\sim\; \sigma \big/ \sqrt{N_{\mathrm{eff}}},
+\qquad N_{\mathrm{eff}} = 1 \big/ \textstyle\sum_k w_k^{2},
+\label{eq:step}
+\end{equation}
+so the noise level sets how large a step the stage takes.
+It also sets where the step points, since by \eqref{eq:tweedie} the stage ascends $\log p_{\sigma}$ and $p_\sigma$ is the target smoothed at that level.
+A stage therefore descends the cost smoothed at its own noise level.
+
+One noise level fixes both quantities, so a fixed-noise sampler must trade exploration against refinement.
+A small $\sigma$ gives local proposals, a less-smoothed cost and a small final displacement, but it can remain tied to a surrogate-induced local minimum.
+A large $\sigma$ evaluates a broader neighborhood, but it reads a more heavily smoothed cost and produces a coarser update.
+This does not establish that a larger noise level is better; it only characterizes the scale at which the stage reads and moves.
+The empirical question is whether combining scales is preferable to assigning the same sample budget to one scale.
+
+The annealed schedule separates the two roles.
+It opens at a wide level, where the population is spread furthest from the current plan, and closes at a narrow level, where the smoothing and the final displacement are smallest.
+Under receding horizon the executed command comes from the last stage.
+The early stages therefore expose the optimizer to a broader neighborhood of the current plan, while the last stage refines the executed command under a less-smoothed surrogate cost.
+In the single-basin reaching task below, this predicts that the schedule's advantage should be tied to learned-rollout error, a point tested by repeating the schedules with an exact rollout.
 
 %==============================================================
 \section{Experiments}\label{sec:exp}
 %==============================================================
-We evaluate the framework on two main testbeds, both first-order
-coupled in the sense of Sec.~\ref{subsec:representability}: an SE(2)
-unicycle parking task, where the coupling is exact, and end-effector
-reaching with a Franka Research 3 (FR3) manipulator simulated with full
-rigid-body physics in MuJoCo. On the FR3, the joint-velocity servo
-realizes the first-order interface only up to lag and load.
-A third testbed, a kinematic $7$-DOF arm, carries the optimizer study of
-Sec.~\ref{subsec:exp_anneal}. The
-experiments are organized to support the claims of Sec.~\ref{sec:intro}:
-the failure of the full-lift linear rollout and the oracle-level
-performance of the bilinear rollout
-(Secs.~\ref{subsec:exp_unicycle}--\ref{subsec:exp_franka}), the mechanism
-by which a modest open-loop gap becomes that closed-loop failure once an
-optimizer sits on top of the model (Sec.~\ref{subsec:exp_mechanism}),
-the contribution of the annealed schedule over a single-stage sampler
-(Sec.~\ref{subsec:exp_anneal}), the
-rollout-cost decoupling together with an empirical validation of the tube
-(Sec.~\ref{subsec:exp_cost}), and finally the boundary of the regime in
-which the bilinear class is needed at all
-(Sec.~\ref{subsec:exp_regime}).
 
-\subsection{Protocol and Compared Methods}\label{subsec:setup}
-
-All four planners run inside one implementation of the MBD optimizer of
-Sec.~\ref{subsec:mbd}. The \emph{only} component that differs across
-methods is the rollout model that maps a candidate control sequence to
-a cost. \mbdtrue{} rolls out the true dynamics (the analytic model on the
-unicycle, the MuJoCo simulator on the FR3) and serves as the oracle
-upper bound. \dkmbd{} rolls out the full-lift linear deep Koopman model
-\eqref{eq:lin}. \dksplit{} is the structure-informed control of
-Sec.~\ref{subsec:split}: it is granted the analytic coupling (the SE(2)
-group action on the unicycle, the forward kinematics on the FR3) and
-learns only the input-affine remainder. \bkmbd{} rolls out the bilinear
-model \eqref{eq:bil} with the tube cost \eqref{eq:tubecost}. The optimizer
-uses $S = 5$ annealing stages, temperature $\alpha = 0.4$, and step scale
-$\eta = 1$ (the deterministic weighted-mean limit of \eqref{eq:update});
-per task we fix the sample count, noise schedule, horizon, and cost across
-all methods (unicycle: $N = 768$, $\sigma\!: 0.9 \to 0.2$, $T = 40$;
-FR3: $N = 800$, $\sigma\!: 1.2 \to 0.3$, $T = 15$).
-
-The learned models follow one training recipe
-(Sec.~\ref{subsec:training}). For each of five seeds, the linear,
-bilinear, and split models are trained on the same dataset of $6{,}000$
-random-excitation snippets of length $15$, so that every learned-model
-comparison shares data, architecture, epochs, and optimizer, and
-differs only in the lifted dynamics class. Every
-(task, seed) pairing then runs all closed-loop cases from identical initial
-sequences, giving $5 \times 4 = 20$ trials on the unicycle and
-$5 \times 7 = 35$ trials on the FR3 (and likewise $35$ on the kinematic
-arm of Sec.~\ref{subsec:exp_anneal}). We report the task success rate, the
-strict success rate at a tighter tolerance, the final error, and the
-planning time per control step.
-
-\subsection{Unicycle Parking}\label{subsec:exp_unicycle}
-
-The unicycle state is $(x, y, \theta)$ with speed and turn-rate inputs,
-integrated by RK4 at $\Delta t = 50$\,ms. The task is to park at the
-origin from four start poses within $180$ steps, with success defined
-as a final position error below $0.3$\,m (strict: $0.08$\,m position
-\emph{and} $0.2$\,rad heading). The base features used for lifting and cost are
-$[x, y, \sin\theta, \cos\theta - 1]$, and the coupling
-$R(\theta)\,[v, 0]^\top$ is exactly the configuration-dependent gain of
-Proposition~\ref{prop:const}.
-
-\begin{table}[!t]
-\centering
-\caption{Unicycle parking, 5 seeds $\times$ 4 cases.}
-\label{tab:unicycle}
-\begin{tabular}{lcccc}
-\hline
-Method & Park & Strict & Final err.\ [m] & ms/step \\
-\hline
-\mbdtrue{} & $20/20$ & $20/20$ & $0.070 \pm 0.008$ & $81$ \\
-\dkmbd{} & $0/20$ & $0/20$ & $2.383 \pm 1.706$ & $43$ \\
-\dksplit{} & $20/20$ & $20/20$ & $0.066 \pm 0.010$ & $58$ \\
-\bkmbd{} (ours) & $20/20$ & $18/20$ & $0.071 \pm 0.026$ & $95$ \\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{figure}[!t]
-\centering
-\includegraphics[width=\linewidth]{figs/unicycle_trajectories.png}
-\caption{Unicycle parking trajectories for all methods over five seeds
-(gray disk: $0.3$\,m park radius). \dkmbd{} (blue) veers away in every
-trial, while \dksplit{} (orange) and \bkmbd{} (red) are indistinguishable
-from the oracle (green).}
-\label{fig:unicycle_traj}
-\end{figure}
-
-\dkmbd{} does not merely park imprecisely but diverges, ending with a
-mean final error of $2.38$\,m on a task whose starts are $2$--$3$\,m
-from the goal. Its constant input map commits to one average heading
-direction (Proposition~\ref{prop:const}), and the annealed optimizer
-then faithfully optimizes the wrong model. Both control
-conditions behave as predicted (Table~\ref{tab:unicycle},
-Fig.~\ref{fig:unicycle_traj}): granting the linear model the SE(2)
-structure (\dksplit{})
-or replacing the model class by the bilinear lift (\bkmbd{}) restores
-oracle-level parking, with final errors within one standard deviation of
-\mbdtrue{}.
-
-\subsection{Franka FR3 Reaching in Physics Simulation}\label{subsec:exp_franka}
-
-The second testbed is a Franka
-Research 3 manipulator with attached Franka Hand, simulated in MuJoCo with
-full rigid-body dynamics. The robot is controlled through a
-gravity-compensated joint-velocity servo interface, the same
-abstraction exposed by the vendor controller on the physical robot, at
-a control period of $50$\,ms spanning $25$ physics substeps. The
-surrogate must therefore absorb servo lag and the inertial load of the
-hand rather than an exact integrator. The control point is the tool center point (TCP) between the
-two fingertips, and the Koopman state is $b = [q, p_{\mathrm{tcp}}]$
-with measured joint positions. At every control step the planner
-searches a $105$-dimensional decision space ($m = 7$ joint velocities
-over $T = 15$ steps). Training data are $6{,}000$ coherent random
-joint-velocity snippets rolled through the simulator; seven reach targets
-are attempted for up to $120$ steps ($6$\,s), with success below $5$\,cm
-and strict success below $2.5$\,cm. The oracle plans through the simulator
-itself with threaded batch rollouts.
+In this section we evaluate \bkmbd{} on two velocity-commanded platforms in simulation and on a physical manipulator.
+Sec.~\ref{subsec:problem} defines a controller as the pair of an optimizer and a rollout model, so every comparison below holds one of the two fixed and exchanges the other.
+Sec.~\ref{subsec:setup} states the platforms and the protocol, and the studies that follow exchange the rollout class, the noise schedule and the optimizer in turn.
 
 \begin{table}[t]
 \centering
-\caption{FR3 reaching in MuJoCo, 5 seeds $\times$ 7 targets.}
-\label{tab:franka}
-\begin{tabular}{lcccc}
-\hline
-Method & Reach & Strict & Final err.\ [m] & ms/step \\
-\hline
-\mbdtrue{} & $35/35$ & $35/35$ & $0.023 \pm 0.002$ & $4094$ \\
-\dkmbd{} & $13/35$ & $7/35$ & $0.054 \pm 0.022$ & $37$ \\
-\dksplit{} & $35/35$ & $35/35$ & $0.023 \pm 0.001$ & $56$ \\
-\bkmbd{} (ours) & $35/35$ & $35/35$ & $0.023 \pm 0.002$ & $64$ \\
-\hline
-\end{tabular}
+\begin{threeparttable}
+\caption{Hyperparameters.}
+\label{tab:hyper}
+\footnotesize
+\begin{tabularx}{\linewidth}{l Y Y}
+\toprule
+& Manipulator & Drone \\
+\midrule
+Lift $r$ & $20$ & $13$ \\
+Input map $\tau$ & $[\sin q, \cos q]$ & identity \\
+Planner $N$, $S$ & $800$, $5$ & $800$, $5$ \\
+Noise $\sigma$ & $1.2 \to 0.3$ & $1.6 \to 0.3$ \\
+Horizon $T$, temperature $\alpha$ & $15$, $0.4$ & $25$, $0.5$ \\
+\bottomrule
+\end{tabularx}
+\begin{tablenotes}[flushleft]\scriptsize
+\item $\Delta t = 50$\,ms, tolerances $0.05$ and $0.01$\,m, $\eta = 1$ and no Langevin noise.
+Computed on an Intel Core Ultra 5 225F with ten cores and no GPU.
+\end{tablenotes}
+\end{threeparttable}
 \end{table}
 
-Table~\ref{tab:franka} shows that the
-pattern transfers to full physics. \bkmbd{} again matches the oracle
-exactly ($0.023 \pm 0.002$ vs.\ $0.023 \pm 0.002$\,m, all trials
-strict) and traces the same direct TCP paths. \dkmbd{}, in contrast, is
-unreliable: it wanders across the workspace, reaching the strict
-tolerance in only $7/35$
-trials and exceeding the loose one in $22/35$. The planning-time column
-carries the practical significance of these results. Rolling out the
-physics engine costs the oracle $4.1$\,s per $50$\,ms control step, two
-orders of magnitude away from real time even with threaded rollouts.
-\bkmbd{} plans in $64$\,ms, a $64\times$ reduction that brings the same
-annealed optimizer to within $1.3\times$ of the control rate while
-losing nothing in final accuracy.
+\subsection{Setup}\label{subsec:setup}
 
-Two alternative explanations for the linear rollout's failure remain to
-be examined: insufficient capacity, and the possibility that a generic
-nonlinear dynamics model would suffice. Table~\ref{tab:baselines}
-addresses both. Regarding capacity, the enlarged linear lift at
-$r = 57$ spends more dynamics parameters, and a higher per-step FLOP
-count, than the bilinear model at $r = 20$, yet its held-out TCP error
-does not move to three decimals; the limitation is the class-level
-ceiling of Proposition~\ref{prop:const}, not a parameter shortage.
-Regarding the second explanation, an MLP dynamics model given the same
-features, multi-step loss, and budget does capture the coupling, and
-its open-loop accuracy even slightly exceeds the bilinear model's. In
-closed loop, however, it stalls at the step limit $2.9$--$4.7$\,cm from
-the target and reaches the strict tolerance in only $26/35$ trials
-against $35/35$ for the bilinear rollout---a second instance of
-open-loop accuracy failing to certify closed-loop precision
-(Sec.~\ref{subsec:exp_mechanism}). It also incurs a $2.7\times$ higher
-rollout cost and sacrifices the lifted-space linearity that the tube
-recursion~\eqref{eq:tube} exploits.
-Among these candidates, only the bilinear lift combines
-nonlinear-class accuracy, matrix--vector rollout cost, tube-compatible
-structure, and oracle-level closed-loop precision.
+\textbf{Platforms.}
+Sec.~\ref{subsec:bilinear} leaves two quantities to be instantiated on each platform, the map through which a command reaches the tracked output and the fixed input map $\tau$ of \eqref{eq:lift}.
+The Franka Research 3 (FR3) accepts joint velocities through a gravity-compensated servo, tracks the tool center point (TCP) between its fingertips, and is observed as $b = [q, p_{\mathrm{tcp}}]$.
+Its map is the manipulator Jacobian, whose entries are multilinear in $\{\sin q_i, \cos q_i\}$ across joints, so we take $\tau(b) = [\sin q, \cos q]$.
+The drone accepts body-frame linear velocities and a yaw rate, tracks its world-frame position, and is observed as $b = [p, \sin\psi, \cos\psi]$.
+Its map is the yaw rotation, whose entries the observation already carries, so $\tau$ is the identity.
+The manipulator carries the studies of Secs.~\ref{subsec:exp_class} and~\ref{subsec:exp_anneal} and the hardware study of Sec.~\ref{subsec:exp_hw}, since \dksplit{} requires forward kinematics in closed form, and the drone carries the non-convex passage of Sec.~\ref{subsec:exp_window}.
+
+\textbf{Task and protocol.}
+Each trial starts from rest and drives the tracked output toward a goal over a fixed budget of $120$ control steps, without early termination.
+A trial reaches a tolerance at the first control step whose tracking error falls below it, and we report the $5$\,cm and $1$\,cm tolerances.
+Where a condition fails to reach, we report the tracking error at the end of the budget.
+All conditions share one implementation of the optimizer of Sec.~\ref{subsec:mbd}, which draws $N = 800$ candidates over $S = 5$ stages, warm-starts each step from the previous plan by a one-step shift, and scores candidates by the squared tracking error with a control penalty and a terminal penalty.
+Models follow Sec.~\ref{subsec:training} on $6000$ snippets of length $15$ on the manipulator and $4000$ on the drone, with one dataset per training seed.
+The closed-loop studies cross $5$ training seeds with $10$ goals for $50$ trials per condition, and the trials are paired across conditions.
+Table~\ref{tab:hyper} collects the settings that differ by platform.
+
+\textbf{Compared rollout models.}
+Six rollout models are compared inside the identical planner, and the five learned ones form a ladder graded by how the input reaches the tracked output.
+\mbdtrue{} rolls out the true dynamics as the oracle reference.
+\dkmbd{} rolls out the linear model \eqref{eq:lin}, whose decoded input sensitivity is the constant matrix that Lemma~\ref{lem:linear} bounds.
+\dklarge{} raises the lifted dimension above that of the bilinear model, which adds parameters and leaves that sensitivity constant.
+\mlpmbd{} is an unstructured network trained on the same data under the same loss, and its input sensitivity depends on the state.
+\dksplit{} applies the analytic forward kinematics to the decoded joints, so the input reaches the tracked output outside the learned part of the model.
+It is a diagnostic rather than a controller, since Sec.~\ref{subsec:problem} does not assume the kinematics of the plant.
+\bkmbd{} represents the same path inside the model and asks for no analytic kinematics.
+
+\subsection{Rollout Class and Planning Latency}\label{subsec:exp_class}
+
+This study exchanges the rollout model inside one planner and leaves everything else fixed.
+Table~\ref{tab:class} reports reaching accuracy on the manipulator.
+The linear rollout reached the $1$\,cm tolerance on $1/50$ trials and came to rest a median $0.248$\,m from the goal.
+The bilinear rollout reached it on $50/50$ and matched the $10/10$ of the oracle.
+\dksplit{} also reached $50/50$, and it differs from \dkmbd{} in the input sensitivity alone, so Lemma~\ref{lem:linear} accounts for the failure of \dkmbd{}.
+Fig.~\ref{fig:paths} draws one goal of that comparison.
 
 \begin{table}[t]
 \centering
-\caption{Ruling out capacity and black-box explanations on the FR3:
-held-out open-loop TCP error (training seed $0$), rollout cost of an
-$800$-candidate batch, and closed-loop strict success under the
-identical planner ($5$ seeds $\times$ $7$ targets; linear row from
-Table~\ref{tab:franka}).}
-\label{tab:baselines}
-\begin{tabular}{lcccc}
-\hline
-Model & $r$ & $H{=}15$ [m] & ms & Strict \\
-\hline
-Linear & $20$ & $0.336$ & $0.3$ & $7/35$ \\
-Linear (large) & $57$ & $0.336$ & $0.6$ & --- \\
-MLP dynamics & --- & $0.236$ & $3.0$ & $26/35$ \\
-Bilinear (ours) & $20$ & $0.252$ & $1.1$ & $\mathbf{35/35}$ \\
-\hline
-\end{tabular}
+\begin{threeparttable}
+\caption{Reaching accuracy under an identical planner.}
+\label{tab:class}
+\footnotesize
+\begin{tabularx}{\linewidth}{l Y Y}
+\toprule
+Rollout model & Reach $5$\,cm & Reach $1$\,cm \\
+\midrule
+\mbdtrue{}\tnote{a} & $10/10$ & $10/10$ \\
+\dkmbd{} & $10/50$ & $1/50$ \\
+\dklarge{} & $11/50$ & $1/50$ \\
+\mlpmbd{} & $41/50$ & $0/50$ \\
+\dksplit{}\tnote{b} & $50/50$ & $50/50$ \\
+\bkmbd{} (ours) & $\mathbf{50/50}$ & $\mathbf{50/50}$ \\
+\bottomrule
+\end{tabularx}
+\begin{tablenotes}[flushleft]\scriptsize
+\item[a] The oracle carries no learned model, so it is run over the $10$ goals alone, while the learned rows span $5$ seeds $\times$ $10$ goals.
+\item[b] Diagnostic condition supplied with the analytic forward kinematics.
+\end{tablenotes}
+\end{threeparttable}
 \end{table}
-
-\begin{figure*}[!t]
-\centering
-\includegraphics[width=\textwidth]{figs/franka_final_pose_T7_seed0.png}
-\caption{Final FR3 configuration (bold kinematic chain) and TCP path
-(dotted) on the seventh reach target for each method. \bkmbd{}, the
-oracle, and \dksplit{} bring the tool to the target ($\star$) in
-$19$--$26$ steps; \dkmbd{} leaves the arm short of the goal at the step
-limit ($6.9$\,cm).}
-\label{fig:franka_pose}
-\end{figure*}
-
-\begin{figure}[!t]
-\centering
-\includegraphics[width=0.494\linewidth]{figs/bk_mbd_franka.png}\hfill
-\includegraphics[width=0.494\linewidth]{figs/dk_mbd_franka.png}
-\caption{Executed closed-loop FR3 motions on a representative reach,
-rendered as afterimages (translucent snapshots along the trajectory).
-\bkmbd{} (left) sweeps directly to the target (green sphere; TCP trace in
-red), whereas \dkmbd{} (right) wanders across the workspace without
-settling on the target (blue trace).}
-\label{fig:franka_ghost}
-\end{figure}
-
-\subsection{From Open-Loop Error to Closed-Loop Failure}
-\label{subsec:exp_mechanism}
-
-The closed-loop results above raise a question about the mechanism:
-does the linear lift fail because it is a much worse \emph{predictor},
-or because of how an \emph{optimizer} uses it? Because MBD interrogates the rollout model
-$S \times N$ times per control step and executes whatever the model scores
-best, the distinction matters, and it can be read off the open-loop error
-of the very checkpoints used in closed loop.
-Figure~\ref{fig:pred_horizon} shows the open-loop prediction error of the
-FR3 checkpoints against the rollout horizon on held-out data, averaged
-over the five training seeds and decomposed into the output rows that
-carry the configuration-dependent coupling (TCP) and the joint rows,
-where the input enters state-independently.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{figs/pred_error_horizon.png}
-\caption{Open-loop prediction error vs.\ horizon for the trained FR3
-checkpoints used in closed loop (mean $\pm$ std over five seeds,
-held-out data, log scale). The classes coincide on the joint rows
-(dashed); on the TCP rows (solid) the linear model is only $1.33\times$
-worse at the planning horizon $H = 15$---yet reaches the strict
-tolerance in only $7/35$ closed-loop trials against $35/35$ for the
-bilinear model.}
-\label{fig:pred_horizon}
+\includegraphics[width=\linewidth]{figs/traj_compare.pdf}
+\caption{Executed tool paths on one goal, one of the trials Table~\ref{tab:class} counts. The four runs share the planner, the training seed and the random stream, so they differ in the rollout model alone. \dkmbd{} climbs away from the goal and stalls $0.117$\,m from it, while \dksplit{} ($0.009$\,m), \bkmbd{} ($0.016$\,m) and the oracle \mbdtrue{} ($0.007$\,m) reach the $1$\,cm band.}
+\label{fig:paths}
 \end{figure}
 
-Two observations localize the failure. First, the penalty is exactly where
-Proposition~\ref{prop:const} predicts: on the joint rows the two classes
-are indistinguishable, while on the coupled rows the linear model carries
-a persistent excess error. Second, and more consequential, the open-loop
-gap is \emph{modest}---$1.33\times$ at the planning horizon---because
-the Jacobian along reaching motions has a non-zero mean, which the
-constant input map of Proposition~\ref{prop:const} captures. The
-irreducible part is only the \emph{dispersion} around that mean. In
-closed loop, this modest gap becomes $7/35$ strict versus $35/35$. The
-amplification is a property of optimizing through the model rather than
-predicting with it. The residual left by the mean gain is a
-\emph{structural bias} that always points the same way for a given
-configuration; the annealed search selects the candidates whose
-predicted progress exploits this bias, and receding-horizon replanning
-re-commits to the biased direction at every step.
-Fig.~\ref{fig:franka_pose} and Fig.~\ref{fig:franka_ghost} visualize
-this end state: \dkmbd{} leaves the arm short of the goal when the
-step limit expires, while every other method brings the tool to the
-target. The unicycle
-lies at the opposite end of the same spectrum: a parking maneuver drives the
-heading around the entire circle, leaving a near-zero mean gain, so the
-one-step open-loop gap is already $40\times$ ($0.082$ vs.\ $0.002$
-RMSE) and the closed loop diverges outright. Open-loop error
-therefore under-reports the model-class deficit in proportion to how
-benign the visited gain distribution is. A rollout surrogate for a
-sampling-based optimizer must consequently be judged in closed loop, on
-the coupled output rows, rather than by aggregate prediction scores.
+Two further conditions exclude the remaining explanations.
+Raising the linear lift from $r = 20$ to $r = 50$ gave the linear model more parameters and more rollout arithmetic than the bilinear model, and it still reached $1/50$ and stopped a median $0.239$\,m away.
+The bound \eqref{eq:bound} contains no lifted dimension, so a larger dictionary leaves the input sensitivity a single matrix.
+The unstructured network reached $41/50$ within $5$\,cm and $0/50$ within $1$\,cm, stopping a median $0.054$\,m away.
+Its input sensitivity depends on the state, so it can represent the input channel, and it did not identify that channel from the same data under the same objective.
+Capacity and expressiveness therefore leave the failure in place, and the input channel accounts for it.
 
-\subsection{Contribution of the Annealed Schedule}\label{subsec:exp_anneal}
+Table~\ref{tab:latency} reports the end-to-end planning time per receding-horizon control step.
+The timing includes all five annealing stages, candidate generation, rollout, cost evaluation, softmax weighting, weighted averaging, nominal-sequence updates and extraction of the executed command $u_0$.
+The oracle stepped the simulator at a median of $2598$\,ms and overran the $50$\,ms period at every one of its $1200$ control steps.
+The \bkmbd{} planner returned at a median of $11.0$\,ms with a worst case of $14.7$\,ms and missed no deadline over all $50$ trials.
+The oracle is batched over four times the threads of the learned rollouts, so the count of Sec.~\ref{subsec:mbd} accounts for the gap.
+One control step asks the rollout model for $NST = 60{,}000$ steps, which the $2$\,ms integrator turns into $1.5$ million physics substeps, and the $ST = 75$ batched steps among them lie on a serial chain.
+The five stages run in series, so the period admits each of them within a $10$\,ms share.
 
-\begin{table}[!t]
+\begin{table}[t]
 \centering
-\caption{Optimizer ablation on the kinematic arm: identical bilinear
-checkpoints, cost, and tube; only the update schedule varies ($5$ seeds
-$\times$ $7$ targets). (a) is the MPPI operating point; (d) is the full
-anneal used by \bkmbd{}.}
+\begin{threeparttable}
+\caption{End-to-end planning latency per receding-horizon control step over all trials.}
+\label{tab:latency}
+\footnotesize
+\begin{tabularx}{\linewidth}{l Y Y Y}
+\toprule
+Rollout model & Median [ms] & Worst [ms] & Misses \\
+\midrule
+\mbdtrue{} & $2598$ & $2745$ & $1200$ \\
+\dkmbd{} & $7.6$ & $12.5$ & $0$ \\
+\bkmbd{} (ours) & $11.0$ & $14.7$ & $\mathbf{0}$ \\
+\bottomrule
+\end{tabularx}
+\begin{tablenotes}[flushleft]\scriptsize
+\item Timings include all planner computations through the selected $u_0$; misses count control steps whose planning exceeded the $50$\,ms period.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+The bilinear rollout cost $11.0$\,ms against $7.6$\,ms for the linear one, so the configuration-dependent input map is paid for well below the $m+1$ products a bilinear step issues, which share the lifted state they multiply.
+
+\subsection{The Contribution of the Annealed Schedule}\label{subsec:exp_anneal}
+
+This study holds the rollout class at the bilinear model and takes the noise schedule as the free variable.
+Five schedules are compared at one total budget of $NS$ candidates per control step and at the temperature of Table~\ref{tab:hyper}, a single wide stage, a single narrow stage, $S$ wide stages, $S$ narrow stages, and the annealed schedule from wide to narrow.
+The wide and narrow levels are the endpoints of the schedule in Table~\ref{tab:hyper}, $\sigma = 1.2$ and $\sigma = 0.3$.
+The single-stage conditions draw $NS$ candidates at once, which by the third property of Sec.~\ref{subsec:mbd} is the MPPI update at the same budget and raises the sample count $S$-fold within one stage.
+The tolerance is set to $1$\,cm, where the schedules separate, and they run on identical seeds, goals and planner streams, so every comparison below is paired.
+The reaching task places no obstacle between the start and the goal, so the true cost supplies a control case in which the schedule should not need to overcome a multimodal true landscape.
+
+\begin{table}[t]
+\centering
+\begin{threeparttable}
+\caption{Schedules at an equal total sample budget, tolerance $1$\,cm. The lower block repeats two of them on a rollout that carries no model error.}
 \label{tab:anneal}
-\begin{tabular}{lcccc}
-\hline
-Schedule & Reach & Strict & Final err.\ [m] & ms \\
-\hline
-(a) $1{\times}800$, $\sigma{\equiv}1.2$ & $32/35$ & $25/35$ & $0.029 \pm 0.013$ & $18$ \\
-(b) $1{\times}4000$, $\sigma{\equiv}1.2$ & $32/35$ & $28/35$ & $0.028 \pm 0.008$ & $24$ \\
-(c) $5{\times}800$, $\sigma{\equiv}1.2$ & $34/35$ & $32/35$ & $0.027 \pm 0.017$ & $71$ \\
-(d) $5{\times}800$, $\sigma{:}\,1.2{\to}0.3$ & $\mathbf{35/35}$ & $\mathbf{35/35}$ & $\mathbf{0.024 {\pm} 0.001}$ & $69$ \\
-\hline
-\end{tabular}
+\footnotesize
+\begin{tabularx}{\linewidth}{l Y Y}
+\toprule
+Schedule & Reach $1$\,cm & Final\tnote{a} \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Learned bilinear rollout}} \\
+$1 \times NS$ wide (MPPI)\tnote{b} & $33/50$ & $0.010$ \\
+$1 \times NS$ narrow (MPPI)\tnote{b} & $15/50$ & $0.041$ \\
+$S \times N$ wide & $46/50$ & $0.012$ \\
+$S \times N$ narrow & $26/50$ & $0.045$ \\
+$S \times N$ anneal (ours) & $\mathbf{50/50}$ & $\mathbf{0.0097}$ \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{True-dynamics rollout}\tnote{c}} \\
+$S \times N$ narrow & $10/10$ & $0.009$ \\
+$S \times N$ anneal & $10/10$ & $0.007$ \\
+\bottomrule
+\end{tabularx}
+\begin{tablenotes}[flushleft]\scriptsize
+\item[a] Median tracking error [m] at the end of the budget, which unlike the counts is not bounded by the tolerance.
+\item[b] A single stage at a fixed noise level with $\eta = 1$ and no Langevin noise is the MPPI update at the same total sample budget.
+\item[c] The oracle carries no learned model, so it is run over the $10$ goals alone, on the planner stream of the block above.
+\end{tablenotes}
+\end{threeparttable}
 \end{table}
 
-The optimizer itself is the remaining free variable: does the annealed,
-multi-stage schedule of MBD contribute anything that a single-stage
-sampler---the MPPI operating point---would not achieve with the same
-surrogate?
-We answer on a third testbed on which the question is sharpest: a
-kinematic $7$-DOF arm reaching end-effector targets under
-joint-velocity inputs, with the same training recipe and protocol
-($5$ seeds $\times$ $7$ targets, success below $5$\,cm, strict below
-$2.5$\,cm). Its main comparison mirrors the FR3 pattern: the linear
-rollout fails outright ($0/35$, final error $0.73 \pm 0.40$\,m), while
-\bkmbd{} matches the oracle ($35/35$, $0.024$ vs.\ $0.023$\,m).
-Holding the trained bilinear checkpoints, task, cost, and tube fixed, we
-then vary \emph{only} the update schedule (Table~\ref{tab:anneal}).
+Table~\ref{tab:anneal} reports the outcome.
+The annealed schedule reached the $1$\,cm band on all $50$ trials and left the lowest tracking error at the end of the budget.
+The first question is whether annealing improves on a fixed noise level at the same total sample budget.
+Against the single-stage wide and narrow MPPI conditions, the annealed schedule gains $17$ and $35$ goals and loses none.
+The second question is whether the gain is merely the result of applying several serial updates.
+Against $S$ repeated wide stages and $S$ repeated narrow stages, annealing gains $4$ and $24$ goals.
+Multiple stages alone therefore do not account for the result; the changing noise scale is the separating factor.
 
-Strict success climbs monotonically as optimizer structure is added
-($25 \to 28 \to 32 \to 35$), but only the full anneal reaches $35/35$,
-at the same rollout budget as the fixed-noise five-stage variant (c).
-Five times more samples in a single stage (b) yield almost no
-improvement.
-Two mechanisms explain the ordering.
-First, with a learned surrogate the evaluated cost is
-$\hat J = J + e$, where the model-error term $e$ inherits fine-scale
-structure from error accumulation along rollouts. Each annealing stage
-descends a Gaussian-smoothed landscape in which the Fourier components
-of $e$ are attenuated by $e^{-\sigma^{2}\|\omega\|^{2}/2}$: early
-(large-$\sigma$) stages select the basin on a landscape whose spurious
-model-induced minima are suppressed, while late stages refine where
-local bias is small. A single fixed scale must serve both roles at
-once.
-Second, a fixed scale has a \emph{precision floor}: the weighted-mean
-estimator carries Monte-Carlo noise of order
-$\sigma/\sqrt{N_{\mathrm{eff}}}$ per axis
-($N_{\mathrm{eff}} = 1/\sum_k w_k^{2}$). In receding horizon the
-control is executed after a single update, so this noise enters the
-plant directly.
-The failure signature confirms the mechanism: seven of the eight
-fixed-noise failures across (a)--(c) are marginal stalls at
-$0.050$--$0.079$\,m against the $0.05$\,m threshold---never
-divergence---and annealing to $\sigma_S = 0.3$ removes every one.
-On the FR3 the same sweep leaves all four configurations at $35/35$
-strict ($17$--$64$\,ms per step), since its $2.5$\,cm tolerance lies
-above the floor there. The schedule therefore matters exactly when the
-required precision approaches the floor, which is the regime a
-surrogate-based planner enters whenever tolerances tighten.
+The third question is whether the gain is tied to learned-rollout error.
+Rolling the settled plan of each schedule through the model and through the true dynamics locates where each one stops.
+Under the narrow schedule the model puts the terminal error of that plan at $0.024$\,m while the plant delivers $0.053$\,m.
+The plan therefore looks locally favorable under the surrogate but substantially worse under the plant.
+The annealed schedule returns $0.020$\,m under the model against $0.015$\,m under the plant, so its settled plan lies in a region where the two evaluations agree more closely.
 
-\subsection{Rollout Cost and the Error Tube}\label{subsec:exp_cost}
+We then repeated two schedules on the true-dynamics rollout, over the same goals and the same planner stream.
+The schedules stop separating in success rate.
+The narrow schedule reaches the $1$\,cm band on $10/10$ goals as the annealed schedule does, against $26/50$ under the learned rollout, and its settled error moves from $0.045$ to $0.009$\,m.
+The narrow level settles quickly on either rollout, so what it loses under the learned one is not an inability of the sampler to refine a plan.
+It is sensitivity to the surrogate landscape.
 
-The planning-time columns quantify the cost decoupling claimed in
-Sec.~\ref{sec:intro}. A sampling planner spends
-$S \times N \times T$ model evaluations per control step. For \bkmbd{}
-each evaluation is one bilinear matrix--vector recursion in
-$\mathbb{R}^{r}$, so its per-step cost is set by the lifting dimension
-alone and is essentially constant across our testbeds ($64$--$95$\,ms).
-The oracle's cost instead tracks the complexity of the true dynamics,
-from $81$\,ms on the analytic unicycle to $4.1$\,s on the physics
-engine---two orders of magnitude the moment rollouts require a
-simulator.
+The wide level pays at the other end.
+Table~\ref{tab:step} reports the control displacement one control step produces and the tracking error it removes.
+The displacement grows by a factor of $3.8$ from $\sigma = 0.3$ to $\sigma = 1.2$ while the error removed falls, so the error removed per unit of control drops by a factor of six.
+This trend is consistent with the interpretation of Sec.~\ref{subsec:anneal}: larger noise produces broader and coarser updates, and stronger smoothing makes them less suited to final refinement.
+The wide schedules therefore come to rest at the edge of the band without settling inside it.
+No fixed level therefore meets both conditions at once.
+The annealed schedule executes at the displacement of the narrow level, $0.109$, retains an efficiency of $48.4$ against the $9.9$ of the wide level, and reaches on all $50$ goals.
+Its displacement coincides with the narrow level because the final stage produces the executed step, while the preceding wider stages have already exposed the iterate to a broader neighborhood of the current plan.
 
-The tube cost \eqref{eq:tubecost} acts as a soft trust region during the
-anneal, and Fig.~\ref{fig:tube_val} checks empirically that the
-quantile-fitted recursion still does the job it is asked to do. On
-$2{,}000$ held-out FR3 rollouts of $40$ steps ($80{,}000$ propagated
-steps, $2.7\times$ the planning horizon), the tube bounds the true
-lifted error in all but $21$ steps ($0.026\%$): the one-step
-$1-\delta = 99.9\%$ coverage of \eqref{eq:tubefit} transfers
-essentially unchanged through the propagation \eqref{eq:tube}. The
-bound is loose
-(median $e_k / \|\delta_k\| \approx 1.8 \times 10^{3}$ at the planning
-horizon), which is inherent to the norm recursion: with
-$\|A\|_2 \approx 1.00$ and $\sum_i \|B_i\|_2 \approx 1.24$ the growth
-factor $\bar m(u) + c_x$ exceeds one at every step. For \bkmbd{} this
-looseness is immaterial, because the tube enters as a \emph{relative}
-penalty that orders candidates by how far they leave the trusted
-region, rather than as a constraint. For the same reason, however, we
-regard the tube as empirical and attach no certificate semantics to
-it.
+\begin{table}[t]
+\centering
+\begin{threeparttable}
+\caption{Step size and step quality at a fixed noise level.}
+\label{tab:step}
+\footnotesize
+\begin{tabularx}{\linewidth}{l Y Y Y}
+\toprule
+$\sigma$ & $|\Delta U|$ & Error removed & Efficiency\tnote{a} \\
+\midrule
+$0.3$ & $0.109$ & $0.00665$ & $61.7$ \\
+$0.8$ & $0.292$ & $0.00571$ & $19.2$ \\
+$1.2$ & $0.418$ & $0.00409$ & $9.9$ \\
+anneal & $0.109$ & $0.00525$ & $48.4$ \\
+\bottomrule
+\end{tabularx}
+\begin{tablenotes}[flushleft]\scriptsize
+\item[a] Error removed per unit of control displacement, scaled by $10^{3}$. $|\Delta U|$ is the displacement of the plan over one control step and the error removed is the reduction in tracking error over that step, both averaged over control steps and trials.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Non-Convex Passage}\label{subsec:exp_window}
+
+This study holds the rollout model fixed and exchanges the optimizer.
+A wall carries a single circular aperture, the start lies on the near side, and the goals are sampled on the far side.
+The straight chord from the start to any goal crosses the wall below the aperture, so every reaching motion must route through the opening (Fig.~\ref{fig:window}).
+The drone flies this task over $50$ trials, and at each trial the two planners receive one trained bilinear model.
+\bkmbd{} absorbs the wall into the cost as a penalty, which Sec.~\ref{subsec:problem} leaves to the optimizer.
+The convexified controller instead relinearizes the keep-out set at every step and solves the resulting quadratic program over four sequential iterations along the nominal bilinear rollout~\cite{bruder2021bilinear}.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.92\linewidth]{figs/tube_validation.png}
-\caption{Empirical tube $e_k$ vs.\ the true lifted error on a
-representative held-out FR3 rollout, with the quantile-fitted constants
-used by the planner. Over $2{,}000 \times 40$ held-out steps the tube is
-violated in $0.026\%$ of steps, matching the fitted $99.9\%$ one-step
-coverage.}
-\label{fig:tube_val}
+\includegraphics[width=\linewidth]{figs/drone_window.png}
+\caption{Non-convex passage on the drone. The wall admits a single circular aperture. \bkmbd{} (left) threads the aperture and reaches the far-side goal, while the convexified bilinear controller (right) holds the near side.}
+\label{fig:window}
 \end{figure}
 
-The fitting of the tube, however, must respect the residual
-distribution. Fitting $(c_x, c_u)$ to the worst-case residual instead
-of the quantile bound \eqref{eq:tubefit} lets a handful of
-rest-to-motion transients, which a velocity-free lifted state cannot
-represent, inflate $c_x$ by $40\times$ (from $0.008$ to $0.32$) on the
-FR3. The propagated bound \eqref{eq:tube} then grows exponentially over
-the horizon, and the tube term---not the task cost---dominates the
-anneal. With no change to the model, \bkmbd{} is left oscillating
-$23$\,cm from a target that it otherwise reaches with $2.4$\,cm
-accuracy. The quantile fit ($\delta = 10^{-3}$) restores the intended
-regularizing role.
+\bkmbd{} reached the $1$\,cm tolerance on $50/50$ goals and the convexified controller on $10/50$, and both executed zero constraint violations.
+Every failure of either planner was a stall at a collision-free pose, so on identical goals the two separated on passage completion at equal safety.
 
-\subsection{Delimiting the Regime}\label{subsec:exp_regime}
+The structure of the free space accounts for the convexified controller.
+That space is the union of the two sides of the wall joined through the aperture, and a convex program retains one region containing the current nominal.
+Any such region that excludes the wall lies entirely on the near side.
+The far-side goal therefore falls outside the feasible set at every step, and the solve converges to the point of its own region closest to the goal.
+Two measurements match that account.
+The convexified controller settled a median of $0.030$\,m from the wall, which is the planning margin of its own keep-out set.
+The ten goals it did reach were the ten whose offset from the aperture axis was smallest, at most $0.148$\,m against a median of $0.291$\,m over all goals.
+\bkmbd{} scores whole candidate sequences by the cost they achieve, so a candidate routed through the aperture receives its weight from the outcome it produces.
 
-The bilinear rollout was motivated by first-order coupling. Two compact
-studies under the same training recipe locate the boundary of that
-motivation, in decreasing order of coupling strength.
-The first study considers a $3$D quadrotor in MuJoCo, the canonical
-platform of the linear-lift control literature, in which the coupling
-acts one integration below the tracked output: the thrust command must
-first tilt into an acceleration through the attitude before the
-position responds. At a single step the bilinear model is far more
-accurate even on the linear-velocity rows, since the one-step increment
-$\Delta v \propto T\,R e_3$ \emph{is} a state--input product, and it
-remains $2.3$--$2.4\times$ more accurate on the full feature vector at
-$H = 12$. Over the horizon, however, both classes are limited by the
-same attitude-prediction error, and the velocity-row gap settles at
-$1.5$--$1.8\times$ (three training seeds). The remaining gap reflects
-\emph{shared} prediction error rather than the directional
-input-channel bias of Sec.~\ref{subsec:exp_mechanism}, so a coupling
-hidden behind an integrator leaves the linear lift serviceable for
-position control. This is the very regime in which the Koopman control
-literature reported its linear-lift successes (Sec.~\ref{sec:intro}).
-The second study considers a torque-limited pendulum, whose input
-involves no configuration-dependent gain, so that
-Proposition~\ref{prop:const} imposes no structural penalty: inside the
-same annealed planner, the linear class with a $128$-neuron encoder
-swings up from hanging on $5/5$ planning seeds. The bilinear class
-contributes parameter economy here rather than feasibility. At the same
-lifted dimension $r = 8$, it matches with a $32$-neuron encoder the
-multi-step accuracy that the linear model needs $256$ neurons to reach
-(mean over three training seeds), and this difference carries into
-closed loop at tight budgets, where the width-$64$ linear model fails
-swing-up ($0/5$) while the bilinear one already succeeds ($4/5$).
-Together with
-Secs.~\ref{subsec:exp_unicycle}--\ref{subsec:exp_franka}, these studies
-delimit the claim of this paper: the bilinear rollout is required when
-the tracked output is first-order coupled, optional when the coupling
-acts behind an integrator, and an efficiency improvement when the
-coupling is absent.
+Two convexifications act on that controller at once, one of the dynamics and one of the free space.
+The two measurements above bear on the second.
+A controller limited by the frozen dynamics would fail by tracking a poor nominal, whereas this one stalls at the margin of its own keep-out set and succeeds on exactly the goals nearest the aperture axis.
+We therefore attribute the separation to the convexification of the free space, and remedies that partition that space into several convex regions remain open.
+
+\todo{Hardware study (\texttt{subsec:exp\_hw}) to follow.}
 
 %==============================================================
 \section{Conclusion}\label{sec:conclusion}
 %==============================================================
-This paper presented \bkmbd{}, which replaces the simulator rollouts of
-Model-Based Diffusion with a learned bilinear deep Koopman surrogate and
-a quantile-fitted model-error tube. The motivating representability
-argument states that the best constant input map is the mean of the
-configuration-dependent gain, leaving an irreducible error equal to its
-dispersion. Closed-loop experiments on an SE(2) unicycle, a kinematic
-$7$-DOF arm, and a physics-simulated Franka FR3 confirmed this argument
-inside a single planning stack. The full-lift linear rollout failed or
-stalled ($0/20$, $0/35$, and $7/35$ strict), while the bilinear rollout
-matched the true-dynamics oracle in all $90$ trials and reduced the FR3
-planning step from $4.1$\,s to $64$\,ms, within $1.3\times$ of the
-$50$\,ms control period. An optimizer ablation further showed that the
-annealed schedule itself supplies the final precision that a
-single-stage sampler cannot reach.
 
-Two limitations qualify these results. First, the tube constants are
-coverage estimates fitted from data, since certified bounds in the
-spirit of~\cite{safedmd2024} would require identification machinery
-that our deep lift does not yet provide. Second, all our tasks, while
-first-order coupled, are free of contact. Certified tube constants and
-contact-rich dynamics therefore remain open problems. Conversely, the
-linear lift remains a serviceable controller under the same planner
-wherever the input acts state-independently or only through an
-integrator (Sec.~\ref{subsec:exp_regime}), so the bilinear class is
-the repair demanded specifically by first-order coupled outputs.
-Deployment on the physical FR3 through the same joint-velocity
-interface is planned as the next step.
+\todo{To be written last.}
 
 \bibliographystyle{IEEEtran}
-\bibliography{IEEEabrv,references,ours}
+\bibliography{IEEEabrv,ours}
 
 \end{document}

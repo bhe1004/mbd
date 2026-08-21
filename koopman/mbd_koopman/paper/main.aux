@@ -17,121 +17,111 @@
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
 \citation{kappen2005,theodorou2010,williams2017mppi,williams2016aggressive}
-\citation{pan2024model,xue2025full}
+\citation{pan2024model}
 \citation{song2019generative,song2020score}
 \citation{pan2024model}
-\citation{koopman1931,mezic2005}
+\citation{xue2025full}
 \citation{williams2015edmd,proctor2016dmdc}
 \citation{lusch2018deep}
-\citation{korda2018mpc,strasser2026}
 \citation{mppidk2026}
 \citation{iacob2024}
-\citation{bruder2021bilinear,folkestad2021,mamakoukas2019}
-\citation{strasser2026,safedmd2024}
+\citation{korda2018mpc}
+\citation{bruder2021bilinear}
 \citation{janner2022planning,chi2025diffusion,carvalho2023motion}
 \@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{section.1}\protected@file@percent }
 \newlabel{sec:intro}{{I}{1}{Introduction}{section.1}{}}
 \citation{pan2024model}
+\citation{pan2024model}
+\citation{williams2017mppi}
 \@writefile{toc}{\contentsline {section}{\numberline {II}Preliminaries}{2}{section.2}\protected@file@percent }
 \newlabel{sec:prelim}{{II}{2}{Preliminaries}{section.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}Problem Formulation}{2}{subsection.2.1}\protected@file@percent }
-\newlabel{subsec:problem}{{\mbox  {II-A}}{2}{Problem Formulation}{subsection.2.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {II-A}Problem Formulation}{2}{subsection.2.1}\protected@file@percent }
+\newlabel{subsec:problem}{{II-A}{2}{Problem Formulation}{subsection.2.1}{}}
 \newlabel{eq:sys}{{1}{2}{Problem Formulation}{equation.2.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Notation and Symbols}}{2}{table.1}\protected@file@percent }
-\newlabel{tab:notation}{{I}{2}{Notation and Symbols}{table.1}{}}
-\newlabel{eq:cost}{{2}{2}{Problem Formulation}{equation.2.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}Model-Based Diffusion: A Review}{2}{subsection.2.2}\protected@file@percent }
-\newlabel{subsec:mbd}{{\mbox  {II-B}}{2}{Model-Based Diffusion: A Review}{subsection.2.2}{}}
-\newlabel{eq:target}{{3}{2}{Model-Based Diffusion: A Review}{equation.2.3}{}}
-\newlabel{eq:smooth}{{4}{2}{Model-Based Diffusion: A Review}{equation.2.4}{}}
-\newlabel{eq:tweedie}{{5}{2}{Model-Based Diffusion: A Review}{equation.2.5}{}}
-\newlabel{eq:weights}{{6}{2}{Model-Based Diffusion: A Review}{equation.2.6}{}}
+\newlabel{eq:resp}{{2}{2}{Problem Formulation}{equation.2.2}{}}
+\newlabel{eq:ocp}{{3}{2}{Problem Formulation}{equation.2.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {II-B}The Model-Based Diffusion Update}{2}{subsection.2.2}\protected@file@percent }
+\newlabel{subsec:mbd}{{II-B}{2}{The Model-Based Diffusion Update}{subsection.2.2}{}}
+\newlabel{eq:tweedie}{{4}{2}{The Model-Based Diffusion Update}{equation.2.4}{}}
+\newlabel{eq:weights}{{5}{2}{The Model-Based Diffusion Update}{equation.2.5}{}}
+\newlabel{eq:update}{{6}{2}{The Model-Based Diffusion Update}{equation.2.6}{}}
+\citation{koopman1931,mezic2005}
 \citation{iacob2024}
-\citation{mppidk2026,korda2018mpc}
-\newlabel{eq:update}{{7}{3}{Model-Based Diffusion: A Review}{equation.2.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {III}Proposed Method}{3}{section.3}\protected@file@percent }
-\newlabel{sec:method}{{III}{3}{Proposed Method}{section.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}Deep Koopman Lifting and Rollout Models}{3}{subsection.3.1}\protected@file@percent }
-\newlabel{subsec:models}{{\mbox  {III-A}}{3}{Deep Koopman Lifting and Rollout Models}{subsection.3.1}{}}
-\newlabel{eq:lift}{{8}{3}{Deep Koopman Lifting and Rollout Models}{equation.3.8}{}}
-\newlabel{eq:lin}{{9}{3}{Deep Koopman Lifting and Rollout Models}{equation.3.9}{}}
-\newlabel{eq:bil}{{10}{3}{Deep Koopman Lifting and Rollout Models}{equation.3.10}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Why a Constant Input Map Cannot Represent the Coupling}{3}{subsection.3.2}\protected@file@percent }
-\newlabel{subsec:representability}{{\mbox  {III-B}}{3}{Why a Constant Input Map Cannot Represent the Coupling}{subsection.3.2}{}}
-\newlabel{prop:const}{{1}{3}{Irreducible error of a constant gain}{proposition.1}{}}
-\newlabel{eq:meangain}{{11}{3}{Irreducible error of a constant gain}{equation.3.11}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}The Structure-Informed Alternative and Its Cost}{3}{subsection.3.3}\protected@file@percent }
-\newlabel{subsec:split}{{\mbox  {III-C}}{3}{The Structure-Informed Alternative and Its Cost}{subsection.3.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-D}}Multi-Step Training}{3}{subsection.3.4}\protected@file@percent }
-\newlabel{subsec:training}{{\mbox  {III-D}}{3}{Multi-Step Training}{subsection.3.4}{}}
-\newlabel{eq:loss}{{12}{3}{Multi-Step Training}{equation.3.12}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-E}}Model-Error Tube}{4}{subsection.3.5}\protected@file@percent }
-\newlabel{subsec:tube}{{\mbox  {III-E}}{4}{Model-Error Tube}{subsection.3.5}{}}
-\newlabel{eq:tubefit}{{13}{4}{Model-Error Tube}{equation.3.13}{}}
-\newlabel{eq:tube}{{14}{4}{Model-Error Tube}{equation.3.14}{}}
-\newlabel{eq:tubecost}{{15}{4}{Model-Error Tube}{equation.3.15}{}}
+\citation{iacob2024}
+\citation{bruder2021bilinear}
+\citation{kim2026bilinear}
+\@writefile{toc}{\contentsline {subsection}{\numberline {II-C}Linear and Bilinear Lifted Rollouts}{3}{subsection.2.3}\protected@file@percent }
+\newlabel{subsec:koopman}{{II-C}{3}{Linear and Bilinear Lifted Rollouts}{subsection.2.3}{}}
+\newlabel{eq:lin}{{7}{3}{Linear and Bilinear Lifted Rollouts}{equation.2.7}{}}
+\newlabel{eq:bil}{{8}{3}{Linear and Bilinear Lifted Rollouts}{equation.2.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {III}Bilinear Koopman Model-Based Diffusion}{3}{section.3}\protected@file@percent }
+\newlabel{sec:method}{{III}{3}{Bilinear Koopman Model-Based Diffusion}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-A}The Bilinear Rollout}{3}{subsection.3.1}\protected@file@percent }
+\newlabel{subsec:bilinear}{{III-A}{3}{The Bilinear Rollout}{subsection.3.1}{}}
+\newlabel{eq:lift}{{9}{3}{The Bilinear Rollout}{equation.3.9}{}}
+\newlabel{lem:linear}{{1}{3}{Irreducible input-channel error of a linear lift~\cite {kim2026bilinear}}{lemma.1}{}}
+\newlabel{eq:bound}{{10}{3}{Irreducible input-channel error of a linear lift~\cite {kim2026bilinear}}{equation.3.10}{}}
+\newlabel{eq:bilsens}{{11}{3}{The Bilinear Rollout}{equation.3.11}{}}
+\newlabel{eq:match}{{12}{3}{The Bilinear Rollout}{equation.3.12}{}}
+\citation{kim2026bilinear}
+\citation{lusch2018deep}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-B}Identification}{4}{subsection.3.2}\protected@file@percent }
+\newlabel{subsec:training}{{III-B}{4}{Identification}{subsection.3.2}{}}
+\newlabel{eq:loss}{{13}{4}{Identification}{equation.3.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {III-C}Annealing under a Learned Rollout}{4}{subsection.3.3}\protected@file@percent }
+\newlabel{subsec:anneal}{{III-C}{4}{Annealing under a Learned Rollout}{subsection.3.3}{}}
+\newlabel{eq:reach}{{14}{4}{Annealing under a Learned Rollout}{equation.3.14}{}}
+\newlabel{eq:step}{{15}{4}{Annealing under a Learned Rollout}{equation.3.15}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {IV}Experiments}{4}{section.4}\protected@file@percent }
 \newlabel{sec:exp}{{IV}{4}{Experiments}{section.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Protocol and Compared Methods}{4}{subsection.4.1}\protected@file@percent }
-\newlabel{subsec:setup}{{\mbox  {IV-A}}{4}{Protocol and Compared Methods}{subsection.4.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Unicycle Parking}{4}{subsection.4.2}\protected@file@percent }
-\newlabel{subsec:exp_unicycle}{{\mbox  {IV-B}}{4}{Unicycle Parking}{subsection.4.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Unicycle parking, 5 seeds $\times $ 4 cases.}}{5}{table.2}\protected@file@percent }
-\newlabel{tab:unicycle}{{II}{5}{Unicycle parking, 5 seeds $\times $ 4 cases}{table.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Unicycle parking trajectories for all methods over five seeds (gray disk: $0.3$\,m park radius). \textsc  {DK-MBD}{} (blue) veers away in every trial, while \textsc  {DK-MBD-split}{} (orange) and \textsc  {BK-MBD}{} (red) are indistinguishable from the oracle (green).}}{5}{figure.1}\protected@file@percent }
-\newlabel{fig:unicycle_traj}{{1}{5}{Unicycle parking trajectories for all methods over five seeds (gray disk: $0.3$\,m park radius). \dkmbd {} (blue) veers away in every trial, while \dksplit {} (orange) and \bkmbd {} (red) are indistinguishable from the oracle (green)}{figure.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Franka FR3 Reaching in Physics Simulation}{5}{subsection.4.3}\protected@file@percent }
-\newlabel{subsec:exp_franka}{{\mbox  {IV-C}}{5}{Franka FR3 Reaching in Physics Simulation}{subsection.4.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces FR3 reaching in MuJoCo, 5 seeds $\times $ 7 targets.}}{5}{table.3}\protected@file@percent }
-\newlabel{tab:franka}{{III}{5}{FR3 reaching in MuJoCo, 5 seeds $\times $ 7 targets}{table.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces Ruling out capacity and black-box explanations on the FR3: held-out open-loop TCP error (training seed $0$), rollout cost of an $800$-candidate batch, and closed-loop strict success under the identical planner ($5$ seeds $\times $ $7$ targets; linear row from Table\nobreakspace  {}\ref  {tab:franka}).}}{5}{table.4}\protected@file@percent }
-\newlabel{tab:baselines}{{IV}{5}{Ruling out capacity and black-box explanations on the FR3: held-out open-loop TCP error (training seed $0$), rollout cost of an $800$-candidate batch, and closed-loop strict success under the identical planner ($5$ seeds $\times $ $7$ targets; linear row from Table~\ref {tab:franka})}{table.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-D}}From Open-Loop Error to Closed-Loop Failure}{5}{subsection.4.4}\protected@file@percent }
-\newlabel{subsec:exp_mechanism}{{\mbox  {IV-D}}{5}{From Open-Loop Error to Closed-Loop Failure}{subsection.4.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Final FR3 configuration (bold kinematic chain) and TCP path (dotted) on the seventh reach target for each method. \textsc  {BK-MBD}{}, the oracle, and \textsc  {DK-MBD-split}{} bring the tool to the target ($\star $) in $19$--$26$ steps; \textsc  {DK-MBD}{} leaves the arm short of the goal at the step limit ($6.9$\,cm).}}{6}{figure.2}\protected@file@percent }
-\newlabel{fig:franka_pose}{{2}{6}{Final FR3 configuration (bold kinematic chain) and TCP path (dotted) on the seventh reach target for each method. \bkmbd {}, the oracle, and \dksplit {} bring the tool to the target ($\star $) in $19$--$26$ steps; \dkmbd {} leaves the arm short of the goal at the step limit ($6.9$\,cm)}{figure.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Executed closed-loop FR3 motions on a representative reach, rendered as afterimages (translucent snapshots along the trajectory). \textsc  {BK-MBD}{} (left) sweeps directly to the target (green sphere; TCP trace in red), whereas \textsc  {DK-MBD}{} (right) wanders across the workspace without settling on the target (blue trace).}}{6}{figure.3}\protected@file@percent }
-\newlabel{fig:franka_ghost}{{3}{6}{Executed closed-loop FR3 motions on a representative reach, rendered as afterimages (translucent snapshots along the trajectory). \bkmbd {} (left) sweeps directly to the target (green sphere; TCP trace in red), whereas \dkmbd {} (right) wanders across the workspace without settling on the target (blue trace)}{figure.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Open-loop prediction error vs.\ horizon for the trained FR3 checkpoints used in closed loop (mean $\pm $ std over five seeds, held-out data, log scale). The classes coincide on the joint rows (dashed); on the TCP rows (solid) the linear model is only $1.33\times $ worse at the planning horizon $H = 15$---yet reaches the strict tolerance in only $7/35$ closed-loop trials against $35/35$ for the bilinear model.}}{6}{figure.4}\protected@file@percent }
-\newlabel{fig:pred_horizon}{{4}{6}{Open-loop prediction error vs.\ horizon for the trained FR3 checkpoints used in closed loop (mean $\pm $ std over five seeds, held-out data, log scale). The classes coincide on the joint rows (dashed); on the TCP rows (solid) the linear model is only $1.33\times $ worse at the planning horizon $H = 15$---yet reaches the strict tolerance in only $7/35$ closed-loop trials against $35/35$ for the bilinear model}{figure.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Optimizer ablation on the kinematic arm: identical bilinear checkpoints, cost, and tube; only the update schedule varies ($5$ seeds $\times $ $7$ targets). (a) is the MPPI operating point; (d) is the full anneal used by \textsc  {BK-MBD}{}.}}{6}{table.5}\protected@file@percent }
-\newlabel{tab:anneal}{{V}{6}{Optimizer ablation on the kinematic arm: identical bilinear checkpoints, cost, and tube; only the update schedule varies ($5$ seeds $\times $ $7$ targets). (a) is the MPPI operating point; (d) is the full anneal used by \bkmbd {}}{table.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-E}}Contribution of the Annealed Schedule}{6}{subsection.4.5}\protected@file@percent }
-\newlabel{subsec:exp_anneal}{{\mbox  {IV-E}}{6}{Contribution of the Annealed Schedule}{subsection.4.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-F}}Rollout Cost and the Error Tube}{7}{subsection.4.6}\protected@file@percent }
-\newlabel{subsec:exp_cost}{{\mbox  {IV-F}}{7}{Rollout Cost and the Error Tube}{subsection.4.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Empirical tube $e_k$ vs.\ the true lifted error on a representative held-out FR3 rollout, with the quantile-fitted constants used by the planner. Over $2{,}000 \times 40$ held-out steps the tube is violated in $0.026\%$ of steps, matching the fitted $99.9\%$ one-step coverage.}}{7}{figure.5}\protected@file@percent }
-\newlabel{fig:tube_val}{{5}{7}{Empirical tube $e_k$ vs.\ the true lifted error on a representative held-out FR3 rollout, with the quantile-fitted constants used by the planner. Over $2{,}000 \times 40$ held-out steps the tube is violated in $0.026\%$ of steps, matching the fitted $99.9\%$ one-step coverage}{figure.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-G}}Delimiting the Regime}{7}{subsection.4.7}\protected@file@percent }
-\newlabel{subsec:exp_regime}{{\mbox  {IV-G}}{7}{Delimiting the Regime}{subsection.4.7}{}}
-\citation{safedmd2024}
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Hyperparameters.\relax }}{5}{table.caption.2}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{tab:hyper}{{I}{5}{Hyperparameters.\relax }{table.caption.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-A}Setup}{5}{subsection.4.1}\protected@file@percent }
+\newlabel{subsec:setup}{{IV-A}{5}{Setup}{subsection.4.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Reaching accuracy under an identical planner.\relax }}{5}{table.caption.4}\protected@file@percent }
+\newlabel{tab:class}{{II}{5}{Reaching accuracy under an identical planner.\relax }{table.caption.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-B}Rollout Class and Planning Latency}{5}{subsection.4.2}\protected@file@percent }
+\newlabel{subsec:exp_class}{{IV-B}{5}{Rollout Class and Planning Latency}{subsection.4.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Executed tool paths on one goal, one of the trials Table\nobreakspace  {}\ref  {tab:class} counts. The four runs share the planner, the training seed and the random stream, so they differ in the rollout model alone. \textsc  {DK-MBD}{} climbs away from the goal and stalls $0.117$\,m from it, while \textsc  {DK-MBD-split}{} ($0.009$\,m), \textsc  {BK-MBD}{} ($0.016$\,m) and the oracle \textsc  {MBD-true}{} ($0.007$\,m) reach the $1$\,cm band.\relax }}{6}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:paths}{{1}{6}{Executed tool paths on one goal, one of the trials Table~\ref {tab:class} counts. The four runs share the planner, the training seed and the random stream, so they differ in the rollout model alone. \dkmbd {} climbs away from the goal and stalls $0.117$\,m from it, while \dksplit {} ($0.009$\,m), \bkmbd {} ($0.016$\,m) and the oracle \mbdtrue {} ($0.007$\,m) reach the $1$\,cm band.\relax }{figure.caption.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces End-to-end planning latency per receding-horizon control step over all trials.\relax }}{6}{table.caption.7}\protected@file@percent }
+\newlabel{tab:latency}{{III}{6}{End-to-end planning latency per receding-horizon control step over all trials.\relax }{table.caption.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-C}The Contribution of the Annealed Schedule}{6}{subsection.4.3}\protected@file@percent }
+\newlabel{subsec:exp_anneal}{{IV-C}{6}{The Contribution of the Annealed Schedule}{subsection.4.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces Schedules at an equal total sample budget, tolerance $1$\,cm. The lower block repeats two of them on a rollout that carries no model error.\relax }}{6}{table.caption.9}\protected@file@percent }
+\newlabel{tab:anneal}{{IV}{6}{Schedules at an equal total sample budget, tolerance $1$\,cm. The lower block repeats two of them on a rollout that carries no model error.\relax }{table.caption.9}{}}
+\citation{bruder2021bilinear}
 \bibstyle{IEEEtran}
-\bibdata{IEEEabrv,references,ours}
+\bibdata{IEEEabrv,ours}
 \bibcite{kappen2005}{1}
 \bibcite{theodorou2010}{2}
 \bibcite{williams2017mppi}{3}
 \bibcite{williams2016aggressive}{4}
 \bibcite{pan2024model}{5}
-\bibcite{xue2025full}{6}
-\bibcite{song2019generative}{7}
-\bibcite{song2020score}{8}
-\bibcite{koopman1931}{9}
-\bibcite{mezic2005}{10}
-\bibcite{williams2015edmd}{11}
-\bibcite{proctor2016dmdc}{12}
-\bibcite{lusch2018deep}{13}
+\bibcite{song2019generative}{6}
+\bibcite{song2020score}{7}
+\bibcite{xue2025full}{8}
+\@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Step size and step quality at a fixed noise level.\relax }}{7}{table.caption.11}\protected@file@percent }
+\newlabel{tab:step}{{V}{7}{Step size and step quality at a fixed noise level.\relax }{table.caption.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-D}Non-Convex Passage}{7}{subsection.4.4}\protected@file@percent }
+\newlabel{subsec:exp_window}{{IV-D}{7}{Non-Convex Passage}{subsection.4.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Non-convex passage on the drone. The wall admits a single circular aperture. \textsc  {BK-MBD}{} (left) threads the aperture and reaches the far-side goal, while the convexified bilinear controller (right) holds the near side.\relax }}{7}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:window}{{2}{7}{Non-convex passage on the drone. The wall admits a single circular aperture. \bkmbd {} (left) threads the aperture and reaches the far-side goal, while the convexified bilinear controller (right) holds the near side.\relax }{figure.caption.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Conclusion}{7}{section.5}\protected@file@percent }
+\newlabel{sec:conclusion}{{V}{7}{Conclusion}{section.5}{}}
+\@writefile{toc}{\contentsline {section}{References}{7}{section*.13}\protected@file@percent }
+\bibcite{williams2015edmd}{9}
+\bibcite{proctor2016dmdc}{10}
+\bibcite{lusch2018deep}{11}
+\bibcite{mppidk2026}{12}
+\bibcite{iacob2024}{13}
 \bibcite{korda2018mpc}{14}
-\bibcite{strasser2026}{15}
-\bibcite{mppidk2026}{16}
-\bibcite{iacob2024}{17}
-\bibcite{bruder2021bilinear}{18}
-\bibcite{folkestad2021}{19}
-\bibcite{mamakoukas2019}{20}
-\bibcite{safedmd2024}{21}
-\bibcite{janner2022planning}{22}
-\bibcite{chi2025diffusion}{23}
-\bibcite{carvalho2023motion}{24}
-\@writefile{toc}{\contentsline {section}{\numberline {V}Conclusion}{8}{section.5}\protected@file@percent }
-\newlabel{sec:conclusion}{{V}{8}{Conclusion}{section.5}{}}
-\@writefile{toc}{\contentsline {section}{References}{8}{section*.1}\protected@file@percent }
+\bibcite{bruder2021bilinear}{15}
+\bibcite{janner2022planning}{16}
+\bibcite{chi2025diffusion}{17}
+\bibcite{carvalho2023motion}{18}
+\bibcite{koopman1931}{19}
+\bibcite{mezic2005}{20}
+\bibcite{kim2026bilinear}{21}
 \gdef \@abspage@last{8}

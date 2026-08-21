@@ -1,0 +1,610 @@
+<mujoco model="panda scene">
+  <include file="panda.xml"/>
+  <include file="panda_goal_ghost.xml"/>
+  <include file="panda_prior_ghosts.xml"/>
+  <include file="../../object/bookshelf.xml"/>
+  <!-- <include file="../../object/table.xml"/>
+  <include file="../../object/box.xml"/>
+  <include file="../../Target_Basket_Medium/model.xml"/> -->
+  <statistic center="0.3 0 0.4" extent="1"/>
+
+  <visual>
+    <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <global azimuth="120" elevation="-20"/>
+  </visual>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/>
+    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3"
+      markrgb="0.8 0.8 0.8" width="300" height="300"/>
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
+    <mesh name="tri_prism_obstacle_mesh" file="tri_prism_obstacle.obj"/>
+    <mesh name="diamond_prism_obstacle_mesh" file="diamond_prism_obstacle.obj"/>
+  </asset>
+
+  <worldbody>
+    <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
+    <geom name="floor" pos="0 0 -0.72" size="0 0 0.05" type="plane" material="groundplane"/>
+    <body name="start_marker" mocap="true">
+      <geom name="start_marker_geom" type="sphere" size="0.022" rgba="0.1 0.9 0.2 0.55" contype="0" conaffinity="0"/>
+    </body>
+    <body name="goal_marker" mocap="true">
+      <geom name="goal_marker_geom" type="sphere" size="0.028" rgba="0.95 0.15 0.15 0.7" contype="0" conaffinity="0"/>
+    </body>
+    <body name="desired_marker" mocap="true">
+      <geom name="desired_marker_geom" type="sphere" size="0.016" rgba="1 0.75 0.15 0.8" contype="0" conaffinity="0"/>
+    </body>
+    <body name="chunk_marker_00" mocap="true"><geom name="chunk_marker_00_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.30" contype="0" conaffinity="0"/></body>
+    <body name="chunk_marker_01" mocap="true"><geom name="chunk_marker_01_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.32" contype="0" conaffinity="0"/></body>
+    <body name="chunk_marker_02" mocap="true"><geom name="chunk_marker_02_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.34" contype="0" conaffinity="0"/></body>
+    <body name="chunk_marker_03" mocap="true"><geom name="chunk_marker_03_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.36" contype="0" conaffinity="0"/></body>
+    <body name="chunk_marker_04" mocap="true"><geom name="chunk_marker_04_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.38" contype="0" conaffinity="0"/></body>
+    <body name="chunk_marker_05" mocap="true"><geom name="chunk_marker_05_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.40" contype="0" conaffinity="0"/></body>
+    <body name="chunk_marker_06" mocap="true"><geom name="chunk_marker_06_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.42" contype="0" conaffinity="0"/></body>
+    <body name="chunk_marker_07" mocap="true"><geom name="chunk_marker_07_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.44" contype="0" conaffinity="0"/></body>
+    <body name="chunk_marker_08" mocap="true"><geom name="chunk_marker_08_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.46" contype="0" conaffinity="0"/></body>
+    <body name="chunk_marker_09" mocap="true"><geom name="chunk_marker_09_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.48" contype="0" conaffinity="0"/></body>
+    <body name="chunk_marker_10" mocap="true"><geom name="chunk_marker_10_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.50" contype="0" conaffinity="0"/></body>
+    <body name="chunk_marker_11" mocap="true"><geom name="chunk_marker_11_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.52" contype="0" conaffinity="0"/></body>
+    <body name="chunk_marker_12" mocap="true"><geom name="chunk_marker_12_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.54" contype="0" conaffinity="0"/></body>
+    <body name="chunk_marker_13" mocap="true"><geom name="chunk_marker_13_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.56" contype="0" conaffinity="0"/></body>
+    <body name="chunk_marker_14" mocap="true"><geom name="chunk_marker_14_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.58" contype="0" conaffinity="0"/></body>
+    <body name="chunk_marker_15" mocap="true"><geom name="chunk_marker_15_geom" type="sphere" size="0.008" rgba="1 0.9 0.2 0.60" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_00" mocap="true"><geom name="guidance_prior_00_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.24" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_01" mocap="true"><geom name="guidance_prior_01_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.26" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_02" mocap="true"><geom name="guidance_prior_02_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.28" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_03" mocap="true"><geom name="guidance_prior_03_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.30" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_04" mocap="true"><geom name="guidance_prior_04_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.32" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_05" mocap="true"><geom name="guidance_prior_05_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.34" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_06" mocap="true"><geom name="guidance_prior_06_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.36" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_07" mocap="true"><geom name="guidance_prior_07_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.38" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_08" mocap="true"><geom name="guidance_prior_08_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.40" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_09" mocap="true"><geom name="guidance_prior_09_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.42" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_10" mocap="true"><geom name="guidance_prior_10_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.44" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_11" mocap="true"><geom name="guidance_prior_11_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.46" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_12" mocap="true"><geom name="guidance_prior_12_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.48" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_13" mocap="true"><geom name="guidance_prior_13_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.50" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_14" mocap="true"><geom name="guidance_prior_14_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.52" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_15" mocap="true"><geom name="guidance_prior_15_geom" type="sphere" size="0.0065" rgba="1.00 0.25 0.25 0.54" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_00" mocap="true"><geom name="guidance_best_00_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.24" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_01" mocap="true"><geom name="guidance_best_01_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.26" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_02" mocap="true"><geom name="guidance_best_02_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.28" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_03" mocap="true"><geom name="guidance_best_03_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.30" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_04" mocap="true"><geom name="guidance_best_04_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.32" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_05" mocap="true"><geom name="guidance_best_05_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.34" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_06" mocap="true"><geom name="guidance_best_06_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.36" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_07" mocap="true"><geom name="guidance_best_07_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.38" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_08" mocap="true"><geom name="guidance_best_08_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.40" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_09" mocap="true"><geom name="guidance_best_09_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.42" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_10" mocap="true"><geom name="guidance_best_10_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.44" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_11" mocap="true"><geom name="guidance_best_11_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.46" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_12" mocap="true"><geom name="guidance_best_12_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.48" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_13" mocap="true"><geom name="guidance_best_13_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.50" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_14" mocap="true"><geom name="guidance_best_14_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.52" contype="0" conaffinity="0"/></body>
+    <body name="guidance_best_15" mocap="true"><geom name="guidance_best_15_geom" type="sphere" size="0.0065" rgba="1.00 0.35 0.25 0.54" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_00" mocap="true"><geom name="guidance_posterior_00_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.24" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_01" mocap="true"><geom name="guidance_posterior_01_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.26" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_02" mocap="true"><geom name="guidance_posterior_02_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.28" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_03" mocap="true"><geom name="guidance_posterior_03_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.30" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_04" mocap="true"><geom name="guidance_posterior_04_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.32" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_05" mocap="true"><geom name="guidance_posterior_05_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.34" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_06" mocap="true"><geom name="guidance_posterior_06_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.36" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_07" mocap="true"><geom name="guidance_posterior_07_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.38" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_08" mocap="true"><geom name="guidance_posterior_08_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.40" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_09" mocap="true"><geom name="guidance_posterior_09_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.42" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_10" mocap="true"><geom name="guidance_posterior_10_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.44" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_11" mocap="true"><geom name="guidance_posterior_11_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.46" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_12" mocap="true"><geom name="guidance_posterior_12_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.48" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_13" mocap="true"><geom name="guidance_posterior_13_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.50" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_14" mocap="true"><geom name="guidance_posterior_14_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.52" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_15" mocap="true"><geom name="guidance_posterior_15_geom" type="sphere" size="0.0065" rgba="0.20 0.55 1.00 0.54" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_00" mocap="true"><geom name="guidance_sample_00_00_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_01" mocap="true"><geom name="guidance_sample_00_01_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_02" mocap="true"><geom name="guidance_sample_00_02_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_03" mocap="true"><geom name="guidance_sample_00_03_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_04" mocap="true"><geom name="guidance_sample_00_04_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_05" mocap="true"><geom name="guidance_sample_00_05_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_06" mocap="true"><geom name="guidance_sample_00_06_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_07" mocap="true"><geom name="guidance_sample_00_07_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_08" mocap="true"><geom name="guidance_sample_00_08_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_09" mocap="true"><geom name="guidance_sample_00_09_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_10" mocap="true"><geom name="guidance_sample_00_10_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_11" mocap="true"><geom name="guidance_sample_00_11_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_12" mocap="true"><geom name="guidance_sample_00_12_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_13" mocap="true"><geom name="guidance_sample_00_13_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_14" mocap="true"><geom name="guidance_sample_00_14_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_00_15" mocap="true"><geom name="guidance_sample_00_15_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_00" mocap="true"><geom name="guidance_sample_01_00_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_01" mocap="true"><geom name="guidance_sample_01_01_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_02" mocap="true"><geom name="guidance_sample_01_02_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_03" mocap="true"><geom name="guidance_sample_01_03_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_04" mocap="true"><geom name="guidance_sample_01_04_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_05" mocap="true"><geom name="guidance_sample_01_05_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_06" mocap="true"><geom name="guidance_sample_01_06_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_07" mocap="true"><geom name="guidance_sample_01_07_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_08" mocap="true"><geom name="guidance_sample_01_08_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_09" mocap="true"><geom name="guidance_sample_01_09_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_10" mocap="true"><geom name="guidance_sample_01_10_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_11" mocap="true"><geom name="guidance_sample_01_11_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_12" mocap="true"><geom name="guidance_sample_01_12_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_13" mocap="true"><geom name="guidance_sample_01_13_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_14" mocap="true"><geom name="guidance_sample_01_14_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_01_15" mocap="true"><geom name="guidance_sample_01_15_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_00" mocap="true"><geom name="guidance_sample_02_00_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_01" mocap="true"><geom name="guidance_sample_02_01_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_02" mocap="true"><geom name="guidance_sample_02_02_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_03" mocap="true"><geom name="guidance_sample_02_03_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_04" mocap="true"><geom name="guidance_sample_02_04_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_05" mocap="true"><geom name="guidance_sample_02_05_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_06" mocap="true"><geom name="guidance_sample_02_06_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_07" mocap="true"><geom name="guidance_sample_02_07_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_08" mocap="true"><geom name="guidance_sample_02_08_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_09" mocap="true"><geom name="guidance_sample_02_09_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_10" mocap="true"><geom name="guidance_sample_02_10_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_11" mocap="true"><geom name="guidance_sample_02_11_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_12" mocap="true"><geom name="guidance_sample_02_12_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_13" mocap="true"><geom name="guidance_sample_02_13_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_14" mocap="true"><geom name="guidance_sample_02_14_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_02_15" mocap="true"><geom name="guidance_sample_02_15_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_00" mocap="true"><geom name="guidance_sample_03_00_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_01" mocap="true"><geom name="guidance_sample_03_01_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_02" mocap="true"><geom name="guidance_sample_03_02_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_03" mocap="true"><geom name="guidance_sample_03_03_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_04" mocap="true"><geom name="guidance_sample_03_04_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_05" mocap="true"><geom name="guidance_sample_03_05_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_06" mocap="true"><geom name="guidance_sample_03_06_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_07" mocap="true"><geom name="guidance_sample_03_07_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_08" mocap="true"><geom name="guidance_sample_03_08_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_09" mocap="true"><geom name="guidance_sample_03_09_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_10" mocap="true"><geom name="guidance_sample_03_10_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_11" mocap="true"><geom name="guidance_sample_03_11_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_12" mocap="true"><geom name="guidance_sample_03_12_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_13" mocap="true"><geom name="guidance_sample_03_13_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_14" mocap="true"><geom name="guidance_sample_03_14_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_03_15" mocap="true"><geom name="guidance_sample_03_15_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_00" mocap="true"><geom name="guidance_sample_04_00_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_01" mocap="true"><geom name="guidance_sample_04_01_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_02" mocap="true"><geom name="guidance_sample_04_02_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_03" mocap="true"><geom name="guidance_sample_04_03_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_04" mocap="true"><geom name="guidance_sample_04_04_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_05" mocap="true"><geom name="guidance_sample_04_05_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_06" mocap="true"><geom name="guidance_sample_04_06_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_07" mocap="true"><geom name="guidance_sample_04_07_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_08" mocap="true"><geom name="guidance_sample_04_08_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_09" mocap="true"><geom name="guidance_sample_04_09_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_10" mocap="true"><geom name="guidance_sample_04_10_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_11" mocap="true"><geom name="guidance_sample_04_11_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_12" mocap="true"><geom name="guidance_sample_04_12_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_13" mocap="true"><geom name="guidance_sample_04_13_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_14" mocap="true"><geom name="guidance_sample_04_14_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_04_15" mocap="true"><geom name="guidance_sample_04_15_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_00" mocap="true"><geom name="guidance_sample_05_00_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_01" mocap="true"><geom name="guidance_sample_05_01_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_02" mocap="true"><geom name="guidance_sample_05_02_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_03" mocap="true"><geom name="guidance_sample_05_03_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_04" mocap="true"><geom name="guidance_sample_05_04_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_05" mocap="true"><geom name="guidance_sample_05_05_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_06" mocap="true"><geom name="guidance_sample_05_06_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_07" mocap="true"><geom name="guidance_sample_05_07_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_08" mocap="true"><geom name="guidance_sample_05_08_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_09" mocap="true"><geom name="guidance_sample_05_09_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_10" mocap="true"><geom name="guidance_sample_05_10_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_11" mocap="true"><geom name="guidance_sample_05_11_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_12" mocap="true"><geom name="guidance_sample_05_12_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_13" mocap="true"><geom name="guidance_sample_05_13_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_14" mocap="true"><geom name="guidance_sample_05_14_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_05_15" mocap="true"><geom name="guidance_sample_05_15_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_00" mocap="true"><geom name="guidance_sample_06_00_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_01" mocap="true"><geom name="guidance_sample_06_01_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_02" mocap="true"><geom name="guidance_sample_06_02_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_03" mocap="true"><geom name="guidance_sample_06_03_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_04" mocap="true"><geom name="guidance_sample_06_04_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_05" mocap="true"><geom name="guidance_sample_06_05_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_06" mocap="true"><geom name="guidance_sample_06_06_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_07" mocap="true"><geom name="guidance_sample_06_07_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_08" mocap="true"><geom name="guidance_sample_06_08_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_09" mocap="true"><geom name="guidance_sample_06_09_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_10" mocap="true"><geom name="guidance_sample_06_10_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_11" mocap="true"><geom name="guidance_sample_06_11_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_12" mocap="true"><geom name="guidance_sample_06_12_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_13" mocap="true"><geom name="guidance_sample_06_13_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_14" mocap="true"><geom name="guidance_sample_06_14_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_06_15" mocap="true"><geom name="guidance_sample_06_15_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_00" mocap="true"><geom name="guidance_sample_07_00_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_01" mocap="true"><geom name="guidance_sample_07_01_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_02" mocap="true"><geom name="guidance_sample_07_02_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_03" mocap="true"><geom name="guidance_sample_07_03_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_04" mocap="true"><geom name="guidance_sample_07_04_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_05" mocap="true"><geom name="guidance_sample_07_05_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_06" mocap="true"><geom name="guidance_sample_07_06_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_07" mocap="true"><geom name="guidance_sample_07_07_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_08" mocap="true"><geom name="guidance_sample_07_08_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_09" mocap="true"><geom name="guidance_sample_07_09_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_10" mocap="true"><geom name="guidance_sample_07_10_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_11" mocap="true"><geom name="guidance_sample_07_11_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_12" mocap="true"><geom name="guidance_sample_07_12_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_13" mocap="true"><geom name="guidance_sample_07_13_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_14" mocap="true"><geom name="guidance_sample_07_14_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_07_15" mocap="true"><geom name="guidance_sample_07_15_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_00" mocap="true"><geom name="guidance_sample_08_00_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_01" mocap="true"><geom name="guidance_sample_08_01_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_02" mocap="true"><geom name="guidance_sample_08_02_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_03" mocap="true"><geom name="guidance_sample_08_03_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_04" mocap="true"><geom name="guidance_sample_08_04_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_05" mocap="true"><geom name="guidance_sample_08_05_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_06" mocap="true"><geom name="guidance_sample_08_06_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_07" mocap="true"><geom name="guidance_sample_08_07_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_08" mocap="true"><geom name="guidance_sample_08_08_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_09" mocap="true"><geom name="guidance_sample_08_09_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_10" mocap="true"><geom name="guidance_sample_08_10_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_11" mocap="true"><geom name="guidance_sample_08_11_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_12" mocap="true"><geom name="guidance_sample_08_12_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_13" mocap="true"><geom name="guidance_sample_08_13_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_14" mocap="true"><geom name="guidance_sample_08_14_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_08_15" mocap="true"><geom name="guidance_sample_08_15_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_00" mocap="true"><geom name="guidance_sample_09_00_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_01" mocap="true"><geom name="guidance_sample_09_01_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_02" mocap="true"><geom name="guidance_sample_09_02_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_03" mocap="true"><geom name="guidance_sample_09_03_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_04" mocap="true"><geom name="guidance_sample_09_04_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_05" mocap="true"><geom name="guidance_sample_09_05_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_06" mocap="true"><geom name="guidance_sample_09_06_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_07" mocap="true"><geom name="guidance_sample_09_07_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_08" mocap="true"><geom name="guidance_sample_09_08_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_09" mocap="true"><geom name="guidance_sample_09_09_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_10" mocap="true"><geom name="guidance_sample_09_10_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_11" mocap="true"><geom name="guidance_sample_09_11_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_12" mocap="true"><geom name="guidance_sample_09_12_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_13" mocap="true"><geom name="guidance_sample_09_13_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_14" mocap="true"><geom name="guidance_sample_09_14_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_09_15" mocap="true"><geom name="guidance_sample_09_15_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_00" mocap="true"><geom name="guidance_sample_10_00_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_01" mocap="true"><geom name="guidance_sample_10_01_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_02" mocap="true"><geom name="guidance_sample_10_02_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_03" mocap="true"><geom name="guidance_sample_10_03_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_04" mocap="true"><geom name="guidance_sample_10_04_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_05" mocap="true"><geom name="guidance_sample_10_05_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_06" mocap="true"><geom name="guidance_sample_10_06_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_07" mocap="true"><geom name="guidance_sample_10_07_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_08" mocap="true"><geom name="guidance_sample_10_08_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_09" mocap="true"><geom name="guidance_sample_10_09_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_10" mocap="true"><geom name="guidance_sample_10_10_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_11" mocap="true"><geom name="guidance_sample_10_11_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_12" mocap="true"><geom name="guidance_sample_10_12_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_13" mocap="true"><geom name="guidance_sample_10_13_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_14" mocap="true"><geom name="guidance_sample_10_14_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_10_15" mocap="true"><geom name="guidance_sample_10_15_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_00" mocap="true"><geom name="guidance_sample_11_00_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_01" mocap="true"><geom name="guidance_sample_11_01_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_02" mocap="true"><geom name="guidance_sample_11_02_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_03" mocap="true"><geom name="guidance_sample_11_03_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_04" mocap="true"><geom name="guidance_sample_11_04_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_05" mocap="true"><geom name="guidance_sample_11_05_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_06" mocap="true"><geom name="guidance_sample_11_06_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_07" mocap="true"><geom name="guidance_sample_11_07_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_08" mocap="true"><geom name="guidance_sample_11_08_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_09" mocap="true"><geom name="guidance_sample_11_09_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_10" mocap="true"><geom name="guidance_sample_11_10_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_11" mocap="true"><geom name="guidance_sample_11_11_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_12" mocap="true"><geom name="guidance_sample_11_12_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_13" mocap="true"><geom name="guidance_sample_11_13_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_14" mocap="true"><geom name="guidance_sample_11_14_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_11_15" mocap="true"><geom name="guidance_sample_11_15_geom" type="sphere" size="0.0048" rgba="0.72 0.72 0.72 0.12" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_00" mocap="true"><geom name="guidance_prior_approx_00_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.16" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_01" mocap="true"><geom name="guidance_prior_approx_01_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.17" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_02" mocap="true"><geom name="guidance_prior_approx_02_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.19" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_03" mocap="true"><geom name="guidance_prior_approx_03_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.21" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_04" mocap="true"><geom name="guidance_prior_approx_04_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.22" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_05" mocap="true"><geom name="guidance_prior_approx_05_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.23" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_06" mocap="true"><geom name="guidance_prior_approx_06_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.25" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_07" mocap="true"><geom name="guidance_prior_approx_07_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.27" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_08" mocap="true"><geom name="guidance_prior_approx_08_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.28" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_09" mocap="true"><geom name="guidance_prior_approx_09_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.30" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_10" mocap="true"><geom name="guidance_prior_approx_10_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.31" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_11" mocap="true"><geom name="guidance_prior_approx_11_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.32" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_12" mocap="true"><geom name="guidance_prior_approx_12_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.34" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_13" mocap="true"><geom name="guidance_prior_approx_13_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.35" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_14" mocap="true"><geom name="guidance_prior_approx_14_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.37" contype="0" conaffinity="0"/></body>
+    <body name="guidance_prior_approx_15" mocap="true"><geom name="guidance_prior_approx_15_geom" type="sphere" size="0.0056" rgba="1.00 0.62 0.62 0.39" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_00" mocap="true"><geom name="guidance_posterior_approx_00_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.16" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_01" mocap="true"><geom name="guidance_posterior_approx_01_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.17" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_02" mocap="true"><geom name="guidance_posterior_approx_02_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.19" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_03" mocap="true"><geom name="guidance_posterior_approx_03_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.21" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_04" mocap="true"><geom name="guidance_posterior_approx_04_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.22" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_05" mocap="true"><geom name="guidance_posterior_approx_05_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.23" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_06" mocap="true"><geom name="guidance_posterior_approx_06_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.25" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_07" mocap="true"><geom name="guidance_posterior_approx_07_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.27" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_08" mocap="true"><geom name="guidance_posterior_approx_08_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.28" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_09" mocap="true"><geom name="guidance_posterior_approx_09_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.30" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_10" mocap="true"><geom name="guidance_posterior_approx_10_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.31" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_11" mocap="true"><geom name="guidance_posterior_approx_11_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.32" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_12" mocap="true"><geom name="guidance_posterior_approx_12_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.34" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_13" mocap="true"><geom name="guidance_posterior_approx_13_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.35" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_14" mocap="true"><geom name="guidance_posterior_approx_14_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.37" contype="0" conaffinity="0"/></body>
+    <body name="guidance_posterior_approx_15" mocap="true"><geom name="guidance_posterior_approx_15_geom" type="sphere" size="0.0056" rgba="0.62 0.80 1.00 0.39" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_00" mocap="true"><geom name="guidance_sample_approx_00_00_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_01" mocap="true"><geom name="guidance_sample_approx_00_01_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_02" mocap="true"><geom name="guidance_sample_approx_00_02_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_03" mocap="true"><geom name="guidance_sample_approx_00_03_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_04" mocap="true"><geom name="guidance_sample_approx_00_04_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_05" mocap="true"><geom name="guidance_sample_approx_00_05_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_06" mocap="true"><geom name="guidance_sample_approx_00_06_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_07" mocap="true"><geom name="guidance_sample_approx_00_07_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_08" mocap="true"><geom name="guidance_sample_approx_00_08_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_09" mocap="true"><geom name="guidance_sample_approx_00_09_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_10" mocap="true"><geom name="guidance_sample_approx_00_10_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_11" mocap="true"><geom name="guidance_sample_approx_00_11_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_12" mocap="true"><geom name="guidance_sample_approx_00_12_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_13" mocap="true"><geom name="guidance_sample_approx_00_13_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_14" mocap="true"><geom name="guidance_sample_approx_00_14_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_00_15" mocap="true"><geom name="guidance_sample_approx_00_15_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_00" mocap="true"><geom name="guidance_sample_approx_01_00_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_01" mocap="true"><geom name="guidance_sample_approx_01_01_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_02" mocap="true"><geom name="guidance_sample_approx_01_02_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_03" mocap="true"><geom name="guidance_sample_approx_01_03_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_04" mocap="true"><geom name="guidance_sample_approx_01_04_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_05" mocap="true"><geom name="guidance_sample_approx_01_05_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_06" mocap="true"><geom name="guidance_sample_approx_01_06_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_07" mocap="true"><geom name="guidance_sample_approx_01_07_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_08" mocap="true"><geom name="guidance_sample_approx_01_08_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_09" mocap="true"><geom name="guidance_sample_approx_01_09_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_10" mocap="true"><geom name="guidance_sample_approx_01_10_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_11" mocap="true"><geom name="guidance_sample_approx_01_11_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_12" mocap="true"><geom name="guidance_sample_approx_01_12_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_13" mocap="true"><geom name="guidance_sample_approx_01_13_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_14" mocap="true"><geom name="guidance_sample_approx_01_14_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_01_15" mocap="true"><geom name="guidance_sample_approx_01_15_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_00" mocap="true"><geom name="guidance_sample_approx_02_00_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_01" mocap="true"><geom name="guidance_sample_approx_02_01_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_02" mocap="true"><geom name="guidance_sample_approx_02_02_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_03" mocap="true"><geom name="guidance_sample_approx_02_03_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_04" mocap="true"><geom name="guidance_sample_approx_02_04_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_05" mocap="true"><geom name="guidance_sample_approx_02_05_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_06" mocap="true"><geom name="guidance_sample_approx_02_06_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_07" mocap="true"><geom name="guidance_sample_approx_02_07_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_08" mocap="true"><geom name="guidance_sample_approx_02_08_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_09" mocap="true"><geom name="guidance_sample_approx_02_09_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_10" mocap="true"><geom name="guidance_sample_approx_02_10_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_11" mocap="true"><geom name="guidance_sample_approx_02_11_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_12" mocap="true"><geom name="guidance_sample_approx_02_12_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_13" mocap="true"><geom name="guidance_sample_approx_02_13_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_14" mocap="true"><geom name="guidance_sample_approx_02_14_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_02_15" mocap="true"><geom name="guidance_sample_approx_02_15_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_00" mocap="true"><geom name="guidance_sample_approx_03_00_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_01" mocap="true"><geom name="guidance_sample_approx_03_01_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_02" mocap="true"><geom name="guidance_sample_approx_03_02_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_03" mocap="true"><geom name="guidance_sample_approx_03_03_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_04" mocap="true"><geom name="guidance_sample_approx_03_04_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_05" mocap="true"><geom name="guidance_sample_approx_03_05_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_06" mocap="true"><geom name="guidance_sample_approx_03_06_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_07" mocap="true"><geom name="guidance_sample_approx_03_07_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_08" mocap="true"><geom name="guidance_sample_approx_03_08_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_09" mocap="true"><geom name="guidance_sample_approx_03_09_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_10" mocap="true"><geom name="guidance_sample_approx_03_10_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_11" mocap="true"><geom name="guidance_sample_approx_03_11_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_12" mocap="true"><geom name="guidance_sample_approx_03_12_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_13" mocap="true"><geom name="guidance_sample_approx_03_13_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_14" mocap="true"><geom name="guidance_sample_approx_03_14_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_03_15" mocap="true"><geom name="guidance_sample_approx_03_15_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_00" mocap="true"><geom name="guidance_sample_approx_04_00_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_01" mocap="true"><geom name="guidance_sample_approx_04_01_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_02" mocap="true"><geom name="guidance_sample_approx_04_02_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_03" mocap="true"><geom name="guidance_sample_approx_04_03_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_04" mocap="true"><geom name="guidance_sample_approx_04_04_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_05" mocap="true"><geom name="guidance_sample_approx_04_05_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_06" mocap="true"><geom name="guidance_sample_approx_04_06_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_07" mocap="true"><geom name="guidance_sample_approx_04_07_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_08" mocap="true"><geom name="guidance_sample_approx_04_08_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_09" mocap="true"><geom name="guidance_sample_approx_04_09_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_10" mocap="true"><geom name="guidance_sample_approx_04_10_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_11" mocap="true"><geom name="guidance_sample_approx_04_11_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_12" mocap="true"><geom name="guidance_sample_approx_04_12_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_13" mocap="true"><geom name="guidance_sample_approx_04_13_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_14" mocap="true"><geom name="guidance_sample_approx_04_14_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_04_15" mocap="true"><geom name="guidance_sample_approx_04_15_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_00" mocap="true"><geom name="guidance_sample_approx_05_00_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_01" mocap="true"><geom name="guidance_sample_approx_05_01_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_02" mocap="true"><geom name="guidance_sample_approx_05_02_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_03" mocap="true"><geom name="guidance_sample_approx_05_03_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_04" mocap="true"><geom name="guidance_sample_approx_05_04_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_05" mocap="true"><geom name="guidance_sample_approx_05_05_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_06" mocap="true"><geom name="guidance_sample_approx_05_06_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_07" mocap="true"><geom name="guidance_sample_approx_05_07_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_08" mocap="true"><geom name="guidance_sample_approx_05_08_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_09" mocap="true"><geom name="guidance_sample_approx_05_09_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_10" mocap="true"><geom name="guidance_sample_approx_05_10_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_11" mocap="true"><geom name="guidance_sample_approx_05_11_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_12" mocap="true"><geom name="guidance_sample_approx_05_12_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_13" mocap="true"><geom name="guidance_sample_approx_05_13_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_14" mocap="true"><geom name="guidance_sample_approx_05_14_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_05_15" mocap="true"><geom name="guidance_sample_approx_05_15_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_00" mocap="true"><geom name="guidance_sample_approx_06_00_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_01" mocap="true"><geom name="guidance_sample_approx_06_01_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_02" mocap="true"><geom name="guidance_sample_approx_06_02_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_03" mocap="true"><geom name="guidance_sample_approx_06_03_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_04" mocap="true"><geom name="guidance_sample_approx_06_04_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_05" mocap="true"><geom name="guidance_sample_approx_06_05_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_06" mocap="true"><geom name="guidance_sample_approx_06_06_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_07" mocap="true"><geom name="guidance_sample_approx_06_07_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_08" mocap="true"><geom name="guidance_sample_approx_06_08_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_09" mocap="true"><geom name="guidance_sample_approx_06_09_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_10" mocap="true"><geom name="guidance_sample_approx_06_10_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_11" mocap="true"><geom name="guidance_sample_approx_06_11_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_12" mocap="true"><geom name="guidance_sample_approx_06_12_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_13" mocap="true"><geom name="guidance_sample_approx_06_13_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_14" mocap="true"><geom name="guidance_sample_approx_06_14_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_06_15" mocap="true"><geom name="guidance_sample_approx_06_15_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_00" mocap="true"><geom name="guidance_sample_approx_07_00_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_01" mocap="true"><geom name="guidance_sample_approx_07_01_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_02" mocap="true"><geom name="guidance_sample_approx_07_02_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_03" mocap="true"><geom name="guidance_sample_approx_07_03_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_04" mocap="true"><geom name="guidance_sample_approx_07_04_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_05" mocap="true"><geom name="guidance_sample_approx_07_05_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_06" mocap="true"><geom name="guidance_sample_approx_07_06_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_07" mocap="true"><geom name="guidance_sample_approx_07_07_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_08" mocap="true"><geom name="guidance_sample_approx_07_08_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_09" mocap="true"><geom name="guidance_sample_approx_07_09_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_10" mocap="true"><geom name="guidance_sample_approx_07_10_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_11" mocap="true"><geom name="guidance_sample_approx_07_11_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_12" mocap="true"><geom name="guidance_sample_approx_07_12_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_13" mocap="true"><geom name="guidance_sample_approx_07_13_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_14" mocap="true"><geom name="guidance_sample_approx_07_14_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_07_15" mocap="true"><geom name="guidance_sample_approx_07_15_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_00" mocap="true"><geom name="guidance_sample_approx_08_00_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_01" mocap="true"><geom name="guidance_sample_approx_08_01_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_02" mocap="true"><geom name="guidance_sample_approx_08_02_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_03" mocap="true"><geom name="guidance_sample_approx_08_03_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_04" mocap="true"><geom name="guidance_sample_approx_08_04_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_05" mocap="true"><geom name="guidance_sample_approx_08_05_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_06" mocap="true"><geom name="guidance_sample_approx_08_06_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_07" mocap="true"><geom name="guidance_sample_approx_08_07_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_08" mocap="true"><geom name="guidance_sample_approx_08_08_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_09" mocap="true"><geom name="guidance_sample_approx_08_09_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_10" mocap="true"><geom name="guidance_sample_approx_08_10_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_11" mocap="true"><geom name="guidance_sample_approx_08_11_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_12" mocap="true"><geom name="guidance_sample_approx_08_12_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_13" mocap="true"><geom name="guidance_sample_approx_08_13_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_14" mocap="true"><geom name="guidance_sample_approx_08_14_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_08_15" mocap="true"><geom name="guidance_sample_approx_08_15_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_00" mocap="true"><geom name="guidance_sample_approx_09_00_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_01" mocap="true"><geom name="guidance_sample_approx_09_01_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_02" mocap="true"><geom name="guidance_sample_approx_09_02_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_03" mocap="true"><geom name="guidance_sample_approx_09_03_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_04" mocap="true"><geom name="guidance_sample_approx_09_04_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_05" mocap="true"><geom name="guidance_sample_approx_09_05_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_06" mocap="true"><geom name="guidance_sample_approx_09_06_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_07" mocap="true"><geom name="guidance_sample_approx_09_07_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_08" mocap="true"><geom name="guidance_sample_approx_09_08_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_09" mocap="true"><geom name="guidance_sample_approx_09_09_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_10" mocap="true"><geom name="guidance_sample_approx_09_10_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_11" mocap="true"><geom name="guidance_sample_approx_09_11_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_12" mocap="true"><geom name="guidance_sample_approx_09_12_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_13" mocap="true"><geom name="guidance_sample_approx_09_13_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_14" mocap="true"><geom name="guidance_sample_approx_09_14_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_09_15" mocap="true"><geom name="guidance_sample_approx_09_15_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_00" mocap="true"><geom name="guidance_sample_approx_10_00_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_01" mocap="true"><geom name="guidance_sample_approx_10_01_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_02" mocap="true"><geom name="guidance_sample_approx_10_02_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_03" mocap="true"><geom name="guidance_sample_approx_10_03_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_04" mocap="true"><geom name="guidance_sample_approx_10_04_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_05" mocap="true"><geom name="guidance_sample_approx_10_05_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_06" mocap="true"><geom name="guidance_sample_approx_10_06_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_07" mocap="true"><geom name="guidance_sample_approx_10_07_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_08" mocap="true"><geom name="guidance_sample_approx_10_08_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_09" mocap="true"><geom name="guidance_sample_approx_10_09_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_10" mocap="true"><geom name="guidance_sample_approx_10_10_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_11" mocap="true"><geom name="guidance_sample_approx_10_11_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_12" mocap="true"><geom name="guidance_sample_approx_10_12_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_13" mocap="true"><geom name="guidance_sample_approx_10_13_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_14" mocap="true"><geom name="guidance_sample_approx_10_14_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_10_15" mocap="true"><geom name="guidance_sample_approx_10_15_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_00" mocap="true"><geom name="guidance_sample_approx_11_00_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_01" mocap="true"><geom name="guidance_sample_approx_11_01_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_02" mocap="true"><geom name="guidance_sample_approx_11_02_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_03" mocap="true"><geom name="guidance_sample_approx_11_03_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_04" mocap="true"><geom name="guidance_sample_approx_11_04_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_05" mocap="true"><geom name="guidance_sample_approx_11_05_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_06" mocap="true"><geom name="guidance_sample_approx_11_06_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_07" mocap="true"><geom name="guidance_sample_approx_11_07_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_08" mocap="true"><geom name="guidance_sample_approx_11_08_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_09" mocap="true"><geom name="guidance_sample_approx_11_09_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_10" mocap="true"><geom name="guidance_sample_approx_11_10_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_11" mocap="true"><geom name="guidance_sample_approx_11_11_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_12" mocap="true"><geom name="guidance_sample_approx_11_12_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_13" mocap="true"><geom name="guidance_sample_approx_11_13_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_14" mocap="true"><geom name="guidance_sample_approx_11_14_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="guidance_sample_approx_11_15" mocap="true"><geom name="guidance_sample_approx_11_15_geom" type="sphere" size="0.0042" rgba="0.42 0.42 0.42 0.08" contype="0" conaffinity="0"/></body>
+    <body name="obstacle_marker_00" mocap="true"><geom name="obstacle_marker_00_geom" type="sphere" size="0.001" rgba="0.05 0.75 1 0.62" contype="0" conaffinity="0"/></body>
+    <body name="obstacle_marker_01" mocap="true"><geom name="obstacle_marker_01_geom" type="sphere" size="0.001" rgba="0.05 0.75 1 0.62" contype="0" conaffinity="0"/></body>
+    <body name="obstacle_marker_02" mocap="true"><geom name="obstacle_marker_02_geom" type="sphere" size="0.001" rgba="0.05 0.75 1 0.62" contype="0" conaffinity="0"/></body>
+    <body name="obstacle_marker_03" mocap="true"><geom name="obstacle_marker_03_geom" type="sphere" size="0.001" rgba="0.05 0.75 1 0.62" contype="0" conaffinity="0"/></body>
+    <body name="obstacle_marker_04" mocap="true"><geom name="obstacle_marker_04_geom" type="sphere" size="0.001" rgba="0.05 0.75 1 0.62" contype="0" conaffinity="0"/></body>
+    <body name="obstacle_marker_05" mocap="true"><geom name="obstacle_marker_05_geom" type="sphere" size="0.001" rgba="0.05 0.75 1 0.62" contype="0" conaffinity="0"/></body>
+    <body name="obstacle_marker_06" mocap="true"><geom name="obstacle_marker_06_geom" type="sphere" size="0.001" rgba="0.05 0.75 1 0.62" contype="0" conaffinity="0"/></body>
+    <body name="obstacle_marker_07" mocap="true"><geom name="obstacle_marker_07_geom" type="sphere" size="0.001" rgba="0.05 0.75 1 0.62" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_sphere_00" mocap="true"><geom name="shape_obstacle_sphere_00_geom" type="sphere" size="0.001" rgba="0.05 0.75 1 0.62" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_sphere_01" mocap="true"><geom name="shape_obstacle_sphere_01_geom" type="sphere" size="0.001" rgba="0.05 0.75 1 0.62" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_sphere_02" mocap="true"><geom name="shape_obstacle_sphere_02_geom" type="sphere" size="0.001" rgba="0.05 0.75 1 0.62" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_sphere_03" mocap="true"><geom name="shape_obstacle_sphere_03_geom" type="sphere" size="0.001" rgba="0.05 0.75 1 0.62" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_box_00" mocap="true"><geom name="shape_obstacle_box_00_geom" type="box" size="0.001 0.001 0.001" rgba="0.95 0.55 0.10 0.62" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_box_01" mocap="true"><geom name="shape_obstacle_box_01_geom" type="box" size="0.001 0.001 0.001" rgba="0.95 0.55 0.10 0.62" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_box_02" mocap="true"><geom name="shape_obstacle_box_02_geom" type="box" size="0.001 0.001 0.001" rgba="0.95 0.55 0.10 0.62" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_box_03" mocap="true"><geom name="shape_obstacle_box_03_geom" type="box" size="0.001 0.001 0.001" rgba="0.95 0.55 0.10 0.62" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_tri_prism_00" mocap="true"><geom name="shape_obstacle_tri_prism_00_geom" type="mesh" mesh="tri_prism_obstacle_mesh" rgba="0.90 0.18 0.16 0.70" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_tri_prism_01" mocap="true"><geom name="shape_obstacle_tri_prism_01_geom" type="mesh" mesh="tri_prism_obstacle_mesh" rgba="0.90 0.18 0.16 0.70" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_tri_prism_02" mocap="true"><geom name="shape_obstacle_tri_prism_02_geom" type="mesh" mesh="tri_prism_obstacle_mesh" rgba="0.90 0.18 0.16 0.70" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_tri_prism_03" mocap="true"><geom name="shape_obstacle_tri_prism_03_geom" type="mesh" mesh="tri_prism_obstacle_mesh" rgba="0.90 0.18 0.16 0.70" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_diamond_prism_00" mocap="true"><geom name="shape_obstacle_diamond_prism_00_geom" type="mesh" mesh="diamond_prism_obstacle_mesh" rgba="0.25 0.85 0.35 0.70" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_diamond_prism_01" mocap="true"><geom name="shape_obstacle_diamond_prism_01_geom" type="mesh" mesh="diamond_prism_obstacle_mesh" rgba="0.25 0.85 0.35 0.70" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_diamond_prism_02" mocap="true"><geom name="shape_obstacle_diamond_prism_02_geom" type="mesh" mesh="diamond_prism_obstacle_mesh" rgba="0.25 0.85 0.35 0.70" contype="0" conaffinity="0"/></body>
+    <body name="shape_obstacle_diamond_prism_03" mocap="true"><geom name="shape_obstacle_diamond_prism_03_geom" type="mesh" mesh="diamond_prism_obstacle_mesh" rgba="0.25 0.85 0.35 0.70" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_00" mocap="true"><geom name="collision_debug_marker_00_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_01" mocap="true"><geom name="collision_debug_marker_01_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_02" mocap="true"><geom name="collision_debug_marker_02_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_03" mocap="true"><geom name="collision_debug_marker_03_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_04" mocap="true"><geom name="collision_debug_marker_04_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_05" mocap="true"><geom name="collision_debug_marker_05_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_06" mocap="true"><geom name="collision_debug_marker_06_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_07" mocap="true"><geom name="collision_debug_marker_07_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_08" mocap="true"><geom name="collision_debug_marker_08_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_09" mocap="true"><geom name="collision_debug_marker_09_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_10" mocap="true"><geom name="collision_debug_marker_10_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_11" mocap="true"><geom name="collision_debug_marker_11_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_12" mocap="true"><geom name="collision_debug_marker_12_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_13" mocap="true"><geom name="collision_debug_marker_13_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_14" mocap="true"><geom name="collision_debug_marker_14_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_15" mocap="true"><geom name="collision_debug_marker_15_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_16" mocap="true"><geom name="collision_debug_marker_16_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_17" mocap="true"><geom name="collision_debug_marker_17_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_18" mocap="true"><geom name="collision_debug_marker_18_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_19" mocap="true"><geom name="collision_debug_marker_19_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_20" mocap="true"><geom name="collision_debug_marker_20_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_21" mocap="true"><geom name="collision_debug_marker_21_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_22" mocap="true"><geom name="collision_debug_marker_22_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_23" mocap="true"><geom name="collision_debug_marker_23_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_24" mocap="true"><geom name="collision_debug_marker_24_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_25" mocap="true"><geom name="collision_debug_marker_25_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_26" mocap="true"><geom name="collision_debug_marker_26_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_27" mocap="true"><geom name="collision_debug_marker_27_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_28" mocap="true"><geom name="collision_debug_marker_28_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_29" mocap="true"><geom name="collision_debug_marker_29_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_30" mocap="true"><geom name="collision_debug_marker_30_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_31" mocap="true"><geom name="collision_debug_marker_31_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_32" mocap="true"><geom name="collision_debug_marker_32_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_33" mocap="true"><geom name="collision_debug_marker_33_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_34" mocap="true"><geom name="collision_debug_marker_34_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_35" mocap="true"><geom name="collision_debug_marker_35_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_36" mocap="true"><geom name="collision_debug_marker_36_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_37" mocap="true"><geom name="collision_debug_marker_37_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_38" mocap="true"><geom name="collision_debug_marker_38_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_39" mocap="true"><geom name="collision_debug_marker_39_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_40" mocap="true"><geom name="collision_debug_marker_40_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_41" mocap="true"><geom name="collision_debug_marker_41_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_42" mocap="true"><geom name="collision_debug_marker_42_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_43" mocap="true"><geom name="collision_debug_marker_43_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_44" mocap="true"><geom name="collision_debug_marker_44_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_45" mocap="true"><geom name="collision_debug_marker_45_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_46" mocap="true"><geom name="collision_debug_marker_46_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_47" mocap="true"><geom name="collision_debug_marker_47_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_48" mocap="true"><geom name="collision_debug_marker_48_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_49" mocap="true"><geom name="collision_debug_marker_49_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_50" mocap="true"><geom name="collision_debug_marker_50_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_51" mocap="true"><geom name="collision_debug_marker_51_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_52" mocap="true"><geom name="collision_debug_marker_52_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_53" mocap="true"><geom name="collision_debug_marker_53_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_54" mocap="true"><geom name="collision_debug_marker_54_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_55" mocap="true"><geom name="collision_debug_marker_55_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_56" mocap="true"><geom name="collision_debug_marker_56_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_57" mocap="true"><geom name="collision_debug_marker_57_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_58" mocap="true"><geom name="collision_debug_marker_58_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_59" mocap="true"><geom name="collision_debug_marker_59_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_60" mocap="true"><geom name="collision_debug_marker_60_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_61" mocap="true"><geom name="collision_debug_marker_61_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_62" mocap="true"><geom name="collision_debug_marker_62_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <body name="collision_debug_marker_63" mocap="true"><geom name="collision_debug_marker_63_geom" type="capsule" size="0.001 0.001" rgba="1 0.25 0.05 0.18" contype="0" conaffinity="0"/></body>
+    <!-- <body name="workspace_box" pos="0.2 0 0.39">
+      <geom name="workspace_box_geom" type="box" size="0.50 0.50 0.23" rgba="0.2 0.8 1 0.06" contype="0" conaffinity="0"/>
+    </body> -->
+  </worldbody>
+</mujoco>

@@ -1,0 +1,27 @@
+model=bilinear r=20 N=800 S=5 sigma=1.2->0.3 T=15 seeds=[0, 1, 2, 3, 4]
+control period 50 ms, N=800, S=5, T=15
+
+reference: 25 substeps of 2 ms, path length 278 mm
+
+  nsub= 25 (  2.0 ms)  chain  1875  CPU   2171.4 ms  gap median     0.00 mm  max     0.00 mm
+  nsub= 10 (  5.0 ms)  chain   750  CPU    933.5 ms  gap median     2.24 mm  max    41.05 mm
+  nsub=  5 ( 10.0 ms)  chain   375  CPU    449.7 ms  gap median     7.30 mm  max    66.04 mm
+  nsub=  2 ( 25.0 ms)  chain   150  CPU    189.5 ms  gap median    50.86 mm  max   280.11 mm
+  nsub=  1 ( 50.0 ms)  chain    75  CPU    101.0 ms  gap median   248.35 mm  max  1358.41 mm
+
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link0_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link1_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link2_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+Failed to import warp: No module named 'warp'
+Failed to import mujoco_warp: No module named 'warp'
+  nsub= 25  GPU   4017.2 ms  (misses the 50 ms period)
+  nsub= 10  GPU   1711.6 ms  (misses the 50 ms period)
+  nsub=  5  GPU    862.1 ms  (misses the 50 ms period)
+  nsub=  2  GPU    353.0 ms  (misses the 50 ms period)
+  nsub=  1  GPU    170.8 ms  (misses the 50 ms period)
+
+wrote /home/home/mbd/koopman/mbd_koopman/exper/out/substep_ladder.json
+SUBDONE

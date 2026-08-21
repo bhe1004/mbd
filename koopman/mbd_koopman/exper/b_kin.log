@@ -1,0 +1,496 @@
+model=bilinear r=20 N=800 S=5 sigma=1.2->0.3 T=15 seeds=[0, 1, 2, 3, 4]
+conditions 6 x seeds 5 x targets 10 = 300 trials -> /home/home/mbd/koopman/mbd_koopman/exper/out/b_kin/trials.jsonl
+  training linear seed 0 ...
+    epoch 50/300  loss 0.00719
+    epoch 100/300  loss 0.00650
+    epoch 150/300  loss 0.00715
+    epoch 200/300  loss 0.00637
+    epoch 250/300  loss 0.00673
+    epoch 300/300  loss 0.00663
+  saved kin_linear_r20_seed0.pt  held-out horizon error 0.3500 m
+  training linear seed 0 ...
+    epoch 50/300  loss 0.00600
+    epoch 100/300  loss 0.00673
+    epoch 150/300  loss 0.00648
+    epoch 200/300  loss 0.00677
+    epoch 250/300  loss 0.00648
+    epoch 300/300  loss 0.00595
+  saved kin_linear_r50_seed0_large.pt  held-out horizon error 0.3499 m
+  training mlp seed 0 ...
+    epoch 50/300  loss 0.00684
+    epoch 100/300  loss 0.00588
+    epoch 150/300  loss 0.00450
+    epoch 200/300  loss 0.00341
+    epoch 250/300  loss 0.00356
+    epoch 300/300  loss 0.00337
+  saved kin_mlp_r20_seed0.pt  held-out horizon error 0.2397 m
+  loaded kin_linear_r20_seed0.pt
+  training bilinear seed 0 ...
+    epoch 50/300  loss 0.00425
+    epoch 100/300  loss 0.00396
+    epoch 150/300  loss 0.00368
+    epoch 200/300  loss 0.00343
+    epoch 250/300  loss 0.00304
+    epoch 300/300  loss 0.00337
+  saved kin_bilinear_r20_seed0.pt  held-out horizon error 0.2576 m
+[1/300] oracle        s0 t0 err=0.0031 steps=20 ms=19 -> STRICT
+[2/300] oracle        s0 t1 err=0.0048 steps=33 ms=19 -> STRICT
+[3/300] oracle        s0 t2 err=0.0027 steps=38 ms=19 -> STRICT
+[4/300] oracle        s0 t3 err=0.0096 steps=20 ms=19 -> STRICT
+[5/300] oracle        s0 t4 err=0.0100 steps=21 ms=19 -> STRICT
+[6/300] oracle        s0 t5 err=0.0082 steps=29 ms=19 -> STRICT
+[7/300] oracle        s0 t6 err=0.0077 steps=27 ms=19 -> STRICT
+[8/300] oracle        s0 t7 err=0.0038 steps=20 ms=19 -> STRICT
+[9/300] oracle        s0 t8 err=0.0132 steps=33 ms=19 -> STRICT
+[10/300] oracle        s0 t9 err=0.0134 steps=36 ms=19 -> STRICT
+[11/300] linear        s0 t0 err=0.0420 steps=120 ms=8 -> reach
+[12/300] linear        s0 t1 err=0.1011 steps=120 ms=8 -> miss
+[13/300] linear        s0 t2 err=0.0966 steps=120 ms=8 -> miss
+[14/300] linear        s0 t3 err=0.0400 steps=120 ms=8 -> reach
+[15/300] linear        s0 t4 err=0.1712 steps=120 ms=8 -> miss
+[16/300] linear        s0 t5 err=0.1169 steps=120 ms=8 -> miss
+[17/300] linear        s0 t6 err=0.0926 steps=120 ms=8 -> miss
+[18/300] linear        s0 t7 err=0.1246 steps=120 ms=8 -> miss
+[19/300] linear        s0 t8 err=0.0614 steps=120 ms=8 -> miss
+[20/300] linear        s0 t9 err=0.1219 steps=120 ms=8 -> miss
+[21/300] linear_large  s0 t0 err=0.0422 steps=120 ms=9 -> reach
+[22/300] linear_large  s0 t1 err=0.1139 steps=120 ms=9 -> miss
+[23/300] linear_large  s0 t2 err=0.0977 steps=120 ms=9 -> miss
+[24/300] linear_large  s0 t3 err=0.0413 steps=120 ms=9 -> reach
+[25/300] linear_large  s0 t4 err=0.1755 steps=120 ms=9 -> miss
+[26/300] linear_large  s0 t5 err=0.1180 steps=120 ms=9 -> miss
+[27/300] linear_large  s0 t6 err=0.0928 steps=120 ms=9 -> miss
+[28/300] linear_large  s0 t7 err=0.1325 steps=120 ms=9 -> miss
+[29/300] linear_large  s0 t8 err=0.0623 steps=120 ms=9 -> miss
+[30/300] linear_large  s0 t9 err=0.1368 steps=120 ms=9 -> miss
+[31/300] mlp           s0 t0 err=0.0501 steps=120 ms=17 -> reach
+[32/300] mlp           s0 t1 err=0.0485 steps=120 ms=17 -> reach
+[33/300] mlp           s0 t2 err=0.0570 steps=120 ms=17 -> reach
+[34/300] mlp           s0 t3 err=0.0491 steps=120 ms=17 -> reach
+[35/300] mlp           s0 t4 err=0.0565 steps=120 ms=17 -> reach
+[36/300] mlp           s0 t5 err=0.0627 steps=120 ms=17 -> reach
+[37/300] mlp           s0 t6 err=0.0537 steps=120 ms=17 -> reach
+[38/300] mlp           s0 t7 err=0.0513 steps=120 ms=17 -> reach
+[39/300] mlp           s0 t8 err=0.0521 steps=120 ms=17 -> reach
+[40/300] mlp           s0 t9 err=0.0554 steps=120 ms=17 -> reach
+[41/300] split         s0 t0 err=0.0045 steps=20 ms=19 -> STRICT
+[42/300] split         s0 t1 err=0.0051 steps=34 ms=19 -> STRICT
+[43/300] split         s0 t2 err=0.0024 steps=38 ms=19 -> STRICT
+[44/300] split         s0 t3 err=0.0097 steps=20 ms=19 -> STRICT
+[45/300] split         s0 t4 err=0.0108 steps=21 ms=19 -> STRICT
+[46/300] split         s0 t5 err=0.0087 steps=28 ms=19 -> STRICT
+[47/300] split         s0 t6 err=0.0077 steps=27 ms=19 -> STRICT
+[48/300] split         s0 t7 err=0.0055 steps=20 ms=19 -> STRICT
+[49/300] split         s0 t8 err=0.0110 steps=33 ms=19 -> STRICT
+[50/300] split         s0 t9 err=0.0128 steps=42 ms=19 -> STRICT
+[51/300] bilinear      s0 t0 err=0.0090 steps=40 ms=16 -> STRICT
+[52/300] bilinear      s0 t1 err=0.0126 steps=75 ms=16 -> STRICT
+[53/300] bilinear      s0 t2 err=0.0079 steps=43 ms=16 -> STRICT
+[54/300] bilinear      s0 t3 err=0.0142 steps=31 ms=16 -> STRICT
+[55/300] bilinear      s0 t4 err=0.0100 steps=17 ms=16 -> STRICT
+[56/300] bilinear      s0 t5 err=0.0147 steps=120 ms=16 -> reach
+[57/300] bilinear      s0 t6 err=0.0159 steps=31 ms=16 -> STRICT
+[58/300] bilinear      s0 t7 err=0.0113 steps=41 ms=16 -> STRICT
+[59/300] bilinear      s0 t8 err=0.0169 steps=41 ms=16 -> STRICT
+[60/300] bilinear      s0 t9 err=0.0197 steps=64 ms=16 -> STRICT
+  training linear seed 1 ...
+    epoch 50/300  loss 0.00712
+    epoch 100/300  loss 0.00641
+    epoch 150/300  loss 0.00657
+    epoch 200/300  loss 0.00700
+    epoch 250/300  loss 0.00729
+    epoch 300/300  loss 0.00659
+  saved kin_linear_r20_seed1.pt  held-out horizon error 0.3478 m
+  training linear seed 1 ...
+    epoch 50/300  loss 0.00694
+    epoch 100/300  loss 0.00661
+    epoch 150/300  loss 0.00660
+    epoch 200/300  loss 0.00715
+    epoch 250/300  loss 0.00647
+    epoch 300/300  loss 0.00695
+  saved kin_linear_r50_seed1_large.pt  held-out horizon error 0.3479 m
+  training mlp seed 1 ...
+    epoch 50/300  loss 0.00665
+    epoch 100/300  loss 0.00556
+    epoch 150/300  loss 0.00471
+    epoch 200/300  loss 0.00371
+    epoch 250/300  loss 0.00343
+    epoch 300/300  loss 0.00352
+  saved kin_mlp_r20_seed1.pt  held-out horizon error 0.2338 m
+  loaded kin_linear_r20_seed1.pt
+  training bilinear seed 1 ...
+    epoch 50/300  loss 0.00400
+    epoch 100/300  loss 0.00365
+    epoch 150/300  loss 0.00370
+    epoch 200/300  loss 0.00391
+    epoch 250/300  loss 0.00368
+    epoch 300/300  loss 0.00348
+  saved kin_bilinear_r20_seed1.pt  held-out horizon error 0.2597 m
+[61/300] oracle        s1 t0 err=0.0031 steps=20 ms=19 -> STRICT
+[62/300] oracle        s1 t1 err=0.0048 steps=33 ms=19 -> STRICT
+[63/300] oracle        s1 t2 err=0.0027 steps=38 ms=19 -> STRICT
+[64/300] oracle        s1 t3 err=0.0096 steps=20 ms=19 -> STRICT
+[65/300] oracle        s1 t4 err=0.0100 steps=21 ms=19 -> STRICT
+[66/300] oracle        s1 t5 err=0.0082 steps=29 ms=19 -> STRICT
+[67/300] oracle        s1 t6 err=0.0077 steps=27 ms=19 -> STRICT
+[68/300] oracle        s1 t7 err=0.0038 steps=20 ms=19 -> STRICT
+[69/300] oracle        s1 t8 err=0.0132 steps=33 ms=19 -> STRICT
+[70/300] oracle        s1 t9 err=0.0134 steps=36 ms=19 -> STRICT
+[71/300] linear        s1 t0 err=0.1191 steps=120 ms=8 -> miss
+[72/300] linear        s1 t1 err=0.1145 steps=120 ms=8 -> miss
+[73/300] linear        s1 t2 err=0.0963 steps=120 ms=8 -> miss
+[74/300] linear        s1 t3 err=0.1199 steps=120 ms=8 -> miss
+[75/300] linear        s1 t4 err=0.2373 steps=120 ms=8 -> miss
+[76/300] linear        s1 t5 err=0.1076 steps=120 ms=8 -> miss
+[77/300] linear        s1 t6 err=0.1368 steps=120 ms=8 -> miss
+[78/300] linear        s1 t7 err=0.1624 steps=120 ms=8 -> miss
+[79/300] linear        s1 t8 err=0.1116 steps=120 ms=8 -> miss
+[80/300] linear        s1 t9 err=0.0781 steps=120 ms=8 -> miss
+[81/300] linear_large  s1 t0 err=0.1191 steps=120 ms=9 -> miss
+[82/300] linear_large  s1 t1 err=0.1150 steps=120 ms=9 -> miss
+[83/300] linear_large  s1 t2 err=0.1001 steps=120 ms=9 -> miss
+[84/300] linear_large  s1 t3 err=0.1174 steps=120 ms=9 -> miss
+[85/300] linear_large  s1 t4 err=0.2435 steps=120 ms=9 -> miss
+[86/300] linear_large  s1 t5 err=0.1099 steps=120 ms=10 -> miss
+[87/300] linear_large  s1 t6 err=0.1387 steps=120 ms=9 -> miss
+[88/300] linear_large  s1 t7 err=0.1681 steps=120 ms=9 -> miss
+[89/300] linear_large  s1 t8 err=0.1107 steps=120 ms=9 -> miss
+[90/300] linear_large  s1 t9 err=0.0765 steps=120 ms=9 -> miss
+[91/300] mlp           s1 t0 err=0.0694 steps=120 ms=17 -> reach
+[92/300] mlp           s1 t1 err=0.0379 steps=120 ms=17 -> reach
+[93/300] mlp           s1 t2 err=0.0529 steps=120 ms=17 -> reach
+[94/300] mlp           s1 t3 err=0.0809 steps=120 ms=17 -> miss
+[95/300] mlp           s1 t4 err=0.0543 steps=120 ms=17 -> miss
+[96/300] mlp           s1 t5 err=0.0580 steps=120 ms=17 -> miss
+[97/300] mlp           s1 t6 err=0.0832 steps=120 ms=17 -> reach
+[98/300] mlp           s1 t7 err=0.0564 steps=120 ms=17 -> miss
+[99/300] mlp           s1 t8 err=0.0939 steps=120 ms=17 -> miss
+[100/300] mlp           s1 t9 err=0.0434 steps=120 ms=17 -> reach
+[101/300] split         s1 t0 err=0.0046 steps=20 ms=19 -> STRICT
+[102/300] split         s1 t1 err=0.0052 steps=35 ms=19 -> STRICT
+[103/300] split         s1 t2 err=0.0026 steps=38 ms=19 -> STRICT
+[104/300] split         s1 t3 err=0.0100 steps=20 ms=19 -> STRICT
+[105/300] split         s1 t4 err=0.0106 steps=21 ms=19 -> STRICT
+[106/300] split         s1 t5 err=0.0087 steps=28 ms=19 -> STRICT
+[107/300] split         s1 t6 err=0.0076 steps=27 ms=19 -> STRICT
+[108/300] split         s1 t7 err=0.0055 steps=20 ms=19 -> STRICT
+[109/300] split         s1 t8 err=0.0115 steps=33 ms=19 -> STRICT
+[110/300] split         s1 t9 err=0.0130 steps=42 ms=19 -> STRICT
+[111/300] bilinear      s1 t0 err=0.0134 steps=22 ms=16 -> STRICT
+[112/300] bilinear      s1 t1 err=0.0285 steps=38 ms=16 -> STRICT
+[113/300] bilinear      s1 t2 err=0.0269 steps=42 ms=16 -> STRICT
+[114/300] bilinear      s1 t3 err=0.0104 steps=32 ms=16 -> STRICT
+[115/300] bilinear      s1 t4 err=0.0144 steps=18 ms=16 -> STRICT
+[116/300] bilinear      s1 t5 err=0.0107 steps=59 ms=16 -> STRICT
+[117/300] bilinear      s1 t6 err=0.0226 steps=24 ms=16 -> STRICT
+[118/300] bilinear      s1 t7 err=0.0148 steps=77 ms=16 -> STRICT
+[119/300] bilinear      s1 t8 err=0.0204 steps=34 ms=16 -> STRICT
+[120/300] bilinear      s1 t9 err=0.0236 steps=43 ms=16 -> STRICT
+  training linear seed 2 ...
+    epoch 50/300  loss 0.00724
+    epoch 100/300  loss 0.00745
+    epoch 150/300  loss 0.00696
+    epoch 200/300  loss 0.00703
+    epoch 250/300  loss 0.00644
+    epoch 300/300  loss 0.00748
+  saved kin_linear_r20_seed2.pt  held-out horizon error 0.3349 m
+  training linear seed 2 ...
+    epoch 50/300  loss 0.00658
+    epoch 100/300  loss 0.00594
+    epoch 150/300  loss 0.00782
+    epoch 200/300  loss 0.00661
+    epoch 250/300  loss 0.00685
+    epoch 300/300  loss 0.00648
+  saved kin_linear_r50_seed2_large.pt  held-out horizon error 0.3350 m
+  training mlp seed 2 ...
+    epoch 50/300  loss 0.00740
+    epoch 100/300  loss 0.00600
+    epoch 150/300  loss 0.00473
+    epoch 200/300  loss 0.00392
+    epoch 250/300  loss 0.00361
+    epoch 300/300  loss 0.00361
+  saved kin_mlp_r20_seed2.pt  held-out horizon error 0.2418 m
+  loaded kin_linear_r20_seed2.pt
+  training bilinear seed 2 ...
+    epoch 50/300  loss 0.00415
+    epoch 100/300  loss 0.00412
+    epoch 150/300  loss 0.00405
+    epoch 200/300  loss 0.00366
+    epoch 250/300  loss 0.00339
+    epoch 300/300  loss 0.00353
+  saved kin_bilinear_r20_seed2.pt  held-out horizon error 0.2586 m
+[121/300] oracle        s2 t0 err=0.0031 steps=20 ms=19 -> STRICT
+[122/300] oracle        s2 t1 err=0.0048 steps=33 ms=19 -> STRICT
+[123/300] oracle        s2 t2 err=0.0027 steps=38 ms=19 -> STRICT
+[124/300] oracle        s2 t3 err=0.0096 steps=20 ms=18 -> STRICT
+[125/300] oracle        s2 t4 err=0.0100 steps=21 ms=19 -> STRICT
+[126/300] oracle        s2 t5 err=0.0082 steps=29 ms=19 -> STRICT
+[127/300] oracle        s2 t6 err=0.0077 steps=27 ms=19 -> STRICT
+[128/300] oracle        s2 t7 err=0.0038 steps=20 ms=19 -> STRICT
+[129/300] oracle        s2 t8 err=0.0132 steps=33 ms=19 -> STRICT
+[130/300] oracle        s2 t9 err=0.0134 steps=36 ms=19 -> STRICT
+[131/300] linear        s2 t0 err=0.0645 steps=120 ms=8 -> reach
+[132/300] linear        s2 t1 err=0.0648 steps=120 ms=8 -> reach
+[133/300] linear        s2 t2 err=0.0814 steps=120 ms=8 -> miss
+[134/300] linear        s2 t3 err=0.0407 steps=120 ms=8 -> reach
+[135/300] linear        s2 t4 err=0.0413 steps=120 ms=8 -> reach
+[136/300] linear        s2 t5 err=0.0815 steps=120 ms=8 -> miss
+[137/300] linear        s2 t6 err=0.0719 steps=120 ms=8 -> reach
+[138/300] linear        s2 t7 err=0.0457 steps=120 ms=8 -> reach
+[139/300] linear        s2 t8 err=0.0524 steps=120 ms=8 -> reach
+[140/300] linear        s2 t9 err=0.0544 steps=120 ms=8 -> reach
+[141/300] linear_large  s2 t0 err=0.0640 steps=120 ms=10 -> reach
+[142/300] linear_large  s2 t1 err=0.0657 steps=120 ms=10 -> reach
+[143/300] linear_large  s2 t2 err=0.0806 steps=120 ms=10 -> miss
+[144/300] linear_large  s2 t3 err=0.0407 steps=120 ms=10 -> reach
+[145/300] linear_large  s2 t4 err=0.0424 steps=120 ms=10 -> reach
+[146/300] linear_large  s2 t5 err=0.0814 steps=120 ms=10 -> miss
+[147/300] linear_large  s2 t6 err=0.0717 steps=120 ms=10 -> reach
+[148/300] linear_large  s2 t7 err=0.0454 steps=120 ms=10 -> reach
+[149/300] linear_large  s2 t8 err=0.0525 steps=120 ms=9 -> reach
+[150/300] linear_large  s2 t9 err=0.0545 steps=120 ms=9 -> reach
+[151/300] mlp           s2 t0 err=0.0424 steps=120 ms=17 -> reach
+[152/300] mlp           s2 t1 err=0.0667 steps=120 ms=17 -> reach
+[153/300] mlp           s2 t2 err=0.0425 steps=120 ms=17 -> reach
+[154/300] mlp           s2 t3 err=0.0573 steps=120 ms=18 -> reach
+[155/300] mlp           s2 t4 err=0.0554 steps=120 ms=17 -> reach
+[156/300] mlp           s2 t5 err=0.0527 steps=120 ms=17 -> reach
+[157/300] mlp           s2 t6 err=0.0500 steps=120 ms=17 -> reach
+[158/300] mlp           s2 t7 err=0.0548 steps=120 ms=17 -> reach
+[159/300] mlp           s2 t8 err=0.0573 steps=120 ms=17 -> reach
+[160/300] mlp           s2 t9 err=0.0406 steps=120 ms=17 -> reach
+[161/300] split         s2 t0 err=0.0044 steps=20 ms=19 -> STRICT
+[162/300] split         s2 t1 err=0.0049 steps=35 ms=19 -> STRICT
+[163/300] split         s2 t2 err=0.0035 steps=38 ms=19 -> STRICT
+[164/300] split         s2 t3 err=0.0103 steps=20 ms=19 -> STRICT
+[165/300] split         s2 t4 err=0.0105 steps=22 ms=19 -> STRICT
+[166/300] split         s2 t5 err=0.0087 steps=28 ms=19 -> STRICT
+[167/300] split         s2 t6 err=0.0078 steps=27 ms=19 -> STRICT
+[168/300] split         s2 t7 err=0.0052 steps=20 ms=19 -> STRICT
+[169/300] split         s2 t8 err=0.0121 steps=33 ms=19 -> STRICT
+[170/300] split         s2 t9 err=0.0138 steps=42 ms=19 -> STRICT
+[171/300] bilinear      s2 t0 err=0.0093 steps=46 ms=16 -> STRICT
+[172/300] bilinear      s2 t1 err=0.0112 steps=31 ms=16 -> STRICT
+[173/300] bilinear      s2 t2 err=0.0090 steps=42 ms=16 -> STRICT
+[174/300] bilinear      s2 t3 err=0.0116 steps=22 ms=16 -> STRICT
+[175/300] bilinear      s2 t4 err=0.0098 steps=18 ms=16 -> STRICT
+[176/300] bilinear      s2 t5 err=0.0085 steps=49 ms=16 -> STRICT
+[177/300] bilinear      s2 t6 err=0.0081 steps=28 ms=16 -> STRICT
+[178/300] bilinear      s2 t7 err=0.0057 steps=20 ms=16 -> STRICT
+[179/300] bilinear      s2 t8 err=0.0162 steps=34 ms=16 -> STRICT
+[180/300] bilinear      s2 t9 err=0.0079 steps=42 ms=16 -> STRICT
+  training linear seed 3 ...
+    epoch 50/300  loss 0.00736
+    epoch 100/300  loss 0.00713
+    epoch 150/300  loss 0.00740
+    epoch 200/300  loss 0.00651
+    epoch 250/300  loss 0.00656
+    epoch 300/300  loss 0.00641
+  saved kin_linear_r20_seed3.pt  held-out horizon error 0.3511 m
+  training linear seed 3 ...
+    epoch 50/300  loss 0.00702
+    epoch 100/300  loss 0.00633
+    epoch 150/300  loss 0.00724
+    epoch 200/300  loss 0.00675
+    epoch 250/300  loss 0.00697
+    epoch 300/300  loss 0.00723
+  saved kin_linear_r50_seed3_large.pt  held-out horizon error 0.3513 m
+  training mlp seed 3 ...
+    epoch 50/300  loss 0.00708
+    epoch 100/300  loss 0.00577
+    epoch 150/300  loss 0.00446
+    epoch 200/300  loss 0.00394
+    epoch 250/300  loss 0.00350
+    epoch 300/300  loss 0.00344
+  saved kin_mlp_r20_seed3.pt  held-out horizon error 0.2471 m
+  loaded kin_linear_r20_seed3.pt
+  training bilinear seed 3 ...
+    epoch 50/300  loss 0.00418
+    epoch 100/300  loss 0.00410
+    epoch 150/300  loss 0.00409
+    epoch 200/300  loss 0.00340
+    epoch 250/300  loss 0.00350
+    epoch 300/300  loss 0.00325
+  saved kin_bilinear_r20_seed3.pt  held-out horizon error 0.2611 m
+[181/300] oracle        s3 t0 err=0.0031 steps=20 ms=19 -> STRICT
+[182/300] oracle        s3 t1 err=0.0048 steps=33 ms=19 -> STRICT
+[183/300] oracle        s3 t2 err=0.0027 steps=38 ms=19 -> STRICT
+[184/300] oracle        s3 t3 err=0.0096 steps=20 ms=19 -> STRICT
+[185/300] oracle        s3 t4 err=0.0100 steps=21 ms=19 -> STRICT
+[186/300] oracle        s3 t5 err=0.0082 steps=29 ms=19 -> STRICT
+[187/300] oracle        s3 t6 err=0.0077 steps=27 ms=19 -> STRICT
+[188/300] oracle        s3 t7 err=0.0038 steps=20 ms=19 -> STRICT
+[189/300] oracle        s3 t8 err=0.0132 steps=33 ms=19 -> STRICT
+[190/300] oracle        s3 t9 err=0.0134 steps=36 ms=19 -> STRICT
+[191/300] linear        s3 t0 err=0.5353 steps=120 ms=8 -> miss
+[192/300] linear        s3 t1 err=0.5470 steps=120 ms=8 -> miss
+[193/300] linear        s3 t2 err=0.1027 steps=120 ms=8 -> miss
+[194/300] linear        s3 t3 err=0.4937 steps=120 ms=8 -> miss
+[195/300] linear        s3 t4 err=0.6157 steps=120 ms=8 -> miss
+[196/300] linear        s3 t5 err=0.1058 steps=120 ms=8 -> miss
+[197/300] linear        s3 t6 err=0.4745 steps=120 ms=8 -> miss
+[198/300] linear        s3 t7 err=0.4885 steps=120 ms=8 -> miss
+[199/300] linear        s3 t8 err=0.3934 steps=120 ms=8 -> miss
+[200/300] linear        s3 t9 err=0.6475 steps=120 ms=8 -> miss
+[201/300] linear_large  s3 t0 err=0.5493 steps=120 ms=9 -> miss
+[202/300] linear_large  s3 t1 err=0.5709 steps=120 ms=10 -> miss
+[203/300] linear_large  s3 t2 err=0.0983 steps=120 ms=10 -> miss
+[204/300] linear_large  s3 t3 err=0.5098 steps=120 ms=9 -> miss
+[205/300] linear_large  s3 t4 err=0.6424 steps=120 ms=9 -> miss
+[206/300] linear_large  s3 t5 err=0.1042 steps=120 ms=9 -> miss
+[207/300] linear_large  s3 t6 err=0.4901 steps=120 ms=9 -> miss
+[208/300] linear_large  s3 t7 err=0.5098 steps=120 ms=9 -> miss
+[209/300] linear_large  s3 t8 err=0.4095 steps=120 ms=9 -> miss
+[210/300] linear_large  s3 t9 err=0.6780 steps=120 ms=9 -> miss
+[211/300] mlp           s3 t0 err=0.0394 steps=120 ms=17 -> reach
+[212/300] mlp           s3 t1 err=0.0656 steps=120 ms=17 -> reach
+[213/300] mlp           s3 t2 err=0.0597 steps=120 ms=17 -> reach
+[214/300] mlp           s3 t3 err=0.0581 steps=120 ms=17 -> reach
+[215/300] mlp           s3 t4 err=0.0753 steps=120 ms=17 -> miss
+[216/300] mlp           s3 t5 err=0.0833 steps=120 ms=17 -> miss
+[217/300] mlp           s3 t6 err=0.0642 steps=120 ms=17 -> reach
+[218/300] mlp           s3 t7 err=0.0832 steps=120 ms=17 -> miss
+[219/300] mlp           s3 t8 err=0.0716 steps=120 ms=17 -> reach
+[220/300] mlp           s3 t9 err=0.0502 steps=120 ms=17 -> reach
+[221/300] split         s3 t0 err=0.0047 steps=20 ms=19 -> STRICT
+[222/300] split         s3 t1 err=0.0056 steps=35 ms=19 -> STRICT
+[223/300] split         s3 t2 err=0.0032 steps=38 ms=19 -> STRICT
+[224/300] split         s3 t3 err=0.0103 steps=20 ms=19 -> STRICT
+[225/300] split         s3 t4 err=0.0105 steps=21 ms=19 -> STRICT
+[226/300] split         s3 t5 err=0.0089 steps=28 ms=19 -> STRICT
+[227/300] split         s3 t6 err=0.0080 steps=27 ms=19 -> STRICT
+[228/300] split         s3 t7 err=0.0058 steps=20 ms=19 -> STRICT
+[229/300] split         s3 t8 err=0.0114 steps=33 ms=19 -> STRICT
+[230/300] split         s3 t9 err=0.0131 steps=42 ms=19 -> STRICT
+[231/300] bilinear      s3 t0 err=0.0111 steps=40 ms=16 -> STRICT
+[232/300] bilinear      s3 t1 err=0.0126 steps=44 ms=16 -> STRICT
+[233/300] bilinear      s3 t2 err=0.0139 steps=41 ms=16 -> STRICT
+[234/300] bilinear      s3 t3 err=0.0092 steps=21 ms=16 -> STRICT
+[235/300] bilinear      s3 t4 err=0.0097 steps=18 ms=16 -> STRICT
+[236/300] bilinear      s3 t5 err=0.0117 steps=51 ms=16 -> STRICT
+[237/300] bilinear      s3 t6 err=0.0110 steps=30 ms=16 -> STRICT
+[238/300] bilinear      s3 t7 err=0.0051 steps=20 ms=16 -> STRICT
+[239/300] bilinear      s3 t8 err=0.0120 steps=40 ms=16 -> STRICT
+[240/300] bilinear      s3 t9 err=0.0073 steps=49 ms=16 -> STRICT
+  training linear seed 4 ...
+    epoch 50/300  loss 0.00583
+    epoch 100/300  loss 0.00715
+    epoch 150/300  loss 0.00680
+    epoch 200/300  loss 0.00638
+    epoch 250/300  loss 0.00708
+    epoch 300/300  loss 0.00640
+  saved kin_linear_r20_seed4.pt  held-out horizon error 0.3480 m
+  training linear seed 4 ...
+    epoch 50/300  loss 0.00672
+    epoch 100/300  loss 0.00680
+    epoch 150/300  loss 0.00645
+    epoch 200/300  loss 0.00609
+    epoch 250/300  loss 0.00701
+    epoch 300/300  loss 0.00647
+  saved kin_linear_r50_seed4_large.pt  held-out horizon error 0.3480 m
+  training mlp seed 4 ...
+    epoch 50/300  loss 0.00732
+    epoch 100/300  loss 0.00553
+    epoch 150/300  loss 0.00485
+    epoch 200/300  loss 0.00420
+    epoch 250/300  loss 0.00375
+    epoch 300/300  loss 0.00350
+  saved kin_mlp_r20_seed4.pt  held-out horizon error 0.2437 m
+  loaded kin_linear_r20_seed4.pt
+  training bilinear seed 4 ...
+    epoch 50/300  loss 0.00406
+    epoch 100/300  loss 0.00389
+    epoch 150/300  loss 0.00392
+    epoch 200/300  loss 0.00338
+    epoch 250/300  loss 0.00369
+    epoch 300/300  loss 0.00331
+  saved kin_bilinear_r20_seed4.pt  held-out horizon error 0.2545 m
+[241/300] oracle        s4 t0 err=0.0031 steps=20 ms=20 -> STRICT
+[242/300] oracle        s4 t1 err=0.0048 steps=33 ms=19 -> STRICT
+[243/300] oracle        s4 t2 err=0.0027 steps=38 ms=19 -> STRICT
+[244/300] oracle        s4 t3 err=0.0096 steps=20 ms=19 -> STRICT
+[245/300] oracle        s4 t4 err=0.0100 steps=21 ms=19 -> STRICT
+[246/300] oracle        s4 t5 err=0.0082 steps=29 ms=19 -> STRICT
+[247/300] oracle        s4 t6 err=0.0077 steps=27 ms=19 -> STRICT
+[248/300] oracle        s4 t7 err=0.0038 steps=20 ms=19 -> STRICT
+[249/300] oracle        s4 t8 err=0.0132 steps=33 ms=19 -> STRICT
+[250/300] oracle        s4 t9 err=0.0134 steps=36 ms=19 -> STRICT
+[251/300] linear        s4 t0 err=0.7482 steps=120 ms=8 -> miss
+[252/300] linear        s4 t1 err=0.7394 steps=120 ms=8 -> miss
+[253/300] linear        s4 t2 err=0.1400 steps=120 ms=8 -> miss
+[254/300] linear        s4 t3 err=0.7831 steps=120 ms=8 -> miss
+[255/300] linear        s4 t4 err=0.7954 steps=120 ms=8 -> miss
+[256/300] linear        s4 t5 err=0.1218 steps=120 ms=8 -> miss
+[257/300] linear        s4 t6 err=0.6240 steps=120 ms=8 -> miss
+[258/300] linear        s4 t7 err=0.6486 steps=120 ms=8 -> miss
+[259/300] linear        s4 t8 err=0.7807 steps=120 ms=8 -> miss
+[260/300] linear        s4 t9 err=0.8515 steps=120 ms=8 -> miss
+[261/300] linear_large  s4 t0 err=0.7064 steps=120 ms=10 -> miss
+[262/300] linear_large  s4 t1 err=0.6989 steps=120 ms=10 -> miss
+[263/300] linear_large  s4 t2 err=0.1244 steps=120 ms=10 -> miss
+[264/300] linear_large  s4 t3 err=0.7436 steps=120 ms=9 -> miss
+[265/300] linear_large  s4 t4 err=0.7570 steps=120 ms=9 -> miss
+[266/300] linear_large  s4 t5 err=0.1270 steps=120 ms=9 -> miss
+[267/300] linear_large  s4 t6 err=0.5872 steps=120 ms=9 -> miss
+[268/300] linear_large  s4 t7 err=0.6149 steps=120 ms=9 -> miss
+[269/300] linear_large  s4 t8 err=0.7454 steps=120 ms=10 -> miss
+[270/300] linear_large  s4 t9 err=0.7748 steps=120 ms=9 -> miss
+[271/300] mlp           s4 t0 err=0.0373 steps=120 ms=17 -> reach
+[272/300] mlp           s4 t1 err=0.0461 steps=120 ms=17 -> reach
+[273/300] mlp           s4 t2 err=0.0624 steps=120 ms=17 -> miss
+[274/300] mlp           s4 t3 err=0.0296 steps=120 ms=18 -> reach
+[275/300] mlp           s4 t4 err=0.0494 steps=120 ms=17 -> reach
+[276/300] mlp           s4 t5 err=0.0470 steps=120 ms=18 -> reach
+[277/300] mlp           s4 t6 err=0.0524 steps=120 ms=17 -> reach
+[278/300] mlp           s4 t7 err=0.0499 steps=120 ms=17 -> reach
+[279/300] mlp           s4 t8 err=0.0360 steps=120 ms=17 -> reach
+[280/300] mlp           s4 t9 err=0.0331 steps=120 ms=17 -> reach
+[281/300] split         s4 t0 err=0.0041 steps=20 ms=19 -> STRICT
+[282/300] split         s4 t1 err=0.0053 steps=35 ms=19 -> STRICT
+[283/300] split         s4 t2 err=0.0033 steps=38 ms=19 -> STRICT
+[284/300] split         s4 t3 err=0.0101 steps=20 ms=19 -> STRICT
+[285/300] split         s4 t4 err=0.0101 steps=21 ms=19 -> STRICT
+[286/300] split         s4 t5 err=0.0085 steps=28 ms=19 -> STRICT
+[287/300] split         s4 t6 err=0.0079 steps=27 ms=19 -> STRICT
+[288/300] split         s4 t7 err=0.0053 steps=20 ms=19 -> STRICT
+[289/300] split         s4 t8 err=0.0118 steps=33 ms=19 -> STRICT
+[290/300] split         s4 t9 err=0.0128 steps=42 ms=19 -> STRICT
+[291/300] bilinear      s4 t0 err=0.0111 steps=71 ms=16 -> STRICT
+[292/300] bilinear      s4 t1 err=0.0233 steps=120 ms=16 -> reach
+[293/300] bilinear      s4 t2 err=0.0189 steps=120 ms=16 -> reach
+[294/300] bilinear      s4 t3 err=0.0139 steps=24 ms=16 -> STRICT
+[295/300] bilinear      s4 t4 err=0.0107 steps=25 ms=16 -> STRICT
+[296/300] bilinear      s4 t5 err=0.0093 steps=52 ms=16 -> STRICT
+[297/300] bilinear      s4 t6 err=0.0174 steps=37 ms=16 -> STRICT
+[298/300] bilinear      s4 t7 err=0.0108 steps=80 ms=16 -> STRICT
+[299/300] bilinear      s4 t8 err=0.0187 steps=36 ms=16 -> STRICT
+[300/300] bilinear      s4 t9 err=0.0205 steps=58 ms=16 -> STRICT
+  training bilinear seed 0 ...
+    epoch 50/300  loss 0.00425
+    epoch 100/300  loss 0.00396
+    epoch 150/300  loss 0.00368
+    epoch 200/300  loss 0.00343
+    epoch 250/300  loss 0.00304
+    epoch 300/300  loss 0.00337
+  saved kin_bilinear_r20_seed0_multi_step.pt  held-out horizon error 0.2576 m
+  training bilinear seed 0 ...
+    epoch 50/300  loss 0.00009
+    epoch 100/300  loss 0.00010
+    epoch 150/300  loss 0.00009
+    epoch 200/300  loss 0.00010
+    epoch 250/300  loss 0.00009
+    epoch 300/300  loss 0.00009
+  saved kin_bilinear_r20_seed0_one_step.pt  held-out horizon error 0.2783 m
+  training bilinear seed 0 ...
+    epoch 50/300  loss 0.00122
+    epoch 100/300  loss 0.00106
+    epoch 150/300  loss 0.00099
+    epoch 200/300  loss 0.00104
+    epoch 250/300  loss 0.00099
+    epoch 300/300  loss 0.00099
+  saved kin_bilinear_r20_seed0_white_excitation.pt  held-out horizon error 0.1216 m
+
+held-out horizon error [m]:
+  multi_step         0.2588
+  one_step           0.2779
+  white_excitation   0.2683

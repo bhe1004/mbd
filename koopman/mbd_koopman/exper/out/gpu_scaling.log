@@ -1,0 +1,22 @@
+model=bilinear r=20 N=800 S=5 sigma=1.2->0.3 T=15 seeds=[0, 1, 2, 3, 4]
+CPU reference: 2598 ms per control step = 1.73 us per scalar substep (16 threads)
+
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link0_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link1_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link2_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+Failed to import warp: No module named 'warp'
+Failed to import mujoco_warp: No module named 'warp'
+  N=     1  rollout    460.1 ms  batched substep   1227.0 us  per candidate 1227.046 us  = 708.46x the CPU
+  N=    64  rollout    649.0 ms  batched substep   1730.7 us  per candidate  27.043 us  =  15.61x the CPU
+  N=   800  rollout    801.9 ms  batched substep   2138.5 us  per candidate   2.673 us  =   1.54x the CPU
+  N=  3200  rollout   2046.4 ms  batched substep   5457.2 us  per candidate   1.705 us  =   0.98x the CPU
+  N=  8192  rollout   2973.6 ms  batched substep   7929.6 us  per candidate   0.968 us  =   0.56x the CPU
+
+  at the planner's N=800 the control step is 4010 ms
+  the 50 ms period allows 26.7 us per batched substep
+
+wrote /home/home/mbd/koopman/mbd_koopman/exper/out/gpu_scaling.json
+SCALEDONE

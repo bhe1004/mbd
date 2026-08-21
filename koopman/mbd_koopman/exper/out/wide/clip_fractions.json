@@ -1,0 +1,26 @@
+{
+  "lim1.5_sig1.2": {
+    "single_wide": 0.20576190476190476,
+    "staged_wide": 0.21428571428571427,
+    "staged_narrow": 0.0,
+    "anneal": 0.21066666666666667
+  },
+  "lim1.5_sig3": {
+    "single_wide": 0.6221904761904762,
+    "staged_wide": 0.6202857142857143,
+    "staged_narrow": 0.0,
+    "anneal": 0.6192857142857143
+  },
+  "lim3_sig1.2": {
+    "single_wide": 0.012904761904761905,
+    "staged_wide": 0.013761904761904762,
+    "staged_narrow": 0.0,
+    "anneal": 0.012809523809523809
+  },
+  "lim3_sig3": {
+    "single_wide": 0.31557142857142856,
+    "staged_wide": 0.32195238095238093,
+    "staged_narrow": 0.0,
+    "anneal": 0.31323809523809526
+  }
+}

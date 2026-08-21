@@ -187,6 +187,10 @@ class FrankaTask(MBDClosedLoopMixin):
             states.append(s.copy())
         return np.stack(states, axis=0)
 
+    def batch_rollout(self, s0: Array, controls: Array):
+        """Public alias: roll K control sequences from one full state."""
+        return self._batch_rollout(s0, controls)
+
     def _batch_rollout(self, s0: Array, controls: Array):
         """Roll K control sequences through MuJoCo (threaded).
 
@@ -273,6 +277,39 @@ class FrankaTask(MBDClosedLoopMixin):
         return start, self.targets[case_id].copy(), f"target_{case_id}"
 
     # ------------------------------------------------------------------ dataset
+    def rollout_snippets(self, q0: Array, controls: Array) -> Array:
+        """Batched [q, ee] snippets from per-snippet starts and controls.
+
+        Args:
+            q0: initial joint angles, (n, 7).
+            controls: joint-velocity commands, (n, H, 7).
+
+        Returns:
+            base_states [q, ee] at control boundaries, (n, H+1, 10).
+        """
+        q0 = np.asarray(q0, dtype=np.float64)
+        controls = np.asarray(controls, dtype=np.float64)
+        n, horizon = controls.shape[0], controls.shape[1]
+        chunk = self.dataset_config.chunk_size
+
+        states = np.zeros((n, horizon + 1, NUM_JOINTS), dtype=np.float64)
+        ees = np.zeros((n, horizon + 1, 3), dtype=np.float64)
+        states[:, 0] = q0
+        for i in range(n):
+            ees[i, 0] = self.ee_of_q(q0[i])
+        for start in range(0, n, chunk):
+            end = min(start + chunk, n)
+            s0 = np.concatenate(
+                [q0[start:end], np.zeros((end - start, NUM_JOINTS))], axis=-1)
+            ctrl_sub = np.repeat(controls[start:end], self._nsub, axis=1)
+            init = np.stack([self._full_state(s) for s in s0], axis=0)
+            state, sensordata = mj_rollout.rollout(
+                self.model, self._rollout_datas, init, ctrl_sub)
+            boundary = slice(self._nsub - 1, None, self._nsub)
+            states[start:end, 1:] = np.asarray(state)[:, boundary, 1 : 1 + NUM_JOINTS]
+            ees[start:end, 1:] = np.asarray(sensordata)[:, boundary, :3]
+        return np.concatenate([states, ees], axis=-1)
+
     def sample_dataset(self, seed: int) -> Dict[str, Array]:
         """Coherent random joint-velocity snippets rolled through MuJoCo.
 

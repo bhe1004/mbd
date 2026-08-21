@@ -1,0 +1,55 @@
+{
+  "_comment": "Frozen conditions for the drone window experiment (Section C port). Edit and re-run drone_window.py / drone_window_live.py. Tuning notes: window centred at z=0.70 with H=25, sigma 1.6->0.3 gives BK-MBD reach with zero wall violations while QP-MPC commits to the near-side branch and stalls. The straight start->target chord crosses the wall below the window (z-span [0.50, 0.90]).",
+
+  "geometry": {
+    "start": [0.0, -0.60, 0.45, 0.0],
+    "y_wall": 0.0,
+    "win_c": [0.0, 0.70],
+    "r_win": 0.20,
+    "target_x": [-0.15, 0.15],
+    "target_y": [0.30, 0.45],
+    "target_z": [0.20, 0.62]
+  },
+
+  "planner_mbd": {
+    "horizon": 25,
+    "num_samples": 800,
+    "stages": 5,
+    "sigma_start": 1.6,
+    "sigma_end": 0.3,
+    "alpha": 0.5
+  },
+
+  "qp": {
+    "sqp_iters": 4
+  },
+
+  "wall_penalty": {
+    "w_wall": 500.0,
+    "slab": 0.06,
+    "margin": 0.03
+  },
+
+  "cost": {
+    "w_ee": 1.0,
+    "w_ctrl": 0.02,
+    "w_term": 10.0
+  },
+
+  "limits": {
+    "u_lim": [1.2, 1.2, 1.2, 1.8]
+  },
+
+  "task": {
+    "steps": 120,
+    "reach": 0.05,
+    "success_tol": 0.025,
+    "strict": 0.01
+  },
+
+  "experiment": {
+    "model_seed": 0,
+    "n_targets": 35,
+    "exp_seed": 20260728
+  }
+}

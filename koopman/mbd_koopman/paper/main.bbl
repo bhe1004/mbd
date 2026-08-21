@@ -46,12 +46,6 @@ C.~Pan, Z.~Yi, G.~Shi, and G.~Qu, ``Model-based diffusion for trajectory
   optimization,'' \emph{Advances in Neural Information Processing Systems
   (NeurIPS)}, vol.~37, pp. 57\,914--57\,943, 2024.
 
-\bibitem{xue2025full}
-H.~Xue, C.~Pan, Z.~Yi, G.~Qu, and G.~Shi, ``Full-order sampling-based mpc for
-  torque-level locomotion control via diffusion-style annealing,'' in
-  \emph{2025 IEEE International Conference on Robotics and Automation
-  (ICRA)}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2025, pp. 4974--4981.
-
 \bibitem{song2019generative}
 Y.~Song and S.~Ermon, ``Generative modeling by estimating gradients of the data
   distribution,'' \emph{Advances in Neural Information Processing Systems
@@ -63,13 +57,11 @@ Y.~Song, J.~Sohl-Dickstein, D.~P. Kingma, A.~Kumar, S.~Ermon, and B.~Poole,
   equations,'' in \emph{International Conference on Learning Representations
   (ICLR)}, 2021.
 
-\bibitem{koopman1931}
-B.~O. Koopman, ``Hamiltonian systems and transformation in {Hilbert} space,''
-  \emph{Proc. Natl. Acad. Sci.}, vol.~17, no.~5, pp. 315--318, 1931.
-
-\bibitem{mezic2005}
-I.~Mezi{\'c}, ``Spectral properties of dynamical systems, model reduction and
-  decompositions,'' \emph{Nonlinear Dyn.}, vol.~41, pp. 309--325, 2005.
+\bibitem{xue2025full}
+H.~Xue, C.~Pan, Z.~Yi, G.~Qu, and G.~Shi, ``Full-order sampling-based mpc for
+  torque-level locomotion control via diffusion-style annealing,'' in
+  \emph{2025 IEEE International Conference on Robotics and Automation
+  (ICRA)}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2025, pp. 4974--4981.
 
 \bibitem{williams2015edmd}
 M.~O. Williams, I.~G. Kevrekidis, and C.~W. Rowley, ``A data-driven
@@ -87,16 +79,6 @@ B.~Lusch, J.~N. Kutz, and S.~L. Brunton, ``Deep learning for universal linear
   embeddings of nonlinear dynamics,'' \emph{Nat. Commun.}, vol.~9, p. 4950,
   2018.
 
-\bibitem{korda2018mpc}
-M.~Korda and I.~Mezi{\'c}, ``Linear predictors for nonlinear dynamical systems:
-  {Koopman} operator meets model predictive control,'' \emph{Automatica},
-  vol.~93, pp. 149--160, 2018.
-
-\bibitem{strasser2026}
-R.~Str{\"a}sser, M.~Schaller, K.~Worthmann, J.~Berberich, and F.~Allg{\"o}wer,
-  ``An overview of {Koopman}-based control: From error bounds to closed-loop
-  guarantees,'' \emph{Annual Reviews in Control}, vol.~61, p. 101035, 2026.
-
 \bibitem{mppidk2026}
 W.~Hao, Y.~Fang, Z.~Lu, and S.~Mou, ``Accelerating sampling-based control via
   learned linear {Koopman} dynamics,'' in \emph{Proc. IEEE/RSJ Int. Conf.
@@ -106,25 +88,15 @@ W.~Hao, Y.~Fang, Z.~Lu, and S.~Mou, ``Accelerating sampling-based control via
 L.~C. Iacob, R.~T{\'o}th, and M.~Schoukens, ``Koopman form of nonlinear systems
   with inputs,'' \emph{Automatica}, vol. 162, p. 111525, 2024.
 
+\bibitem{korda2018mpc}
+M.~Korda and I.~Mezi{\'c}, ``Linear predictors for nonlinear dynamical systems:
+  {Koopman} operator meets model predictive control,'' \emph{Automatica},
+  vol.~93, pp. 149--160, 2018.
+
 \bibitem{bruder2021bilinear}
 D.~Bruder, X.~Fu, and R.~Vasudevan, ``Advantages of bilinear {Koopman}
   realizations for the modeling and control of systems with unknown dynamics,''
   \emph{IEEE Robot. Autom. Lett.}, vol.~6, no.~3, pp. 4369--4376, 2021.
-
-\bibitem{folkestad2021}
-C.~Folkestad and J.~W. Burdick, ``{Koopman} {NMPC}: {Koopman}-based learning
-  and nonlinear model predictive control of control-affine systems,'' in
-  \emph{Proc. IEEE Int. Conf. Robot. Autom. (ICRA)}, 2021, pp. 7350--7356.
-
-\bibitem{mamakoukas2019}
-G.~Mamakoukas, M.~L. Castano, X.~Tan, and T.~D. Murphey, ``Local {Koopman}
-  operators for data-driven control of robotic systems,'' in \emph{Robotics:
-  Science and Systems (RSS)}, 2019.
-
-\bibitem{safedmd2024}
-R.~Str{\"a}sser, M.~Schaller, K.~Worthmann, J.~Berberich, and F.~Allg{\"o}wer,
-  ``{SafEDMD}: A certified learning architecture tailored to data-driven
-  control of nonlinear dynamical systems,'' arXiv:2411.10359, 2024.
 
 \bibitem{janner2022planning}
 M.~Janner, Y.~Du, J.~B. Tenenbaum, and S.~Levine, ``Planning with diffusion for
@@ -143,5 +115,18 @@ J.~Carvalho, A.~T. Le, M.~Baierl, D.~Koert, and J.~Peters, ``Motion planning
   \emph{2023 IEEE/RSJ International Conference on Intelligent Robots and
   Systems (IROS)}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2023, pp.
   1916--1923.
+
+\bibitem{koopman1931}
+B.~O. Koopman, ``Hamiltonian systems and transformation in {Hilbert} space,''
+  \emph{Proc. Natl. Acad. Sci.}, vol.~17, no.~5, pp. 315--318, 1931.
+
+\bibitem{mezic2005}
+I.~Mezi{\'c}, ``Spectral properties of dynamical systems, model reduction and
+  decompositions,'' \emph{Nonlinear Dyn.}, vol.~41, pp. 309--325, 2005.
+
+\bibitem{kim2026bilinear}
+K.~Lee and S.~Kim, ``Linear or bilinear: A criterion for {Koopman} rollouts in
+  sampling-based predictive control,'' \emph{Int. J. Control Autom. Syst.},
+  2026, submitted.
 
 \end{thebibliography}

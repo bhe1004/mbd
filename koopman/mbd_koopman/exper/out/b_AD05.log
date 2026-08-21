@@ -1,0 +1,167 @@
+model=bilinear r=20 N=800 S=5 sigma=1.2->0.3 T=15 seeds=[0, 1, 2, 3, 4]
+conditions 3 x seeds 5 x targets 10 = 150 trials -> /home/home/mbd/koopman/mbd_koopman/exper/out/b_AD05/trials.jsonl
+  loaded phys_linear_r20_seed0.pt
+  loaded phys_linear_r50_seed0_large.pt
+  loaded phys_mlp_r20_seed0.pt
+[1/150] linear        s0 t0 err=0.0653 steps=120 ms=8 -> reach
+[2/150] linear        s0 t1 err=0.3995 steps=120 ms=8 -> miss
+[3/150] linear        s0 t2 err=0.0756 steps=120 ms=8 -> miss
+[4/150] linear        s0 t3 err=0.0631 steps=120 ms=8 -> reach
+[5/150] linear        s0 t4 err=0.3612 steps=120 ms=8 -> reach
+[6/150] linear        s0 t5 err=0.0360 steps=120 ms=8 -> reach
+[7/150] linear        s0 t6 err=0.0712 steps=120 ms=8 -> reach
+[8/150] linear        s0 t7 err=0.0482 steps=120 ms=8 -> reach
+[9/150] linear        s0 t8 err=0.0597 steps=120 ms=8 -> reach
+[10/150] linear        s0 t9 err=0.2033 steps=120 ms=8 -> miss
+[11/150] linear_large  s0 t0 err=0.0660 steps=120 ms=9 -> reach
+[12/150] linear_large  s0 t1 err=0.4680 steps=120 ms=9 -> miss
+[13/150] linear_large  s0 t2 err=0.0756 steps=120 ms=9 -> miss
+[14/150] linear_large  s0 t3 err=0.0633 steps=18 ms=9 -> STRICT
+[15/150] linear_large  s0 t4 err=0.3370 steps=120 ms=9 -> reach
+[16/150] linear_large  s0 t5 err=0.0362 steps=120 ms=9 -> reach
+[17/150] linear_large  s0 t6 err=0.0709 steps=120 ms=9 -> reach
+[18/150] linear_large  s0 t7 err=0.0573 steps=120 ms=9 -> reach
+[19/150] linear_large  s0 t8 err=0.0595 steps=120 ms=9 -> reach
+[20/150] linear_large  s0 t9 err=0.1831 steps=120 ms=9 -> miss
+[21/150] mlp           s0 t0 err=0.0416 steps=120 ms=17 -> reach
+[22/150] mlp           s0 t1 err=0.0314 steps=120 ms=17 -> reach
+[23/150] mlp           s0 t2 err=0.0432 steps=120 ms=17 -> reach
+[24/150] mlp           s0 t3 err=0.0418 steps=120 ms=17 -> reach
+[25/150] mlp           s0 t4 err=0.0458 steps=120 ms=17 -> reach
+[26/150] mlp           s0 t5 err=0.0426 steps=120 ms=17 -> reach
+[27/150] mlp           s0 t6 err=0.0506 steps=120 ms=17 -> reach
+[28/150] mlp           s0 t7 err=0.0434 steps=120 ms=17 -> reach
+[29/150] mlp           s0 t8 err=0.0401 steps=120 ms=17 -> reach
+[30/150] mlp           s0 t9 err=0.0355 steps=120 ms=17 -> reach
+  loaded phys_linear_r20_seed1.pt
+  loaded phys_linear_r50_seed1_large.pt
+  loaded phys_mlp_r20_seed1.pt
+[31/150] linear        s1 t0 err=0.0685 steps=120 ms=8 -> reach
+[32/150] linear        s1 t1 err=0.0737 steps=120 ms=8 -> miss
+[33/150] linear        s1 t2 err=0.0728 steps=120 ms=8 -> miss
+[34/150] linear        s1 t3 err=0.0704 steps=120 ms=8 -> reach
+[35/150] linear        s1 t4 err=0.0633 steps=120 ms=8 -> miss
+[36/150] linear        s1 t5 err=0.0356 steps=120 ms=8 -> reach
+[37/150] linear        s1 t6 err=0.0712 steps=120 ms=8 -> miss
+[38/150] linear        s1 t7 err=0.0632 steps=120 ms=8 -> reach
+[39/150] linear        s1 t8 err=0.0647 steps=120 ms=8 -> reach
+[40/150] linear        s1 t9 err=0.0879 steps=120 ms=8 -> miss
+[41/150] linear_large  s1 t0 err=0.0695 steps=120 ms=9 -> reach
+[42/150] linear_large  s1 t1 err=0.0748 steps=120 ms=9 -> miss
+[43/150] linear_large  s1 t2 err=0.0731 steps=120 ms=9 -> miss
+[44/150] linear_large  s1 t3 err=0.0717 steps=120 ms=9 -> reach
+[45/150] linear_large  s1 t4 err=0.0645 steps=120 ms=9 -> miss
+[46/150] linear_large  s1 t5 err=0.0349 steps=120 ms=9 -> reach
+[47/150] linear_large  s1 t6 err=0.0716 steps=120 ms=9 -> miss
+[48/150] linear_large  s1 t7 err=0.0637 steps=120 ms=9 -> miss
+[49/150] linear_large  s1 t8 err=0.0656 steps=120 ms=9 -> reach
+[50/150] linear_large  s1 t9 err=0.0866 steps=120 ms=9 -> miss
+[51/150] mlp           s1 t0 err=0.0542 steps=120 ms=17 -> reach
+[52/150] mlp           s1 t1 err=0.0299 steps=120 ms=17 -> reach
+[53/150] mlp           s1 t2 err=0.0445 steps=120 ms=17 -> reach
+[54/150] mlp           s1 t3 err=0.0598 steps=120 ms=17 -> miss
+[55/150] mlp           s1 t4 err=0.0486 steps=120 ms=17 -> reach
+[56/150] mlp           s1 t5 err=0.0487 steps=120 ms=17 -> reach
+[57/150] mlp           s1 t6 err=0.0700 steps=120 ms=17 -> reach
+[58/150] mlp           s1 t7 err=0.0468 steps=120 ms=17 -> reach
+[59/150] mlp           s1 t8 err=0.0626 steps=120 ms=17 -> reach
+[60/150] mlp           s1 t9 err=0.0303 steps=120 ms=17 -> reach
+  loaded phys_linear_r20_seed2.pt
+  loaded phys_linear_r50_seed2_large.pt
+  loaded phys_mlp_r20_seed2.pt
+[61/150] linear        s2 t0 err=0.0638 steps=120 ms=8 -> reach
+[62/150] linear        s2 t1 err=0.0659 steps=120 ms=8 -> miss
+[63/150] linear        s2 t2 err=0.0743 steps=120 ms=8 -> miss
+[64/150] linear        s2 t3 err=0.0598 steps=120 ms=8 -> reach
+[65/150] linear        s2 t4 err=0.0624 steps=120 ms=8 -> reach
+[66/150] linear        s2 t5 err=0.0405 steps=120 ms=8 -> reach
+[67/150] linear        s2 t6 err=0.0697 steps=120 ms=8 -> miss
+[68/150] linear        s2 t7 err=0.0633 steps=120 ms=8 -> reach
+[69/150] linear        s2 t8 err=0.0581 steps=120 ms=8 -> reach
+[70/150] linear        s2 t9 err=0.0756 steps=120 ms=8 -> miss
+[71/150] linear_large  s2 t0 err=0.0636 steps=120 ms=9 -> reach
+[72/150] linear_large  s2 t1 err=0.0665 steps=120 ms=9 -> miss
+[73/150] linear_large  s2 t2 err=0.0752 steps=120 ms=9 -> miss
+[74/150] linear_large  s2 t3 err=0.0596 steps=120 ms=9 -> reach
+[75/150] linear_large  s2 t4 err=0.0625 steps=120 ms=9 -> reach
+[76/150] linear_large  s2 t5 err=0.0403 steps=120 ms=9 -> reach
+[77/150] linear_large  s2 t6 err=0.0698 steps=120 ms=9 -> miss
+[78/150] linear_large  s2 t7 err=0.0634 steps=120 ms=9 -> reach
+[79/150] linear_large  s2 t8 err=0.0575 steps=120 ms=9 -> reach
+[80/150] linear_large  s2 t9 err=0.0764 steps=120 ms=9 -> miss
+[81/150] mlp           s2 t0 err=0.0259 steps=120 ms=17 -> reach
+[82/150] mlp           s2 t1 err=0.0457 steps=120 ms=17 -> reach
+[83/150] mlp           s2 t2 err=0.0249 steps=120 ms=17 -> reach
+[84/150] mlp           s2 t3 err=0.0394 steps=120 ms=17 -> reach
+[85/150] mlp           s2 t4 err=0.0405 steps=120 ms=17 -> reach
+[86/150] mlp           s2 t5 err=0.0267 steps=120 ms=17 -> reach
+[87/150] mlp           s2 t6 err=0.0269 steps=120 ms=17 -> reach
+[88/150] mlp           s2 t7 err=0.0378 steps=120 ms=17 -> reach
+[89/150] mlp           s2 t8 err=0.0368 steps=120 ms=17 -> reach
+[90/150] mlp           s2 t9 err=0.0279 steps=120 ms=17 -> reach
+  loaded phys_linear_r20_seed3.pt
+  loaded phys_linear_r50_seed3_large.pt
+  loaded phys_mlp_r20_seed3.pt
+[91/150] linear        s3 t0 err=0.8055 steps=120 ms=8 -> miss
+[92/150] linear        s3 t1 err=0.4739 steps=120 ms=8 -> miss
+[93/150] linear        s3 t2 err=1.2290 steps=120 ms=8 -> miss
+[94/150] linear        s3 t3 err=0.6953 steps=120 ms=8 -> miss
+[95/150] linear        s3 t4 err=0.7215 steps=120 ms=8 -> miss
+[96/150] linear        s3 t5 err=0.0456 steps=120 ms=8 -> reach
+[97/150] linear        s3 t6 err=1.2850 steps=120 ms=8 -> miss
+[98/150] linear        s3 t7 err=0.6728 steps=120 ms=8 -> miss
+[99/150] linear        s3 t8 err=1.2655 steps=120 ms=8 -> miss
+[100/150] linear        s3 t9 err=0.5881 steps=120 ms=8 -> miss
+[101/150] linear_large  s3 t0 err=0.8055 steps=120 ms=9 -> miss
+[102/150] linear_large  s3 t1 err=0.7344 steps=120 ms=9 -> miss
+[103/150] linear_large  s3 t2 err=1.2287 steps=120 ms=9 -> miss
+[104/150] linear_large  s3 t3 err=0.6642 steps=120 ms=9 -> miss
+[105/150] linear_large  s3 t4 err=0.7203 steps=120 ms=9 -> miss
+[106/150] linear_large  s3 t5 err=0.0521 steps=120 ms=9 -> reach
+[107/150] linear_large  s3 t6 err=1.2850 steps=120 ms=9 -> miss
+[108/150] linear_large  s3 t7 err=0.6743 steps=120 ms=9 -> miss
+[109/150] linear_large  s3 t8 err=1.2652 steps=120 ms=9 -> miss
+[110/150] linear_large  s3 t9 err=0.5484 steps=120 ms=9 -> miss
+[111/150] mlp           s3 t0 err=0.0268 steps=120 ms=17 -> reach
+[112/150] mlp           s3 t1 err=0.0531 steps=120 ms=17 -> reach
+[113/150] mlp           s3 t2 err=0.0558 steps=120 ms=17 -> reach
+[114/150] mlp           s3 t3 err=0.0368 steps=120 ms=17 -> reach
+[115/150] mlp           s3 t4 err=0.0645 steps=120 ms=17 -> miss
+[116/150] mlp           s3 t5 err=0.0554 steps=120 ms=17 -> miss
+[117/150] mlp           s3 t6 err=0.0457 steps=120 ms=17 -> reach
+[118/150] mlp           s3 t7 err=0.0654 steps=120 ms=17 -> miss
+[119/150] mlp           s3 t8 err=0.0425 steps=120 ms=17 -> reach
+[120/150] mlp           s3 t9 err=0.0530 steps=120 ms=17 -> reach
+  loaded phys_linear_r20_seed4.pt
+  loaded phys_linear_r50_seed4_large.pt
+  loaded phys_mlp_r20_seed4.pt
+[121/150] linear        s4 t0 err=0.7946 steps=120 ms=8 -> miss
+[122/150] linear        s4 t1 err=0.7128 steps=120 ms=8 -> miss
+[123/150] linear        s4 t2 err=1.0464 steps=120 ms=8 -> miss
+[124/150] linear        s4 t3 err=0.7534 steps=120 ms=8 -> miss
+[125/150] linear        s4 t4 err=1.1993 steps=120 ms=8 -> miss
+[126/150] linear        s4 t5 err=0.5434 steps=120 ms=8 -> miss
+[127/150] linear        s4 t6 err=1.1041 steps=120 ms=8 -> miss
+[128/150] linear        s4 t7 err=1.1729 steps=120 ms=8 -> miss
+[129/150] linear        s4 t8 err=1.3194 steps=120 ms=8 -> miss
+[130/150] linear        s4 t9 err=1.2882 steps=120 ms=8 -> miss
+[131/150] linear_large  s4 t0 err=0.6792 steps=120 ms=9 -> miss
+[132/150] linear_large  s4 t1 err=0.6967 steps=120 ms=9 -> miss
+[133/150] linear_large  s4 t2 err=0.9803 steps=120 ms=9 -> miss
+[134/150] linear_large  s4 t3 err=0.6436 steps=120 ms=9 -> miss
+[135/150] linear_large  s4 t4 err=1.0689 steps=120 ms=9 -> miss
+[136/150] linear_large  s4 t5 err=0.1275 steps=120 ms=9 -> miss
+[137/150] linear_large  s4 t6 err=0.7649 steps=120 ms=9 -> miss
+[138/150] linear_large  s4 t7 err=1.0210 steps=120 ms=9 -> miss
+[139/150] linear_large  s4 t8 err=1.0386 steps=120 ms=9 -> miss
+[140/150] linear_large  s4 t9 err=1.2604 steps=120 ms=9 -> miss
+[141/150] mlp           s4 t0 err=0.0333 steps=120 ms=17 -> reach
+[142/150] mlp           s4 t1 err=0.0422 steps=120 ms=17 -> reach
+[143/150] mlp           s4 t2 err=0.0570 steps=120 ms=17 -> reach
+[144/150] mlp           s4 t3 err=0.0221 steps=67 ms=17 -> STRICT
+[145/150] mlp           s4 t4 err=0.0314 steps=120 ms=17 -> reach
+[146/150] mlp           s4 t5 err=0.0196 steps=120 ms=17 -> reach
+[147/150] mlp           s4 t6 err=0.0391 steps=120 ms=17 -> reach
+[148/150] mlp           s4 t7 err=0.0299 steps=120 ms=17 -> reach
+[149/150] mlp           s4 t8 err=0.0213 steps=10 ms=17 -> STRICT
+[150/150] mlp           s4 t9 err=0.0325 steps=120 ms=17 -> reach

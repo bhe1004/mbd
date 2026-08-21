@@ -1,0 +1,4 @@
+gemm {
+  algorithm: 2
+  autotune_workspace_size: 33554432
+}

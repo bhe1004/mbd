@@ -1,0 +1,9 @@
+{
+  "data":    { "num_snippets": 60, "snippet_horizon": 8 },
+  "model":   { "variant": "bilinear", "lift_dim": 16, "hidden": 32, "layers": 2 },
+  "train":   { "horizon": 5, "epochs": 3, "batch_size": 32 },
+  "planner": { "num_samples": 32, "stages": 2, "sigma_start": 1.2,
+               "sigma_end": 0.3, "alpha": 0.4, "horizon": 5 },
+  "task":    { "steps": 4, "num_targets": 1 },
+  "run":     { "model_seeds": [0], "torch_threads": 4, "tag": "smoke" }
+}

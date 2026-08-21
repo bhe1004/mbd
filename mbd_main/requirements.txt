@@ -1,0 +1,7 @@
+# mbd_main -- pinned to the environment these numbers were measured in
+# (conda env `playground`, Python 3.11).
+numpy==2.4.6
+mujoco==3.9.0
+torch==2.7.0        # on Linux this pulls a CUDA wheel; CPU is enough here
+PyYAML==6.0.2
+tqdm==4.68.3        # optional: training progress bar (degrades to plain output)

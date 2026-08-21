@@ -1,0 +1,75 @@
+start [ 0.   -0.6   0.45  0.  ]  wall y=0.000  window c(x,z)=[0.  0.7] r=0.2  N=35 seed=20260728
+loaded /home/home/mbd/koopman/mbd_koopman/drone/saved/drone_window_bk_seed0.pt
+exp: 70 trials to run (0 done, 70 total) -> /home/home/mbd/koopman/mbd_koopman/drone/out/window/trials.jsonl
+[1/70] bk_mbd t0 [0.03 0.38 0.49]: err=0.0096 viol=0 steps=33 ms=31 -> REACH
+[2/70] bk_mbd t1 [-0.15  0.35  0.32]: err=0.0095 viol=0 steps=32 ms=30 -> REACH
+[3/70] bk_mbd t2 [-0.11  0.33  0.29]: err=0.0093 viol=0 steps=34 ms=30 -> REACH
+[4/70] bk_mbd t3 [0.13 0.41 0.28]: err=0.0069 viol=0 steps=49 ms=29 -> REACH
+[5/70] bk_mbd t4 [-0.05  0.38  0.56]: err=0.0077 viol=0 steps=41 ms=29 -> REACH
+[6/70] bk_mbd t5 [-0.1   0.44  0.35]: err=0.0073 viol=0 steps=34 ms=30 -> REACH
+[7/70] bk_mbd t6 [0.06 0.35 0.23]: err=0.0090 viol=0 steps=41 ms=29 -> REACH
+[8/70] bk_mbd t7 [-0.05  0.36  0.53]: err=0.0099 viol=0 steps=41 ms=30 -> REACH
+[9/70] bk_mbd t8 [-0.09  0.42  0.51]: err=0.0067 viol=0 steps=36 ms=30 -> REACH
+[10/70] bk_mbd t9 [-0.15  0.31  0.24]: err=0.0072 viol=0 steps=36 ms=30 -> REACH
+[11/70] bk_mbd t10 [0.15 0.4  0.56]: err=0.0047 viol=0 steps=36 ms=30 -> REACH
+[12/70] bk_mbd t11 [0.12 0.34 0.51]: err=0.0082 viol=0 steps=37 ms=30 -> REACH
+[13/70] bk_mbd t12 [0.14 0.32 0.39]: err=0.0082 viol=0 steps=37 ms=30 -> REACH
+[14/70] bk_mbd t13 [0.12 0.38 0.52]: err=0.0071 viol=0 steps=35 ms=30 -> REACH
+[15/70] bk_mbd t14 [-0.11  0.42  0.34]: err=0.0071 viol=0 steps=51 ms=29 -> REACH
+[16/70] bk_mbd t15 [0.02 0.42 0.51]: err=0.0099 viol=0 steps=40 ms=29 -> REACH
+[17/70] bk_mbd t16 [0.06 0.42 0.23]: err=0.0088 viol=0 steps=36 ms=30 -> REACH
+[18/70] bk_mbd t17 [-0.03  0.3   0.45]: err=0.0079 viol=0 steps=34 ms=30 -> REACH
+[19/70] bk_mbd t18 [0.06 0.4  0.54]: err=0.0070 viol=0 steps=45 ms=30 -> REACH
+[20/70] bk_mbd t19 [0.05 0.36 0.38]: err=0.0094 viol=0 steps=57 ms=30 -> REACH
+[21/70] bk_mbd t20 [0.07 0.42 0.43]: err=0.0100 viol=0 steps=32 ms=30 -> REACH
+[22/70] bk_mbd t21 [-0.06  0.44  0.58]: err=0.0097 viol=0 steps=39 ms=30 -> REACH
+[23/70] bk_mbd t22 [0.13 0.39 0.34]: err=0.0079 viol=0 steps=33 ms=29 -> REACH
+[24/70] bk_mbd t23 [-0.    0.38  0.31]: err=0.0094 viol=0 steps=33 ms=30 -> REACH
+[25/70] bk_mbd t24 [-0.13  0.36  0.51]: err=0.0097 viol=0 steps=51 ms=29 -> REACH
+[26/70] bk_mbd t25 [-0.11  0.44  0.37]: err=0.0088 viol=0 steps=42 ms=30 -> REACH
+[27/70] bk_mbd t26 [0.07 0.44 0.27]: err=0.0073 viol=0 steps=67 ms=30 -> REACH
+[28/70] bk_mbd t27 [0.12 0.44 0.41]: err=0.0064 viol=0 steps=41 ms=30 -> REACH
+[29/70] bk_mbd t28 [0.   0.37 0.25]: err=0.0099 viol=0 steps=34 ms=30 -> REACH
+[30/70] bk_mbd t29 [0.03 0.3  0.5 ]: err=0.0092 viol=0 steps=35 ms=29 -> REACH
+[31/70] bk_mbd t30 [0.12 0.42 0.38]: err=0.0090 viol=0 steps=33 ms=30 -> REACH
+[32/70] bk_mbd t31 [-0.1   0.34  0.33]: err=0.0081 viol=0 steps=39 ms=30 -> REACH
+[33/70] bk_mbd t32 [0.   0.43 0.53]: err=0.0096 viol=0 steps=30 ms=30 -> REACH
+[34/70] bk_mbd t33 [0.12 0.35 0.32]: err=0.0086 viol=0 steps=35 ms=29 -> REACH
+[35/70] bk_mbd t34 [0.05 0.31 0.46]: err=0.0093 viol=0 steps=29 ms=29 -> REACH
+[36/70] bk_qp_sqp t0 [0.03 0.38 0.49]: err=0.4138 viol=0 steps=120 ms=19 -> stall
+[37/70] bk_qp_sqp t1 [-0.15  0.35  0.32]: err=0.3826 viol=0 steps=120 ms=18 -> stall
+[38/70] bk_qp_sqp t2 [-0.11  0.33  0.29]: err=0.3604 viol=0 steps=120 ms=18 -> stall
+[39/70] bk_qp_sqp t3 [0.13 0.41 0.28]: err=0.4394 viol=0 steps=120 ms=18 -> stall
+[40/70] bk_qp_sqp t4 [-0.05  0.38  0.56]: err=0.0083 viol=0 steps=22 ms=19 -> REACH
+[41/70] bk_qp_sqp t5 [-0.1   0.44  0.35]: err=0.4687 viol=0 steps=120 ms=18 -> stall
+[42/70] bk_qp_sqp t6 [0.06 0.35 0.23]: err=0.3845 viol=0 steps=120 ms=18 -> stall
+[43/70] bk_qp_sqp t7 [-0.05  0.36  0.53]: err=0.3897 viol=0 steps=120 ms=18 -> stall
+[44/70] bk_qp_sqp t8 [-0.09  0.42  0.51]: err=0.4546 viol=0 steps=120 ms=18 -> stall
+[45/70] bk_qp_sqp t9 [-0.15  0.31  0.24]: err=0.3360 viol=0 steps=120 ms=18 -> stall
+[46/70] bk_qp_sqp t10 [0.15 0.4  0.56]: err=0.4334 viol=0 steps=120 ms=18 -> stall
+[47/70] bk_qp_sqp t11 [0.12 0.34 0.51]: err=0.3725 viol=0 steps=120 ms=18 -> stall
+[48/70] bk_qp_sqp t12 [0.14 0.32 0.39]: err=0.3480 viol=0 steps=120 ms=18 -> stall
+[49/70] bk_qp_sqp t13 [0.12 0.38 0.52]: err=0.4090 viol=0 steps=120 ms=18 -> stall
+[50/70] bk_qp_sqp t14 [-0.11  0.42  0.34]: err=0.4458 viol=0 steps=120 ms=18 -> stall
+[51/70] bk_qp_sqp t15 [0.02 0.42 0.51]: err=0.4518 viol=0 steps=120 ms=18 -> stall
+[52/70] bk_qp_sqp t16 [0.06 0.42 0.23]: err=0.4527 viol=0 steps=120 ms=18 -> stall
+[53/70] bk_qp_sqp t17 [-0.03  0.3   0.45]: err=0.3302 viol=0 steps=120 ms=18 -> stall
+[54/70] bk_qp_sqp t18 [0.06 0.4  0.54]: err=0.4257 viol=0 steps=120 ms=18 -> stall
+[55/70] bk_qp_sqp t19 [0.05 0.36 0.38]: err=0.3879 viol=0 steps=120 ms=18 -> stall
+[56/70] bk_qp_sqp t20 [0.07 0.42 0.43]: err=0.4526 viol=0 steps=120 ms=18 -> stall
+[57/70] bk_qp_sqp t21 [-0.06  0.44  0.58]: err=0.0087 viol=0 steps=23 ms=19 -> REACH
+[58/70] bk_qp_sqp t22 [0.13 0.39 0.34]: err=0.4244 viol=0 steps=120 ms=18 -> stall
+[59/70] bk_qp_sqp t23 [-0.    0.38  0.31]: err=0.4112 viol=0 steps=120 ms=18 -> stall
+[60/70] bk_qp_sqp t24 [-0.13  0.36  0.51]: err=0.3856 viol=0 steps=120 ms=18 -> stall
+[61/70] bk_qp_sqp t25 [-0.11  0.44  0.37]: err=0.4707 viol=0 steps=120 ms=18 -> stall
+[62/70] bk_qp_sqp t26 [0.07 0.44 0.27]: err=0.4654 viol=0 steps=120 ms=18 -> stall
+[63/70] bk_qp_sqp t27 [0.12 0.44 0.41]: err=0.4730 viol=0 steps=120 ms=18 -> stall
+[64/70] bk_qp_sqp t28 [0.   0.37 0.25]: err=0.4031 viol=0 steps=120 ms=19 -> stall
+[65/70] bk_qp_sqp t29 [0.03 0.3  0.5 ]: err=0.3336 viol=0 steps=120 ms=18 -> stall
+[66/70] bk_qp_sqp t30 [0.12 0.42 0.38]: err=0.4545 viol=0 steps=120 ms=18 -> stall
+[67/70] bk_qp_sqp t31 [-0.1   0.34  0.33]: err=0.3718 viol=0 steps=120 ms=18 -> stall
+[68/70] bk_qp_sqp t32 [0.   0.43 0.53]: err=0.4571 viol=0 steps=120 ms=18 -> stall
+[69/70] bk_qp_sqp t33 [0.12 0.35 0.32]: err=0.3829 viol=0 steps=120 ms=19 -> stall
+[70/70] bk_qp_sqp t34 [0.05 0.31 0.46]: err=0.3430 viol=0 steps=120 ms=18 -> stall
+
+done: 70 trials in 1.9 min. metrics -> /home/home/mbd/koopman/mbd_koopman/drone/out/window/trials.jsonl, trajs -> /home/home/mbd/koopman/mbd_koopman/drone/out/window/trajs.npz

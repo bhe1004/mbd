@@ -1,0 +1,32 @@
+# Drive the target from the keyboard while the planner tracks it live.
+# Only the differences from configs/default.yaml are listed.
+#
+#   python main.py run -c interactive.yaml
+#
+# Keys: W/S = x, A/D = y, E/Q = z, [ / ] = step size, R = reset (arrows also
+# work, but escape sequences are less robust than the letter keys).
+#
+# goal.mode decides WHICH WINDOW takes the keys:
+#   keyboard  the MuJoCo viewer window (simulator plant only)
+#   terminal  the terminal running this command (works over ROS and on hardware)
+extends: default.yaml
+
+scene:
+  obstacles: []          # free space: the target can be driven anywhere
+  start_tcp: [0.45, 0.0, 0.4]
+  target: null           # the keyboard goal starts at built-in target 0
+
+goal:
+  mode: keyboard         # viewer keys; use `terminal` with the ROS plant
+  step: 0.02             # metres per key press
+
+run:
+  mode: async            # required: the planner must not block the arm
+  wait_for_start: true
+  save_replay: ask
+  max_time: 120.0        # a hand-driven target never completes; this ends the run
+
+viewer:
+  enabled: true          # required: the key events come from the viewer window
+  trail: true
+  prediction: true

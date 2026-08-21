@@ -1,0 +1,13 @@
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link0_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link1_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link2_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+Failed to import warp: No module named 'warp'
+Failed to import mujoco_warp: No module named 'warp'
+dtype: float64
+compile 5.1s
+float64 agreement: {'tcp_gap_median_m': 0.0020757066533794604, 'tcp_gap_max_m': 0.010382085331636853, 'tcp_gap_terminal_median_m': 0.003041038641593952, 'path_length_m': 0.27826722663439496}
+float64 rollout 1635.5 ms -> substep 4361 us -> control step 8177 ms (164x the 50 ms period)
+X64DONE

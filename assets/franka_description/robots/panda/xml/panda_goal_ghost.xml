@@ -1,0 +1,102 @@
+<mujoco model="panda goal ghost">
+  <asset>
+    <material name="goal_ghost_white" rgba="1 1 1 0.16"/>
+    <material name="goal_ghost_off_white" rgba="0.901961 0.921569 0.929412 0.16"/>
+    <material name="goal_ghost_black" rgba="0.25 0.25 0.25 0.16"/>
+    <material name="goal_ghost_green" rgba="0 1 0 0.16"/>
+    <material name="goal_ghost_light_blue" rgba="0.039216 0.541176 0.780392 0.16"/>
+  </asset>
+
+  <worldbody>
+    <body name="goal_ghost_link0" mocap="true">
+      <geom mesh="link0_0" material="goal_ghost_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_1" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_2" material="goal_ghost_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_3" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_4" material="goal_ghost_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_5" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_7" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_8" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_9" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_10" material="goal_ghost_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_11" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="goal_ghost_link1" mocap="true">
+      <geom mesh="link1" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="goal_ghost_link2" mocap="true">
+      <geom mesh="link2" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="goal_ghost_link3" mocap="true">
+      <geom mesh="link3_0" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_1" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_2" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_3" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="goal_ghost_link4" mocap="true">
+      <geom mesh="link4_0" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_1" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_2" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_3" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="goal_ghost_link5" mocap="true">
+      <geom mesh="link5_0" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_1" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_2" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="goal_ghost_link6" mocap="true">
+      <geom mesh="link6_0" material="goal_ghost_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_1" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_2" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_3" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_4" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_5" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_6" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_7" material="goal_ghost_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_8" material="goal_ghost_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_9" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_10" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_11" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_12" material="goal_ghost_green" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_13" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_14" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_15" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_16" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="goal_ghost_link7" mocap="true">
+      <geom mesh="link7_0" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_1" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_2" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_3" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_4" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_5" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_6" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_7" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="goal_ghost_hand" mocap="true">
+      <geom mesh="hand_0" material="goal_ghost_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_1" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_2" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_3" material="goal_ghost_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_4" material="goal_ghost_off_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="goal_ghost_left_finger" mocap="true">
+      <geom mesh="finger_0" material="goal_ghost_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="goal_ghost_right_finger" mocap="true">
+      <geom mesh="finger_0" material="goal_ghost_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="goal_ghost_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+  </worldbody>
+</mujoco>

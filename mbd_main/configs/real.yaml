@@ -1,0 +1,57 @@
+# Run MBD through cho_robot_project's ROS 2 stack (run.plant: ros2).
+#
+# This config selects the PLANT INTERFACE, not the simulator: the same file
+# drives the MuJoCo bringup and the real arm. Always shake a change out on the
+# MuJoCo bringup first -- it is the identical command path.
+#
+# Terminal A -- bring the stack up (velocity interfaces + the VLA controller):
+#   ros2 launch cho_bringup_franka bringup_mujoco_robot.launch.py \
+#        control_mode:=velocity use_vla:=true
+#   (real arm: bringup_real_robot.launch.py, same two arguments)
+#
+# Terminal B -- ROS + workspace sourced, then:
+#   .venv-ros/bin/python main.py home -c real.yaml   # point-to-point to the start pose
+#   .venv-ros/bin/python main.py run  -c real.yaml   # plan and execute
+#
+# Only the differences from configs/default.yaml are listed below.
+#
+# Controller-side parameters this file assumes (cho_bringup_franka's
+# controllers.yaml, both the mujoco and real variants):
+#   control_mode:      velocity   (launch argument)
+#   chunk_ema_factor:  1.0        REQUIRED -- set in controllers.yaml. At the
+#                                 stock 0.2 the arm reaches only ~60% of the
+#                                 commanded speed during transients (measured)
+#                                 and coasts ~0.25 s after a zero command.
+#   max_joint_ref_vel: 1.0        >= task.action_limit below
+#   max_joint_ref_acc: 4.0        stock; raise it if the ramp-in is too slow
+#   goal_timeout_sec:  60.0       stock; raise it for longer sessions
+extends: default.yaml
+
+task:
+  action_limit: 0.5        # START LOW on hardware and raise it deliberately
+  horizon: 25
+
+scene:
+  # Describe the REAL cell here. Everything the arm must not hit has to be
+  # listed: the planner only avoids obstacles it is told about.
+  obstacles: []
+  start_tcp: null          # null = the model's home configuration
+  target: [0.50, 0.0, 0.40]
+
+run:
+  plant: ros2
+  mode: async              # required: lockstep would stall the arm while planning
+  wait_for_start: true     # keeps the operator in the loop before motion
+  max_time: 30.0
+  save_replay: always
+  warmup_plans: 5
+
+viewer:
+  enabled: false           # there is no simulation to show
+
+ros2:
+  joint_names: [fr3_joint1, fr3_joint2, fr3_joint3, fr3_joint4,
+                fr3_joint5, fr3_joint6, fr3_joint7]
+  state_timeout: 0.2       # [s] a staler measurement faults the run
+  start_tolerance: 0.05    # [rad] refuse to start if the arm is not at start_tcp
+  ref_error_stop: 0.20     # [rad] reference vs measured gap that stops the run

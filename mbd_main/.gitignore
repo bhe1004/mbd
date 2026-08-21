@@ -1,0 +1,17 @@
+# Virtual environments: absolute paths inside, never portable.
+.venv-ros/
+.venv/
+
+# Pipeline outputs. The dataset regenerates in seconds (`main.py collect`) and
+# the model in about a minute (`main.py train`), so neither is worth versioning.
+# The checkpoint is an exception -- see below.
+data/*.npz
+out/
+models/*.json
+
+# The trained model IS committed (64 KB): a fresh clone can `main.py run`
+# straight away. Delete this negation if you would rather force a retrain.
+!models/bk_koopman.pt
+
+__pycache__/
+*.pyc

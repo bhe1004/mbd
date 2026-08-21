@@ -1,0 +1,13 @@
+t0 final 0.0115 min 0.0028 strict True 989 ms
+t1 final 0.0144 min 0.0054 strict True 980 ms
+t2 final 0.0129 min 0.0023 strict True 959 ms
+t3 final 0.0080 min 0.0026 strict True 993 ms
+t4 final 0.0122 min 0.0031 strict True 972 ms
+t5 final 0.0109 min 0.0045 strict True 947 ms
+t6 final 0.0051 min 0.0027 strict True 974 ms
+t7 final 0.0065 min 0.0015 strict True 971 ms
+t8 final 0.0065 min 0.0005 strict True 992 ms
+t9 final 0.0065 min 0.0031 strict True 960 ms
+
+2 ms rollout, S=2, chain 750: 5cm 10/10  1cm 10/10  final med 0.0094 m  median 973 ms  worst 1135 ms  misses 1200
+FINES2DONE

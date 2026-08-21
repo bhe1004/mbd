@@ -1,0 +1,19 @@
+model=bilinear r=20 N=800 S=5 sigma=1.2->0.3 T=15 seeds=[0, 1, 2, 3, 4]
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link0_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link1_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link2_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+Failed to import warp: No module named 'warp'
+Failed to import mujoco_warp: No module named 'warp'
+  N=  800 contact=off  compile    7.4s  rollout    804.3 ms (375 substeps)  substep  2144.8 us  control step   4021.6 ms  =   80.4x the 50 ms period
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/jax/_src/core.py:665: RuntimeWarning: overflow encountered in cast
+  c_arg = dtypes.canonicalize_value(arg)
+
+  GPU(float32) vs CPU(float64) on identical commands: {'tcp_gap_median_m': 0.0020752209149044356, 'tcp_gap_max_m': 0.010388975065285118, 'tcp_gap_terminal_median_m': 0.003042769380921659, 'path_length_m': 0.27826722663439496}
+
+  meeting the period needs 26.7 us per batched substep
+
+wrote /home/home/mbd/koopman/mbd_koopman/exper/out/gpu_probe.json
+PROBEDONE

@@ -1,0 +1,13 @@
+configuration                 dt  chain     5cm     1cm   final med  ms/step  misses
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link0_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link1_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link2_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+Failed to import warp: No module named 'warp'
+Failed to import mujoco_warp: No module named 'warp'
+ours     5x 800x15 s2/2    50.0ms     75   10/10   10/10     0.0056m    42.4       7
+DIAL     2x2048x16 s2/2    50.0ms     32   10/10   10/10     0.0080m    27.4       0
+ours     5x 800x15 s8/8    50.0ms     75   10/10   10/10     0.0056m    76.1    1200
+ORACLEGPUDONE

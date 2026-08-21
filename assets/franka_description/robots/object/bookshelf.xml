@@ -1,0 +1,46 @@
+<mujoco model="bookshelf">
+  <worldbody>
+    <!--
+      Static bookshelf obstacle for dataset collection.
+
+      Dimensions are set to 79 x 29.5 x 177 cm:
+      width(Y)=0.79 m, depth(X)=0.295 m, height(Z)=1.77 m.
+      The open front faces the robot at negative X.  The front face is 0.60 m
+      from the Franka base, and the bookshelf rests on the lowered floor z=-0.72.
+    -->
+    <body name="bookshelf">
+      <!-- side panels -->
+      <geom name="bookshelf_left_side" type="box"
+            pos="0.7475 -0.385 0.165" size="0.1475 0.010 0.885"
+            rgba="0.55 0.39 0.25 1" condim="3" friction="0.9 0.005 0.0001"/>
+      <geom name="bookshelf_right_side" type="box"
+            pos="0.7475 0.385 0.165" size="0.1475 0.010 0.885"
+            rgba="0.55 0.39 0.25 1" condim="3" friction="0.9 0.005 0.0001"/>
+
+      <!-- back panel -->
+      <geom name="bookshelf_back_panel" type="box"
+            pos="0.885 0.0 0.165" size="0.010 0.395 0.885"
+            rgba="0.49 0.34 0.22 1" condim="3" friction="0.9 0.005 0.0001"/>
+
+      <!-- horizontal boards, using 3 cm board thickness from the STEP layers -->
+      <geom name="bookshelf_bottom_board" type="box"
+            pos="0.7375 0.0 -0.705" size="0.1375 0.375 0.015"
+            rgba="0.60 0.43 0.28 1" condim="3" friction="0.9 0.005 0.0001"/>
+      <geom name="bookshelf_lower_closed_panel" type="box"
+            pos="0.7375 0.0 -0.355" size="0.1375 0.375 0.335"
+            rgba="0.50 0.35 0.23 1" condim="3" friction="0.9 0.005 0.0001"/>
+      <geom name="bookshelf_shelf_00" type="box"
+            pos="0.7375 0.0 -0.005" size="0.1375 0.375 0.015"
+            rgba="0.60 0.43 0.28 1" condim="3" friction="0.9 0.005 0.0001"/>
+      <geom name="bookshelf_shelf_01" type="box"
+            pos="0.7375 0.0 0.345" size="0.1375 0.375 0.015"
+            rgba="0.60 0.43 0.28 1" condim="3" friction="0.9 0.005 0.0001"/>
+      <geom name="bookshelf_shelf_02" type="box"
+            pos="0.7375 0.0 0.695" size="0.1375 0.375 0.015"
+            rgba="0.60 0.43 0.28 1" condim="3" friction="0.9 0.005 0.0001"/>
+      <geom name="bookshelf_top_board" type="box"
+            pos="0.7375 0.0 1.035" size="0.1375 0.375 0.015"
+            rgba="0.60 0.43 0.28 1" condim="3" friction="0.9 0.005 0.0001"/>
+    </body>
+  </worldbody>
+</mujoco>

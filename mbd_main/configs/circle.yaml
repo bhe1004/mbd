@@ -1,0 +1,52 @@
+# Track a target sweeping a circle at constant speed.
+#
+#   python main.py run -c circle.yaml                      # simulator
+#   .venv-ros/bin/python main.py run -c circle.yaml -s run.plant=ros2 \
+#                                    -s viewer.enabled=false   # ROS stack
+#
+# The circle is placed so it starts at the tool position and its angular rate
+# ramps up from rest over `lead_in`, so the run measures tracking, not a step
+# response. There is nothing to "reach": the report gives tracking error.
+extends: default.yaml
+
+scene:
+  obstacles: []
+  start_tcp: null        # start from the home configuration
+  target: null           # ignored: the goal source owns the target
+
+goal:
+  mode: circle
+  radius: 0.12           # [m]
+  period: 8.0            # [s] per revolution -> 0.094 m/s
+  plane: yz              # the vertical plane in front of the base
+  lead_in: 2.0
+  predict: true          # set false to see the standing lag this removes
+
+# Tracking wants different weights from reaching, and they cannot be changed
+# alone: MBD's softmax temperature must scale WITH the cost magnitude. Raising
+# `ee` at the stock alpha makes the softmax nearly an argmin, the weighted-mean
+# update collapses onto one noisy sample, and tracking gets WORSE (measured:
+# 14.3 -> 20.9 mm). Scaled together it improves (ee 10 / alpha 0.3 -> 11.5 mm).
+task:
+  weights:
+    ee: 10.0
+
+mbd:
+  alpha: 0.3           # 10x `ee`, i.e. the same effective temperature
+
+# The across-plans noise shrink exists to settle onto a STATIONARY goal; a
+# target that keeps moving is never "close enough to stop exploring", and the
+# shrink just starves the sampler (18.7 -> 16.3 mm with it off).
+adaptive:
+  enabled: false
+
+run:
+  mode: async
+  wait_for_start: true
+  max_time: 30.0         # ~3.5 revolutions
+  save_replay: ask
+
+viewer:
+  enabled: true
+  trail: true
+  prediction: false      # the trail alone is easier to read while tracking

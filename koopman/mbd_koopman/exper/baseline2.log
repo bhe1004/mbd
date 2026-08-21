@@ -1,0 +1,17 @@
+model=bilinear r=20 N=800 S=5 sigma=1.2->0.3 T=15 seeds=[0, 1, 2]
+conditions 1 x seeds 3 x targets 7 = 21 trials -> /home/home/mbd/koopman/mbd_koopman/exper/out/b_baseline/trials.jsonl
+  loaded bilinear_r20_seed0.pt
+  loaded bilinear_r20_seed1.pt
+[13/21] bilinear      s1 t5 err=0.0107 steps=69 ms=18 -> STRICT
+[14/21] bilinear      s1 t6 err=0.0200 steps=31 ms=22 -> STRICT
+  training bilinear seed 2 ...
+    epoch 50/300  loss 0.00392
+    epoch 100/300  loss 0.00479
+    epoch 150/300  loss 0.00506
+    epoch 200/300  loss 0.00340
+    epoch 250/300  loss 0.00543
+    epoch 300/300  loss 0.00327
+  saved bilinear_r20_seed2.pt  held-out horizon error 0.2481 m
+[15/21] bilinear      s2 t0 err=0.0112 steps=46 ms=18 -> STRICT
+[16/21] bilinear      s2 t1 err=0.0175 steps=28 ms=18 -> STRICT
+[17/21] bilinear      s2 t2 err=0.0146 steps=42 ms=18 -> STRICT

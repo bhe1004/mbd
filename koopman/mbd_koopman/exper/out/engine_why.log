@@ -1,0 +1,26 @@
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link0_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link1_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link2_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+Failed to import warp: No module named 'warp'
+Failed to import mujoco_warp: No module named 'warp'
+joint angle [rad] under a held 1.0 rad/s command (ideal = 0.05 per step)
+
+      step       CPU  2 ms      MJX  2 ms      CPU 50 ms      MJX 50 ms  CPU 50 ms it2    ideal
+         1        0.03090        0.02984        0.07641        0.02080        0.07643   0.0500
+         2        0.07788        0.07667        0.13251        0.06203        0.13253   0.1000
+         3        0.12708        0.12585        0.18400        0.10890        0.18401   0.1500
+         5        0.22614        0.22490        0.28392        0.20682        0.28393   0.2500
+         8        0.37479        0.37355        0.43263        0.35534        0.43268   0.4000
+        12        0.57299        0.57176        0.63081        0.55355        0.63087   0.6000
+        15        0.72165        0.72041        0.77945        0.70220        0.77951   0.7500
+
+per-step increment (rad), should be 0.05 if the servo tracks
+  CPU  2 ms      mean  0.04811  min  0.03090  max  0.04955  sign flips 0
+  MJX  2 ms      mean  0.04803  min  0.02984  max  0.04955  sign flips 0
+  CPU 50 ms      mean  0.05196  min  0.04954  max  0.07641  sign flips 0
+  MJX 50 ms      mean  0.04681  min  0.02080  max  0.04955  sign flips 0
+  CPU 50 ms it2  mean  0.05197  min  0.04954  max  0.07643  sign flips 0
+WHYDONE

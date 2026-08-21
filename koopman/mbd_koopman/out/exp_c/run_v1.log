@@ -1,0 +1,1018 @@
+exp_c: 50 trials to run (0 already done, 50 total) -> /home/home/mbd/koopman/mbd_koopman/out/exp_c/trials.jsonl
+
+=== [1/50] bk_mbd seed=0 target=0 (0.45, 0.3, 0.3) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed0.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.02s] target 0 err=0.263 m | 22 plans, recent 47 ms/plan (21.7 Hz)
+[  1.50s] target 0 strict reach (21.1 mm) in 1.50 s
+  reached_strict=True reached_5cm=True min_err=0.0040 violation=False safe_stall=False
+
+=== [2/50] bk_mbd seed=0 target=1 (0.55, 0.3, 0.25) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed0.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.02s] target 0 err=0.564 m | 22 plans, recent 48 ms/plan (21.5 Hz)
+[  2.05s] target 0 err=0.093 m | 43 plans, recent 48 ms/plan (21.0 Hz)
+[  2.60s] target 0 strict reach (19.1 mm) in 2.60 s
+  reached_strict=True reached_5cm=True min_err=0.0155 violation=False safe_stall=False
+
+=== [3/50] bk_mbd seed=0 target=2 (0.35, 0.3, 0.35) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed0.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.03s] target 0 err=0.150 m | 22 plans, recent 48 ms/plan (21.3 Hz)
+[  1.50s] target 0 strict reach (24.9 mm) in 1.50 s
+  reached_strict=True reached_5cm=True min_err=0.0041 violation=False safe_stall=False
+
+=== [4/50] bk_mbd seed=0 target=3 (0.5, 0.35, 0.2) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed0.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.01s] target 0 err=0.643 m | 22 plans, recent 47 ms/plan (21.7 Hz)
+[  2.02s] target 0 err=0.243 m | 42 plans, recent 49 ms/plan (20.8 Hz)
+[  3.06s] target 0 err=0.062 m | 63 plans, recent 48 ms/plan (20.6 Hz)
+[  3.30s] target 0 strict reach (18.2 mm) in 3.30 s
+  reached_strict=True reached_5cm=True min_err=0.0019 violation=False safe_stall=False
+
+=== [5/50] bk_mbd seed=0 target=4 (0.4, 0.28, 0.4) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed0.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.04s] target 0 err=0.087 m | 22 plans, recent 49 ms/plan (21.1 Hz)
+[  1.35s] target 0 strict reach (24.8 mm) in 1.35 s
+  reached_strict=True reached_5cm=True min_err=0.0038 violation=False safe_stall=False
+
+=== [6/50] bk_mbd seed=1 target=0 (0.45, 0.3, 0.3) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed1.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.00s] target 0 err=0.292 m | 21 plans, recent 49 ms/plan (20.9 Hz)
+[  1.45s] target 0 strict reach (21.0 mm) in 1.45 s
+  reached_strict=True reached_5cm=True min_err=0.0050 violation=False safe_stall=False
+
+=== [7/50] bk_mbd seed=1 target=1 (0.55, 0.3, 0.25) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed1.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.05s] target 0 err=0.519 m | 22 plans, recent 49 ms/plan (21.0 Hz)
+[  2.08s] target 0 err=0.504 m | 43 plans, recent 48 ms/plan (20.6 Hz)
+[  3.13s] target 0 err=0.528 m | 64 plans, recent 49 ms/plan (20.5 Hz)
+[  4.14s] target 0 err=0.420 m | 84 plans, recent 49 ms/plan (20.3 Hz)
+[  5.14s] target 0 err=0.036 m | 104 plans, recent 49 ms/plan (20.2 Hz)
+[  6.15s] target 0 err=0.110 m | 124 plans, recent 49 ms/plan (20.2 Hz)
+[  7.19s] target 0 err=0.118 m | 145 plans, recent 49 ms/plan (20.2 Hz)
+[  8.24s] target 0 err=0.152 m | 166 plans, recent 49 ms/plan (20.1 Hz)
+[  9.29s] target 0 err=0.194 m | 187 plans, recent 49 ms/plan (20.1 Hz)
+[ 10.29s] target 0 err=0.249 m | 207 plans, recent 49 ms/plan (20.1 Hz)
+[ 11.34s] target 0 err=0.534 m | 228 plans, recent 49 ms/plan (20.1 Hz)
+[ 12.39s] target 0 err=0.801 m | 249 plans, recent 49 ms/plan (20.1 Hz)
+[ 13.44s] target 0 err=0.767 m | 270 plans, recent 49 ms/plan (20.1 Hz)
+[ 14.47s] target 0 err=0.786 m | 291 plans, recent 48 ms/plan (20.1 Hz)
+[ 15.49s] target 0 err=0.753 m | 312 plans, recent 47 ms/plan (20.1 Hz)
+[ 16.50s] target 0 err=0.789 m | 333 plans, recent 47 ms/plan (20.2 Hz)
+[ 17.51s] target 0 err=0.771 m | 354 plans, recent 47 ms/plan (20.2 Hz)
+[ 18.53s] target 0 err=0.697 m | 375 plans, recent 47 ms/plan (20.2 Hz)
+[ 19.56s] target 0 err=0.563 m | 396 plans, recent 48 ms/plan (20.2 Hz)
+[ 20.59s] target 0 err=0.691 m | 417 plans, recent 48 ms/plan (20.2 Hz)
+[ 21.64s] target 0 err=0.785 m | 438 plans, recent 49 ms/plan (20.2 Hz)
+[ 22.67s] target 0 err=0.757 m | 459 plans, recent 48 ms/plan (20.2 Hz)
+[ 23.71s] target 0 err=0.652 m | 480 plans, recent 48 ms/plan (20.2 Hz)
+[ 24.74s] target 0 err=0.724 m | 501 plans, recent 48 ms/plan (20.2 Hz)
+[ 25.76s] target 0 err=0.735 m | 522 plans, recent 48 ms/plan (20.3 Hz)
+[ 26.81s] target 0 err=0.614 m | 543 plans, recent 49 ms/plan (20.3 Hz)
+[ 27.81s] target 0 err=0.707 m | 563 plans, recent 49 ms/plan (20.2 Hz)
+[ 28.84s] target 0 err=0.706 m | 584 plans, recent 48 ms/plan (20.2 Hz)
+[ 29.88s] target 0 err=0.740 m | 605 plans, recent 48 ms/plan (20.2 Hz)
+  reached_strict=False reached_5cm=True min_err=0.0342 violation=False safe_stall=True
+
+=== [8/50] bk_mbd seed=1 target=2 (0.35, 0.3, 0.35) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed1.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.00s] target 0 err=0.265 m | 21 plans, recent 49 ms/plan (20.9 Hz)
+[  1.60s] target 0 strict reach (23.5 mm) in 1.60 s
+[  2.01s] target 0 err=0.011 m | 41 plans, recent 49 ms/plan (20.4 Hz)
+  reached_strict=True reached_5cm=True min_err=0.0036 violation=False safe_stall=False
+
+=== [9/50] bk_mbd seed=1 target=3 (0.5, 0.35, 0.2) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed1.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.04s] target 0 err=0.635 m | 22 plans, recent 49 ms/plan (21.1 Hz)
+[  2.09s] target 0 err=0.630 m | 43 plans, recent 49 ms/plan (20.5 Hz)
+[  3.13s] target 0 err=0.647 m | 63 plans, recent 52 ms/plan (20.1 Hz)
+[  4.17s] target 0 err=0.427 m | 83 plans, recent 49 ms/plan (19.9 Hz)
+[  4.95s] target 0 strict reach (22.4 mm) in 4.95 s
+[  5.21s] target 0 err=0.022 m | 104 plans, recent 49 ms/plan (20.0 Hz)
+  reached_strict=True reached_5cm=True min_err=0.0187 violation=False safe_stall=False
+
+=== [10/50] bk_mbd seed=1 target=4 (0.4, 0.28, 0.4) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed1.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.04s] target 0 err=0.130 m | 22 plans, recent 48 ms/plan (21.2 Hz)
+[  1.40s] target 0 strict reach (22.3 mm) in 1.40 s
+  reached_strict=True reached_5cm=True min_err=0.0087 violation=False safe_stall=False
+
+=== [11/50] bk_mbd seed=2 target=0 (0.45, 0.3, 0.3) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed2.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.02s] target 0 err=0.489 m | 21 plans, recent 50 ms/plan (20.6 Hz)
+[  2.03s] target 0 err=0.484 m | 41 plans, recent 49 ms/plan (20.2 Hz)
+[  3.04s] target 0 err=0.538 m | 61 plans, recent 50 ms/plan (20.0 Hz)
+[  4.06s] target 0 err=0.253 m | 81 plans, recent 50 ms/plan (20.0 Hz)
+[  5.07s] target 0 err=0.439 m | 101 plans, recent 50 ms/plan (19.9 Hz)
+[  6.09s] target 0 err=0.167 m | 121 plans, recent 50 ms/plan (19.9 Hz)
+[  7.09s] target 0 err=0.408 m | 141 plans, recent 49 ms/plan (19.9 Hz)
+[  8.10s] target 0 err=0.385 m | 161 plans, recent 49 ms/plan (19.9 Hz)
+[  9.12s] target 0 err=0.541 m | 181 plans, recent 50 ms/plan (19.9 Hz)
+[ 10.13s] target 0 err=0.506 m | 201 plans, recent 49 ms/plan (19.8 Hz)
+[ 11.14s] target 0 err=0.424 m | 221 plans, recent 50 ms/plan (19.8 Hz)
+[ 12.15s] target 0 err=0.458 m | 241 plans, recent 49 ms/plan (19.8 Hz)
+[ 13.15s] target 0 err=0.507 m | 261 plans, recent 49 ms/plan (19.9 Hz)
+[ 14.17s] target 0 err=0.434 m | 281 plans, recent 50 ms/plan (19.8 Hz)
+[ 15.21s] target 0 err=0.411 m | 302 plans, recent 48 ms/plan (19.9 Hz)
+[ 16.26s] target 0 err=0.486 m | 323 plans, recent 49 ms/plan (19.9 Hz)
+[ 17.29s] target 0 err=0.476 m | 344 plans, recent 48 ms/plan (19.9 Hz)
+[ 18.33s] target 0 err=0.366 m | 365 plans, recent 49 ms/plan (19.9 Hz)
+[ 19.37s] target 0 err=0.509 m | 386 plans, recent 48 ms/plan (19.9 Hz)
+[ 20.40s] target 0 err=0.553 m | 407 plans, recent 48 ms/plan (19.9 Hz)
+[ 21.42s] target 0 err=0.581 m | 428 plans, recent 47 ms/plan (20.0 Hz)
+[ 22.45s] target 0 err=0.388 m | 449 plans, recent 48 ms/plan (20.0 Hz)
+[ 23.47s] target 0 err=0.541 m | 470 plans, recent 48 ms/plan (20.0 Hz)
+[ 24.50s] target 0 err=0.468 m | 491 plans, recent 48 ms/plan (20.0 Hz)
+[ 25.52s] target 0 err=0.362 m | 512 plans, recent 48 ms/plan (20.1 Hz)
+[ 26.55s] target 0 err=0.523 m | 533 plans, recent 48 ms/plan (20.1 Hz)
+[ 27.57s] target 0 err=0.346 m | 554 plans, recent 48 ms/plan (20.1 Hz)
+[ 28.61s] target 0 err=0.494 m | 575 plans, recent 48 ms/plan (20.1 Hz)
+[ 29.63s] target 0 err=0.282 m | 596 plans, recent 48 ms/plan (20.1 Hz)
+  reached_strict=False reached_5cm=False min_err=0.1505 violation=False safe_stall=True
+
+=== [12/50] bk_mbd seed=2 target=1 (0.55, 0.3, 0.25) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed2.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.02s] target 0 err=0.511 m | 21 plans, recent 50 ms/plan (20.5 Hz)
+[  2.03s] target 0 err=0.562 m | 41 plans, recent 49 ms/plan (20.2 Hz)
+[  3.03s] target 0 err=0.564 m | 61 plans, recent 49 ms/plan (20.1 Hz)
+[  4.04s] target 0 err=0.471 m | 81 plans, recent 49 ms/plan (20.1 Hz)
+[  5.05s] target 0 err=0.606 m | 101 plans, recent 50 ms/plan (20.0 Hz)
+[  6.07s] target 0 err=0.449 m | 121 plans, recent 50 ms/plan (19.9 Hz)
+[  7.08s] target 0 err=0.642 m | 141 plans, recent 50 ms/plan (19.9 Hz)
+[  8.11s] target 0 err=0.383 m | 161 plans, recent 50 ms/plan (19.8 Hz)
+[  9.15s] target 0 err=0.566 m | 181 plans, recent 51 ms/plan (19.8 Hz)
+[ 10.17s] target 0 err=0.577 m | 201 plans, recent 50 ms/plan (19.8 Hz)
+[ 11.18s] target 0 err=0.537 m | 221 plans, recent 49 ms/plan (19.8 Hz)
+[ 12.19s] target 0 err=0.675 m | 241 plans, recent 49 ms/plan (19.8 Hz)
+[ 13.20s] target 0 err=0.586 m | 261 plans, recent 49 ms/plan (19.8 Hz)
+[ 14.21s] target 0 err=0.626 m | 281 plans, recent 50 ms/plan (19.8 Hz)
+[ 15.21s] target 0 err=0.544 m | 301 plans, recent 49 ms/plan (19.8 Hz)
+[ 16.22s] target 0 err=0.418 m | 321 plans, recent 49 ms/plan (19.8 Hz)
+[ 17.27s] target 0 err=0.556 m | 342 plans, recent 49 ms/plan (19.8 Hz)
+[ 18.27s] target 0 err=0.724 m | 362 plans, recent 49 ms/plan (19.8 Hz)
+[ 19.31s] target 0 err=0.615 m | 383 plans, recent 48 ms/plan (19.8 Hz)
+[ 20.35s] target 0 err=0.623 m | 404 plans, recent 48 ms/plan (19.9 Hz)
+[ 21.38s] target 0 err=0.681 m | 425 plans, recent 48 ms/plan (19.9 Hz)
+[ 22.42s] target 0 err=0.621 m | 446 plans, recent 48 ms/plan (19.9 Hz)
+[ 23.46s] target 0 err=0.710 m | 467 plans, recent 48 ms/plan (19.9 Hz)
+[ 24.50s] target 0 err=0.690 m | 488 plans, recent 49 ms/plan (19.9 Hz)
+[ 25.54s] target 0 err=0.650 m | 509 plans, recent 48 ms/plan (19.9 Hz)
+[ 26.57s] target 0 err=0.705 m | 530 plans, recent 48 ms/plan (19.9 Hz)
+[ 27.61s] target 0 err=0.686 m | 551 plans, recent 48 ms/plan (20.0 Hz)
+[ 28.64s] target 0 err=0.662 m | 572 plans, recent 48 ms/plan (20.0 Hz)
+[ 29.68s] target 0 err=0.658 m | 593 plans, recent 48 ms/plan (20.0 Hz)
+  reached_strict=False reached_5cm=False min_err=0.2983 violation=False safe_stall=True
+
+=== [13/50] bk_mbd seed=2 target=2 (0.35, 0.3, 0.35) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed2.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.05s] target 0 err=0.519 m | 22 plans, recent 49 ms/plan (21.0 Hz)
+[  2.08s] target 0 err=0.456 m | 43 plans, recent 48 ms/plan (20.6 Hz)
+[  3.09s] target 0 err=0.491 m | 63 plans, recent 49 ms/plan (20.4 Hz)
+[  4.13s] target 0 err=0.523 m | 84 plans, recent 49 ms/plan (20.3 Hz)
+[  5.18s] target 0 err=0.302 m | 105 plans, recent 49 ms/plan (20.3 Hz)
+[  6.22s] target 0 err=0.196 m | 126 plans, recent 49 ms/plan (20.2 Hz)
+[  7.27s] target 0 err=0.207 m | 147 plans, recent 49 ms/plan (20.2 Hz)
+[  8.31s] target 0 err=0.269 m | 168 plans, recent 48 ms/plan (20.2 Hz)
+[  9.35s] target 0 err=0.076 m | 189 plans, recent 49 ms/plan (20.2 Hz)
+[  9.95s] target 0 strict reach (20.6 mm) in 9.95 s
+  reached_strict=True reached_5cm=True min_err=0.0077 violation=False safe_stall=False
+
+=== [14/50] bk_mbd seed=2 target=3 (0.5, 0.35, 0.2) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed2.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.02s] target 0 err=0.576 m | 22 plans, recent 48 ms/plan (21.5 Hz)
+[  2.04s] target 0 err=0.556 m | 43 plans, recent 47 ms/plan (21.0 Hz)
+[  3.07s] target 0 err=0.592 m | 64 plans, recent 48 ms/plan (20.8 Hz)
+[  4.10s] target 0 err=0.619 m | 85 plans, recent 48 ms/plan (20.8 Hz)
+[  5.13s] target 0 err=0.497 m | 106 plans, recent 48 ms/plan (20.7 Hz)
+[  6.15s] target 0 err=0.464 m | 127 plans, recent 48 ms/plan (20.6 Hz)
+[  7.18s] target 0 err=0.734 m | 148 plans, recent 48 ms/plan (20.6 Hz)
+[  8.20s] target 0 err=0.743 m | 169 plans, recent 47 ms/plan (20.6 Hz)
+[  9.23s] target 0 err=0.654 m | 190 plans, recent 48 ms/plan (20.6 Hz)
+[ 10.25s] target 0 err=0.597 m | 211 plans, recent 48 ms/plan (20.6 Hz)
+[ 11.28s] target 0 err=0.692 m | 232 plans, recent 48 ms/plan (20.6 Hz)
+[ 12.30s] target 0 err=0.609 m | 253 plans, recent 47 ms/plan (20.6 Hz)
+[ 13.31s] target 0 err=0.595 m | 274 plans, recent 47 ms/plan (20.6 Hz)
+[ 14.33s] target 0 err=0.663 m | 295 plans, recent 47 ms/plan (20.6 Hz)
+[ 15.35s] target 0 err=0.306 m | 316 plans, recent 48 ms/plan (20.6 Hz)
+[ 16.37s] target 0 err=0.566 m | 337 plans, recent 47 ms/plan (20.6 Hz)
+[ 17.40s] target 0 err=0.599 m | 358 plans, recent 48 ms/plan (20.6 Hz)
+[ 18.41s] target 0 err=0.565 m | 379 plans, recent 47 ms/plan (20.6 Hz)
+[ 19.47s] target 0 err=0.521 m | 400 plans, recent 50 ms/plan (20.5 Hz)
+[ 20.48s] target 0 err=0.576 m | 421 plans, recent 47 ms/plan (20.6 Hz)
+[ 21.49s] target 0 err=0.626 m | 442 plans, recent 47 ms/plan (20.6 Hz)
+[ 22.51s] target 0 err=0.559 m | 463 plans, recent 47 ms/plan (20.6 Hz)
+[ 23.53s] target 0 err=0.408 m | 484 plans, recent 47 ms/plan (20.6 Hz)
+[ 24.55s] target 0 err=0.488 m | 505 plans, recent 47 ms/plan (20.6 Hz)
+[ 25.57s] target 0 err=0.529 m | 526 plans, recent 48 ms/plan (20.6 Hz)
+[ 26.59s] target 0 err=0.547 m | 547 plans, recent 47 ms/plan (20.6 Hz)
+[ 27.60s] target 0 err=0.519 m | 568 plans, recent 47 ms/plan (20.6 Hz)
+[ 28.62s] target 0 err=0.458 m | 589 plans, recent 47 ms/plan (20.6 Hz)
+[ 29.64s] target 0 err=0.469 m | 610 plans, recent 47 ms/plan (20.6 Hz)
+  reached_strict=False reached_5cm=False min_err=0.2421 violation=False safe_stall=True
+
+=== [15/50] bk_mbd seed=2 target=4 (0.4, 0.28, 0.4) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed2.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.01s] target 0 err=0.226 m | 21 plans, recent 49 ms/plan (20.8 Hz)
+[  1.45s] target 0 strict reach (22.9 mm) in 1.45 s
+  reached_strict=True reached_5cm=True min_err=0.0049 violation=False safe_stall=False
+
+=== [16/50] bk_mbd seed=3 target=0 (0.45, 0.3, 0.3) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed3.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.00s] target 0 err=0.470 m | 21 plans, recent 49 ms/plan (20.9 Hz)
+[  2.01s] target 0 err=0.501 m | 41 plans, recent 49 ms/plan (20.4 Hz)
+[  3.01s] target 0 err=0.579 m | 61 plans, recent 49 ms/plan (20.3 Hz)
+[  4.02s] target 0 err=0.292 m | 81 plans, recent 50 ms/plan (20.1 Hz)
+[  5.03s] target 0 err=0.164 m | 101 plans, recent 49 ms/plan (20.1 Hz)
+[  6.04s] target 0 err=0.315 m | 121 plans, recent 49 ms/plan (20.0 Hz)
+[  7.06s] target 0 err=0.444 m | 141 plans, recent 50 ms/plan (20.0 Hz)
+[  8.07s] target 0 err=0.302 m | 161 plans, recent 50 ms/plan (19.9 Hz)
+[  9.09s] target 0 err=0.334 m | 181 plans, recent 50 ms/plan (19.9 Hz)
+[ 10.10s] target 0 err=0.173 m | 201 plans, recent 49 ms/plan (19.9 Hz)
+[ 11.12s] target 0 err=0.290 m | 221 plans, recent 50 ms/plan (19.9 Hz)
+[ 12.13s] target 0 err=0.192 m | 241 plans, recent 50 ms/plan (19.9 Hz)
+[ 13.15s] target 0 err=0.257 m | 261 plans, recent 50 ms/plan (19.8 Hz)
+[ 14.17s] target 0 err=0.331 m | 281 plans, recent 50 ms/plan (19.8 Hz)
+[ 15.18s] target 0 err=0.244 m | 301 plans, recent 50 ms/plan (19.8 Hz)
+[ 16.20s] target 0 err=0.292 m | 321 plans, recent 50 ms/plan (19.8 Hz)
+[ 17.21s] target 0 err=0.224 m | 341 plans, recent 49 ms/plan (19.8 Hz)
+[ 18.21s] target 0 err=0.314 m | 361 plans, recent 49 ms/plan (19.8 Hz)
+[ 19.25s] target 0 err=0.271 m | 382 plans, recent 49 ms/plan (19.8 Hz)
+[ 20.30s] target 0 err=0.140 m | 403 plans, recent 49 ms/plan (19.9 Hz)
+[ 21.34s] target 0 err=0.368 m | 424 plans, recent 48 ms/plan (19.9 Hz)
+[ 22.34s] target 0 err=0.238 m | 444 plans, recent 49 ms/plan (19.9 Hz)
+[ 23.38s] target 0 err=0.200 m | 465 plans, recent 49 ms/plan (19.9 Hz)
+[ 24.43s] target 0 err=0.319 m | 486 plans, recent 49 ms/plan (19.9 Hz)
+[ 25.46s] target 0 err=0.146 m | 507 plans, recent 48 ms/plan (19.9 Hz)
+[ 26.49s] target 0 err=0.262 m | 528 plans, recent 48 ms/plan (19.9 Hz)
+[ 27.52s] target 0 err=0.133 m | 549 plans, recent 48 ms/plan (19.9 Hz)
+[ 28.56s] target 0 err=0.256 m | 570 plans, recent 48 ms/plan (20.0 Hz)
+[ 29.60s] target 0 err=0.263 m | 591 plans, recent 49 ms/plan (20.0 Hz)
+  reached_strict=False reached_5cm=False min_err=0.1003 violation=False safe_stall=True
+
+=== [17/50] bk_mbd seed=3 target=1 (0.55, 0.3, 0.25) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed3.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.01s] target 0 err=0.516 m | 21 plans, recent 50 ms/plan (20.7 Hz)
+[  2.03s] target 0 err=0.508 m | 41 plans, recent 50 ms/plan (20.2 Hz)
+[  3.04s] target 0 err=0.455 m | 61 plans, recent 50 ms/plan (20.1 Hz)
+[  3.80s] target 0 strict reach (24.7 mm) in 3.80 s
+[  4.05s] target 0 err=0.019 m | 81 plans, recent 50 ms/plan (20.0 Hz)
+  reached_strict=True reached_5cm=True min_err=0.0173 violation=False safe_stall=False
+
+=== [18/50] bk_mbd seed=3 target=2 (0.35, 0.3, 0.35) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed3.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.04s] target 0 err=0.492 m | 22 plans, recent 49 ms/plan (21.1 Hz)
+[  1.75s] target 0 strict reach (22.6 mm) in 1.75 s
+[  2.09s] target 0 err=0.018 m | 43 plans, recent 49 ms/plan (20.6 Hz)
+  reached_strict=True reached_5cm=True min_err=0.0127 violation=False safe_stall=False
+
+=== [19/50] bk_mbd seed=3 target=3 (0.5, 0.35, 0.2) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed3.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.01s] target 0 err=0.597 m | 21 plans, recent 49 ms/plan (20.9 Hz)
+[  2.01s] target 0 err=0.556 m | 41 plans, recent 49 ms/plan (20.4 Hz)
+[  3.02s] target 0 err=0.615 m | 61 plans, recent 49 ms/plan (20.2 Hz)
+[  4.02s] target 0 err=0.503 m | 81 plans, recent 49 ms/plan (20.2 Hz)
+[  5.07s] target 0 err=0.060 m | 102 plans, recent 49 ms/plan (20.1 Hz)
+[  6.11s] target 0 err=0.057 m | 123 plans, recent 49 ms/plan (20.1 Hz)
+[  7.16s] target 0 err=0.134 m | 144 plans, recent 49 ms/plan (20.1 Hz)
+[  8.16s] target 0 err=0.179 m | 164 plans, recent 49 ms/plan (20.1 Hz)
+[  9.16s] target 0 err=0.376 m | 184 plans, recent 49 ms/plan (20.1 Hz)
+[ 10.17s] target 0 err=0.392 m | 204 plans, recent 49 ms/plan (20.1 Hz)
+[ 11.17s] target 0 err=0.355 m | 224 plans, recent 49 ms/plan (20.1 Hz)
+[ 12.21s] target 0 err=0.377 m | 245 plans, recent 48 ms/plan (20.1 Hz)
+[ 13.26s] target 0 err=0.406 m | 266 plans, recent 49 ms/plan (20.1 Hz)
+[ 14.30s] target 0 err=0.307 m | 287 plans, recent 48 ms/plan (20.1 Hz)
+[ 15.34s] target 0 err=0.422 m | 308 plans, recent 48 ms/plan (20.1 Hz)
+[ 16.38s] target 0 err=0.281 m | 329 plans, recent 48 ms/plan (20.1 Hz)
+[ 17.41s] target 0 err=0.411 m | 350 plans, recent 48 ms/plan (20.1 Hz)
+[ 18.43s] target 0 err=0.407 m | 371 plans, recent 48 ms/plan (20.1 Hz)
+[ 19.46s] target 0 err=0.361 m | 392 plans, recent 48 ms/plan (20.1 Hz)
+[ 20.48s] target 0 err=0.347 m | 413 plans, recent 48 ms/plan (20.2 Hz)
+[ 21.51s] target 0 err=0.293 m | 434 plans, recent 48 ms/plan (20.2 Hz)
+[ 22.55s] target 0 err=0.397 m | 455 plans, recent 49 ms/plan (20.2 Hz)
+[ 23.59s] target 0 err=0.238 m | 476 plans, recent 48 ms/plan (20.2 Hz)
+[ 24.62s] target 0 err=0.429 m | 497 plans, recent 48 ms/plan (20.2 Hz)
+[ 25.65s] target 0 err=0.136 m | 518 plans, recent 48 ms/plan (20.2 Hz)
+[ 26.68s] target 0 err=0.047 m | 539 plans, recent 48 ms/plan (20.2 Hz)
+[ 27.71s] target 0 err=0.030 m | 560 plans, recent 48 ms/plan (20.2 Hz)
+[ 28.74s] target 0 err=0.037 m | 581 plans, recent 48 ms/plan (20.2 Hz)
+[ 29.76s] target 0 err=0.030 m | 602 plans, recent 48 ms/plan (20.2 Hz)
+  reached_strict=False reached_5cm=True min_err=0.0291 violation=False safe_stall=True
+
+=== [20/50] bk_mbd seed=3 target=4 (0.4, 0.28, 0.4) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed3.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.00s] target 0 err=0.419 m | 21 plans, recent 49 ms/plan (21.0 Hz)
+[  1.55s] target 0 strict reach (24.3 mm) in 1.55 s
+  reached_strict=True reached_5cm=True min_err=0.0077 violation=False safe_stall=False
+
+=== [21/50] bk_mbd seed=4 target=0 (0.45, 0.3, 0.3) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed4.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.04s] target 0 err=0.135 m | 21 plans, recent 51 ms/plan (20.2 Hz)
+[  1.40s] target 0 strict reach (22.8 mm) in 1.40 s
+  reached_strict=True reached_5cm=True min_err=0.0070 violation=False safe_stall=False
+
+=== [22/50] bk_mbd seed=4 target=1 (0.55, 0.3, 0.25) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed4.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.00s] target 0 err=0.540 m | 21 plans, recent 49 ms/plan (20.9 Hz)
+[  2.01s] target 0 err=0.479 m | 41 plans, recent 49 ms/plan (20.4 Hz)
+[  3.02s] target 0 err=0.506 m | 61 plans, recent 49 ms/plan (20.2 Hz)
+[  4.03s] target 0 err=0.539 m | 81 plans, recent 49 ms/plan (20.1 Hz)
+[  5.03s] target 0 err=0.344 m | 101 plans, recent 49 ms/plan (20.1 Hz)
+[  6.08s] target 0 err=0.058 m | 122 plans, recent 49 ms/plan (20.1 Hz)
+[  7.08s] target 0 err=0.105 m | 142 plans, recent 49 ms/plan (20.1 Hz)
+[  8.13s] target 0 err=0.035 m | 163 plans, recent 49 ms/plan (20.1 Hz)
+[  9.17s] target 0 err=0.220 m | 183 plans, recent 51 ms/plan (20.0 Hz)
+[ 10.21s] target 0 err=0.368 m | 204 plans, recent 49 ms/plan (20.0 Hz)
+[ 11.24s] target 0 err=0.401 m | 225 plans, recent 48 ms/plan (20.0 Hz)
+[ 12.28s] target 0 err=0.317 m | 246 plans, recent 48 ms/plan (20.0 Hz)
+[ 13.31s] target 0 err=0.414 m | 267 plans, recent 48 ms/plan (20.1 Hz)
+[ 14.35s] target 0 err=0.352 m | 288 plans, recent 48 ms/plan (20.1 Hz)
+[ 15.38s] target 0 err=0.380 m | 309 plans, recent 48 ms/plan (20.1 Hz)
+[ 16.41s] target 0 err=0.413 m | 330 plans, recent 48 ms/plan (20.1 Hz)
+[ 17.46s] target 0 err=0.435 m | 351 plans, recent 49 ms/plan (20.1 Hz)
+[ 18.50s] target 0 err=0.362 m | 372 plans, recent 48 ms/plan (20.1 Hz)
+[ 19.53s] target 0 err=0.312 m | 393 plans, recent 48 ms/plan (20.1 Hz)
+[ 20.58s] target 0 err=0.371 m | 414 plans, recent 49 ms/plan (20.1 Hz)
+[ 21.63s] target 0 err=0.449 m | 435 plans, recent 49 ms/plan (20.1 Hz)
+[ 22.63s] target 0 err=0.434 m | 455 plans, recent 49 ms/plan (20.1 Hz)
+[ 23.68s] target 0 err=0.390 m | 476 plans, recent 49 ms/plan (20.1 Hz)
+[ 24.72s] target 0 err=0.280 m | 497 plans, recent 49 ms/plan (20.1 Hz)
+[ 25.76s] target 0 err=0.364 m | 518 plans, recent 48 ms/plan (20.1 Hz)
+[ 26.78s] target 0 err=0.374 m | 539 plans, recent 48 ms/plan (20.1 Hz)
+[ 27.80s] target 0 err=0.370 m | 560 plans, recent 48 ms/plan (20.1 Hz)
+[ 28.82s] target 0 err=0.386 m | 581 plans, recent 47 ms/plan (20.2 Hz)
+[ 29.85s] target 0 err=0.341 m | 602 plans, recent 48 ms/plan (20.2 Hz)
+  reached_strict=False reached_5cm=True min_err=0.0353 violation=False safe_stall=True
+
+=== [23/50] bk_mbd seed=4 target=2 (0.35, 0.3, 0.35) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed4.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.02s] target 0 err=0.231 m | 21 plans, recent 50 ms/plan (20.5 Hz)
+[  1.75s] target 0 strict reach (21.8 mm) in 1.75 s
+[  2.05s] target 0 err=0.019 m | 41 plans, recent 50 ms/plan (20.0 Hz)
+  reached_strict=True reached_5cm=True min_err=0.0173 violation=False safe_stall=False
+
+=== [24/50] bk_mbd seed=4 target=3 (0.5, 0.35, 0.2) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed4.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.02s] target 0 err=0.631 m | 21 plans, recent 50 ms/plan (20.6 Hz)
+[  2.03s] target 0 err=0.572 m | 41 plans, recent 50 ms/plan (20.2 Hz)
+[  3.05s] target 0 err=0.620 m | 61 plans, recent 50 ms/plan (20.0 Hz)
+[  4.07s] target 0 err=0.603 m | 81 plans, recent 50 ms/plan (19.9 Hz)
+[  5.09s] target 0 err=0.554 m | 101 plans, recent 50 ms/plan (19.9 Hz)
+[  6.10s] target 0 err=0.091 m | 121 plans, recent 50 ms/plan (19.8 Hz)
+[  7.13s] target 0 err=0.096 m | 141 plans, recent 50 ms/plan (19.8 Hz)
+[  8.17s] target 0 err=0.034 m | 161 plans, recent 51 ms/plan (19.7 Hz)
+[  9.22s] target 0 err=0.265 m | 181 plans, recent 51 ms/plan (19.6 Hz)
+[ 10.25s] target 0 err=0.387 m | 201 plans, recent 50 ms/plan (19.6 Hz)
+[ 11.27s] target 0 err=0.418 m | 221 plans, recent 50 ms/plan (19.6 Hz)
+[ 12.30s] target 0 err=0.415 m | 241 plans, recent 50 ms/plan (19.6 Hz)
+[ 13.33s] target 0 err=0.384 m | 261 plans, recent 51 ms/plan (19.6 Hz)
+[ 14.35s] target 0 err=0.428 m | 281 plans, recent 50 ms/plan (19.6 Hz)
+[ 15.36s] target 0 err=0.413 m | 301 plans, recent 50 ms/plan (19.6 Hz)
+[ 16.37s] target 0 err=0.383 m | 321 plans, recent 49 ms/plan (19.6 Hz)
+[ 17.37s] target 0 err=0.456 m | 341 plans, recent 49 ms/plan (19.6 Hz)
+[ 18.38s] target 0 err=0.373 m | 361 plans, recent 49 ms/plan (19.6 Hz)
+[ 19.38s] target 0 err=0.456 m | 381 plans, recent 49 ms/plan (19.7 Hz)
+[ 20.40s] target 0 err=0.423 m | 401 plans, recent 50 ms/plan (19.7 Hz)
+[ 21.41s] target 0 err=0.476 m | 421 plans, recent 49 ms/plan (19.7 Hz)
+[ 22.41s] target 0 err=0.420 m | 441 plans, recent 49 ms/plan (19.7 Hz)
+[ 23.41s] target 0 err=0.451 m | 461 plans, recent 49 ms/plan (19.7 Hz)
+[ 24.46s] target 0 err=0.409 m | 482 plans, recent 49 ms/plan (19.7 Hz)
+[ 25.50s] target 0 err=0.453 m | 503 plans, recent 49 ms/plan (19.7 Hz)
+[ 26.55s] target 0 err=0.406 m | 524 plans, recent 49 ms/plan (19.7 Hz)
+[ 27.58s] target 0 err=0.436 m | 545 plans, recent 48 ms/plan (19.8 Hz)
+[ 28.63s] target 0 err=0.370 m | 566 plans, recent 49 ms/plan (19.8 Hz)
+[ 29.67s] target 0 err=0.470 m | 587 plans, recent 49 ms/plan (19.8 Hz)
+  reached_strict=False reached_5cm=True min_err=0.0335 violation=False safe_stall=True
+
+=== [25/50] bk_mbd seed=4 target=4 (0.4, 0.28, 0.4) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed4.pt
+tube disabled (tube_mode none): plain bilinear rollout, no penalty
+adaptive noise: ON (full schedule at err >= 0.4 m, floor 0.05)
+warm-up: 3 throwaway plans
+[  1.05s] target 0 err=0.163 m | 22 plans, recent 48 ms/plan (21.0 Hz)
+[  1.55s] target 0 strict reach (24.6 mm) in 1.55 s
+  reached_strict=True reached_5cm=True min_err=0.0110 violation=False safe_stall=False
+
+=== [26/50] sqp_mpc seed=0 target=0 (0.45, 0.3, 0.3) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed0.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+/home/home/mbd/koopman/mbd_koopman/secy/sqp_mpc.py:286: UserWarning: Solution may be inaccurate. Try another solver, adjusting the solver settings, or solve with verbose=True for more information.
+  self.prob.solve(**self._solve_kw)
+warm-up: 3 throwaway plans
+[  1.14s] target 0 err=0.579 m | 6 plans, recent 227 ms/plan (5.3 Hz)
+[  2.28s] target 0 err=0.525 m | 11 plans, recent 231 ms/plan (4.8 Hz)
+[  3.31s] target 0 err=0.508 m | 15 plans, recent 238 ms/plan (4.5 Hz)
+[  4.34s] target 0 err=0.555 m | 19 plans, recent 241 ms/plan (4.4 Hz)
+[  5.51s] target 0 err=0.546 m | 24 plans, recent 238 ms/plan (4.4 Hz)
+[  6.64s] target 0 err=0.537 m | 29 plans, recent 243 ms/plan (4.4 Hz)
+[  7.87s] target 0 err=0.473 m | 34 plans, recent 241 ms/plan (4.3 Hz)
+[  9.04s] target 0 err=0.547 m | 39 plans, recent 233 ms/plan (4.3 Hz)
+[ 10.11s] target 0 err=0.612 m | 44 plans, recent 230 ms/plan (4.4 Hz)
+[ 11.21s] target 0 err=0.551 m | 49 plans, recent 225 ms/plan (4.4 Hz)
+[ 12.23s] target 0 err=0.561 m | 54 plans, recent 209 ms/plan (4.4 Hz)
+[ 13.46s] target 0 err=0.585 m | 60 plans, recent 207 ms/plan (4.5 Hz)
+[ 14.58s] target 0 err=0.557 m | 66 plans, recent 201 ms/plan (4.5 Hz)
+[ 15.59s] target 0 err=0.523 m | 71 plans, recent 198 ms/plan (4.6 Hz)
+[ 16.74s] target 0 err=0.502 m | 76 plans, recent 209 ms/plan (4.5 Hz)
+[ 17.74s] target 0 err=0.491 m | 80 plans, recent 213 ms/plan (4.5 Hz)
+[ 18.90s] target 0 err=0.520 m | 85 plans, recent 229 ms/plan (4.5 Hz)
+[ 20.07s] target 0 err=0.462 m | 90 plans, recent 237 ms/plan (4.5 Hz)
+[ 21.13s] target 0 err=0.334 m | 94 plans, recent 233 ms/plan (4.4 Hz)
+[ 22.32s] target 0 err=0.312 m | 99 plans, recent 238 ms/plan (4.4 Hz)
+[ 23.42s] target 0 err=0.346 m | 104 plans, recent 235 ms/plan (4.4 Hz)
+[ 24.55s] target 0 err=0.324 m | 109 plans, recent 237 ms/plan (4.4 Hz)
+[ 25.57s] target 0 err=0.317 m | 113 plans, recent 232 ms/plan (4.4 Hz)
+[ 26.59s] target 0 err=0.274 m | 118 plans, recent 224 ms/plan (4.4 Hz)
+[ 27.74s] target 0 err=0.289 m | 124 plans, recent 214 ms/plan (4.5 Hz)
+[ 28.89s] target 0 err=0.304 m | 129 plans, recent 215 ms/plan (4.5 Hz)
+[ 29.98s] target 0 err=0.335 m | 133 plans, recent 222 ms/plan (4.4 Hz)
+  reached_strict=False reached_5cm=False min_err=0.2737 violation=False safe_stall=True
+
+=== [27/50] sqp_mpc seed=0 target=1 (0.55, 0.3, 0.25) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed0.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.09s] target 0 err=0.560 m | 6 plans, recent 226 ms/plan (5.5 Hz)
+[  2.14s] target 0 err=0.512 m | 12 plans, recent 189 ms/plan (5.6 Hz)
+[  3.23s] target 0 err=0.557 m | 19 plans, recent 180 ms/plan (5.9 Hz)
+[  4.44s] target 0 err=0.491 m | 25 plans, recent 177 ms/plan (5.6 Hz)
+[  5.71s] target 0 err=0.499 m | 30 plans, recent 195 ms/plan (5.3 Hz)
+[  6.93s] target 0 err=0.563 m | 36 plans, recent 213 ms/plan (5.2 Hz)
+[  8.02s] target 0 err=0.575 m | 40 plans, recent 230 ms/plan (5.0 Hz)
+[  9.09s] target 0 err=0.591 m | 45 plans, recent 229 ms/plan (4.9 Hz)
+[ 10.11s] target 0 err=0.575 m | 51 plans, recent 205 ms/plan (5.0 Hz)
+[ 11.30s] target 0 err=0.456 m | 57 plans, recent 200 ms/plan (5.0 Hz)
+[ 12.53s] target 0 err=0.470 m | 62 plans, recent 199 ms/plan (4.9 Hz)
+[ 13.53s] target 0 err=0.544 m | 67 plans, recent 207 ms/plan (5.0 Hz)
+[ 14.60s] target 0 err=0.552 m | 72 plans, recent 216 ms/plan (4.9 Hz)
+[ 15.73s] target 0 err=0.569 m | 78 plans, recent 210 ms/plan (5.0 Hz)
+[ 16.75s] target 0 err=0.530 m | 84 plans, recent 190 ms/plan (5.0 Hz)
+[ 17.96s] target 0 err=0.478 m | 92 plans, recent 170 ms/plan (5.1 Hz)
+[ 19.14s] target 0 err=0.449 m | 97 plans, recent 176 ms/plan (5.1 Hz)
+[ 20.16s] target 0 err=0.413 m | 103 plans, recent 178 ms/plan (5.1 Hz)
+[ 21.32s] target 0 err=0.386 m | 108 plans, recent 203 ms/plan (5.1 Hz)
+[ 22.54s] target 0 err=0.389 m | 114 plans, recent 204 ms/plan (5.1 Hz)
+[ 23.75s] target 0 err=0.438 m | 119 plans, recent 221 ms/plan (5.0 Hz)
+[ 24.84s] target 0 err=0.521 m | 123 plans, recent 237 ms/plan (5.0 Hz)
+[ 25.86s] target 0 err=0.573 m | 127 plans, recent 235 ms/plan (4.9 Hz)
+[ 27.02s] target 0 err=0.605 m | 133 plans, recent 233 ms/plan (4.9 Hz)
+[ 28.06s] target 0 err=0.601 m | 138 plans, recent 221 ms/plan (4.9 Hz)
+[ 29.22s] target 0 err=0.592 m | 144 plans, recent 204 ms/plan (4.9 Hz)
+  reached_strict=False reached_5cm=False min_err=0.3856 violation=False safe_stall=True
+
+=== [28/50] sqp_mpc seed=0 target=2 (0.35, 0.3, 0.35) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed0.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.24s] target 0 err=0.608 m | 6 plans, recent 241 ms/plan (4.8 Hz)
+[  2.49s] target 0 err=0.539 m | 11 plans, recent 247 ms/plan (4.4 Hz)
+[  3.65s] target 0 err=0.482 m | 16 plans, recent 244 ms/plan (4.4 Hz)
+[  4.76s] target 0 err=0.361 m | 21 plans, recent 237 ms/plan (4.4 Hz)
+[  5.81s] target 0 err=0.157 m | 27 plans, recent 210 ms/plan (4.6 Hz)
+[  1.75s] target 0 strict reach (19.9 mm) in 1.75 s
+[  6.87s] target 0 err=0.014 m | 38 plans, recent 127 ms/plan (5.5 Hz)
+  reached_strict=True reached_5cm=True min_err=0.0123 violation=False safe_stall=False
+
+=== [29/50] sqp_mpc seed=0 target=3 (0.5, 0.35, 0.2) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed0.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.13s] target 0 err=0.607 m | 6 plans, recent 227 ms/plan (5.3 Hz)
+[  2.35s] target 0 err=0.572 m | 11 plans, recent 235 ms/plan (4.7 Hz)
+[  3.58s] target 0 err=0.606 m | 17 plans, recent 220 ms/plan (4.7 Hz)
+[  4.77s] target 0 err=0.561 m | 23 plans, recent 209 ms/plan (4.8 Hz)
+[  5.81s] target 0 err=0.563 m | 28 plans, recent 204 ms/plan (4.8 Hz)
+[  7.03s] target 0 err=0.549 m | 34 plans, recent 206 ms/plan (4.8 Hz)
+[  8.08s] target 0 err=0.521 m | 39 plans, recent 201 ms/plan (4.8 Hz)
+[  9.17s] target 0 err=0.514 m | 45 plans, recent 201 ms/plan (4.9 Hz)
+[ 10.35s] target 0 err=0.504 m | 50 plans, recent 208 ms/plan (4.8 Hz)
+[ 11.58s] target 0 err=0.509 m | 55 plans, recent 216 ms/plan (4.8 Hz)
+[ 12.82s] target 0 err=0.544 m | 60 plans, recent 230 ms/plan (4.7 Hz)
+[ 14.03s] target 0 err=0.571 m | 65 plans, recent 242 ms/plan (4.6 Hz)
+[ 15.21s] target 0 err=0.628 m | 70 plans, recent 240 ms/plan (4.6 Hz)
+[ 16.46s] target 0 err=0.648 m | 75 plans, recent 242 ms/plan (4.6 Hz)
+[ 17.61s] target 0 err=0.658 m | 80 plans, recent 236 ms/plan (4.5 Hz)
+[ 18.71s] target 0 err=0.626 m | 85 plans, recent 229 ms/plan (4.5 Hz)
+[ 19.80s] target 0 err=0.623 m | 90 plans, recent 229 ms/plan (4.5 Hz)
+[ 20.85s] target 0 err=0.613 m | 95 plans, recent 224 ms/plan (4.6 Hz)
+[ 21.89s] target 0 err=0.618 m | 100 plans, recent 218 ms/plan (4.6 Hz)
+[ 22.98s] target 0 err=0.658 m | 106 plans, recent 200 ms/plan (4.6 Hz)
+[ 24.12s] target 0 err=0.703 m | 112 plans, recent 192 ms/plan (4.6 Hz)
+[ 25.18s] target 0 err=0.692 m | 116 plans, recent 205 ms/plan (4.6 Hz)
+[ 26.20s] target 0 err=0.621 m | 121 plans, recent 202 ms/plan (4.6 Hz)
+[ 27.29s] target 0 err=0.536 m | 127 plans, recent 201 ms/plan (4.7 Hz)
+[ 28.43s] target 0 err=0.483 m | 134 plans, recent 186 ms/plan (4.7 Hz)
+[ 29.56s] target 0 err=0.425 m | 141 plans, recent 173 ms/plan (4.8 Hz)
+  reached_strict=False reached_5cm=False min_err=0.4180 violation=False safe_stall=True
+
+=== [30/50] sqp_mpc seed=0 target=4 (0.4, 0.28, 0.4) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed0.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.26s] target 0 err=0.548 m | 6 plans, recent 253 ms/plan (4.8 Hz)
+[  2.52s] target 0 err=0.462 m | 11 plans, recent 250 ms/plan (4.4 Hz)
+[  3.55s] target 0 err=0.169 m | 17 plans, recent 214 ms/plan (4.8 Hz)
+[  1.00s] target 0 strict reach (24.8 mm) in 1.00 s
+  reached_strict=True reached_5cm=True min_err=0.0122 violation=False safe_stall=False
+
+=== [31/50] sqp_mpc seed=1 target=0 (0.45, 0.3, 0.3) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed1.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.09s] target 0 err=0.508 m | 6 plans, recent 210 ms/plan (5.5 Hz)
+[  2.16s] target 0 err=0.470 m | 11 plans, recent 220 ms/plan (5.1 Hz)
+[  3.24s] target 0 err=0.410 m | 16 plans, recent 215 ms/plan (4.9 Hz)
+[  4.43s] target 0 err=0.031 m | 23 plans, recent 195 ms/plan (5.2 Hz)
+[  1.15s] target 0 strict reach (23.1 mm) in 1.15 s
+  reached_strict=True reached_5cm=True min_err=0.0126 violation=False safe_stall=False
+
+=== [32/50] sqp_mpc seed=1 target=1 (0.55, 0.3, 0.25) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed1.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.05s] target 0 err=0.502 m | 6 plans, recent 220 ms/plan (5.7 Hz)
+[  2.26s] target 0 err=0.485 m | 11 plans, recent 230 ms/plan (4.9 Hz)
+[  3.35s] target 0 err=0.419 m | 15 plans, recent 235 ms/plan (4.5 Hz)
+[  4.40s] target 0 err=0.084 m | 20 plans, recent 232 ms/plan (4.5 Hz)
+[  5.65s] target 0 err=0.044 m | 26 plans, recent 223 ms/plan (4.6 Hz)
+[  6.69s] target 0 err=0.052 m | 31 plans, recent 220 ms/plan (4.6 Hz)
+[  7.89s] target 0 err=0.063 m | 37 plans, recent 211 ms/plan (4.7 Hz)
+[  9.00s] target 0 err=0.071 m | 41 plans, recent 222 ms/plan (4.6 Hz)
+[ 10.11s] target 0 err=0.080 m | 45 plans, recent 234 ms/plan (4.4 Hz)
+[ 11.22s] target 0 err=0.116 m | 50 plans, recent 240 ms/plan (4.5 Hz)
+[ 12.30s] target 0 err=0.156 m | 55 plans, recent 246 ms/plan (4.5 Hz)
+[ 13.31s] target 0 err=0.177 m | 59 plans, recent 242 ms/plan (4.4 Hz)
+[ 14.39s] target 0 err=0.180 m | 63 plans, recent 237 ms/plan (4.4 Hz)
+[ 15.44s] target 0 err=0.179 m | 67 plans, recent 246 ms/plan (4.3 Hz)
+[ 16.45s] target 0 err=0.235 m | 71 plans, recent 247 ms/plan (4.3 Hz)
+[ 17.50s] target 0 err=0.290 m | 75 plans, recent 257 ms/plan (4.3 Hz)
+[ 18.58s] target 0 err=0.314 m | 80 plans, recent 244 ms/plan (4.3 Hz)
+[ 19.81s] target 0 err=0.263 m | 86 plans, recent 228 ms/plan (4.3 Hz)
+[ 20.89s] target 0 err=0.142 m | 91 plans, recent 219 ms/plan (4.4 Hz)
+[ 22.14s] target 0 err=0.089 m | 96 plans, recent 222 ms/plan (4.3 Hz)
+[ 23.37s] target 0 err=0.077 m | 101 plans, recent 230 ms/plan (4.3 Hz)
+[ 24.45s] target 0 err=0.045 m | 106 plans, recent 234 ms/plan (4.3 Hz)
+[ 25.62s] target 0 err=0.030 m | 111 plans, recent 236 ms/plan (4.3 Hz)
+[  5.55s] target 0 strict reach (24.2 mm) in 5.55 s
+[ 26.72s] target 0 err=0.023 m | 116 plans, recent 220 ms/plan (4.3 Hz)
+  reached_strict=True reached_5cm=True min_err=0.0161 violation=False safe_stall=False
+
+=== [33/50] sqp_mpc seed=1 target=2 (0.35, 0.3, 0.35) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed1.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.11s] target 0 err=0.574 m | 5 plans, recent 275 ms/plan (4.5 Hz)
+[  2.18s] target 0 err=0.498 m | 9 plans, recent 272 ms/plan (4.1 Hz)
+[  3.37s] target 0 err=0.522 m | 14 plans, recent 253 ms/plan (4.1 Hz)
+[  4.40s] target 0 err=0.062 m | 23 plans, recent 183 ms/plan (5.2 Hz)
+[  1.20s] target 0 strict reach (18.2 mm) in 1.20 s
+  reached_strict=True reached_5cm=True min_err=0.0054 violation=False safe_stall=False
+
+=== [34/50] sqp_mpc seed=1 target=3 (0.5, 0.35, 0.2) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed1.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.10s] target 0 err=0.542 m | 6 plans, recent 228 ms/plan (5.5 Hz)
+[  2.10s] target 0 err=0.519 m | 10 plans, recent 231 ms/plan (4.8 Hz)
+[  3.25s] target 0 err=0.552 m | 15 plans, recent 229 ms/plan (4.6 Hz)
+[  4.36s] target 0 err=0.563 m | 20 plans, recent 231 ms/plan (4.6 Hz)
+[  5.49s] target 0 err=0.512 m | 25 plans, recent 233 ms/plan (4.6 Hz)
+[  6.62s] target 0 err=0.512 m | 30 plans, recent 224 ms/plan (4.5 Hz)
+[  7.85s] target 0 err=0.521 m | 35 plans, recent 233 ms/plan (4.5 Hz)
+[  9.05s] target 0 err=0.543 m | 40 plans, recent 229 ms/plan (4.4 Hz)
+[ 10.17s] target 0 err=0.625 m | 45 plans, recent 233 ms/plan (4.4 Hz)
+[ 11.35s] target 0 err=0.450 m | 50 plans, recent 238 ms/plan (4.4 Hz)
+[ 12.48s] target 0 err=0.489 m | 55 plans, recent 230 ms/plan (4.4 Hz)
+[ 13.49s] target 0 err=0.563 m | 59 plans, recent 233 ms/plan (4.4 Hz)
+[ 14.60s] target 0 err=0.660 m | 64 plans, recent 232 ms/plan (4.4 Hz)
+[ 15.62s] target 0 err=0.671 m | 68 plans, recent 232 ms/plan (4.4 Hz)
+[ 16.70s] target 0 err=0.645 m | 73 plans, recent 229 ms/plan (4.4 Hz)
+[ 17.80s] target 0 err=0.690 m | 79 plans, recent 216 ms/plan (4.4 Hz)
+[ 18.86s] target 0 err=0.737 m | 84 plans, recent 213 ms/plan (4.5 Hz)
+[ 20.01s] target 0 err=0.816 m | 90 plans, recent 196 ms/plan (4.5 Hz)
+[ 21.08s] target 0 err=0.866 m | 96 plans, recent 198 ms/plan (4.6 Hz)
+[ 22.17s] target 0 err=0.870 m | 102 plans, recent 184 ms/plan (4.6 Hz)
+[ 23.35s] target 0 err=0.855 m | 109 plans, recent 172 ms/plan (4.7 Hz)
+[ 24.51s] target 0 err=0.839 m | 115 plans, recent 180 ms/plan (4.7 Hz)
+[ 25.71s] target 0 err=0.832 m | 121 plans, recent 185 ms/plan (4.7 Hz)
+[ 26.73s] target 0 err=0.835 m | 126 plans, recent 199 ms/plan (4.7 Hz)
+[ 27.82s] target 0 err=0.842 m | 131 plans, recent 209 ms/plan (4.7 Hz)
+[ 28.86s] target 0 err=0.855 m | 136 plans, recent 210 ms/plan (4.7 Hz)
+[ 29.88s] target 0 err=0.875 m | 141 plans, recent 211 ms/plan (4.7 Hz)
+  reached_strict=False reached_5cm=False min_err=0.4436 violation=False safe_stall=True
+
+=== [35/50] sqp_mpc seed=1 target=4 (0.4, 0.28, 0.4) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed1.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.23s] target 0 err=0.512 m | 6 plans, recent 246 ms/plan (4.9 Hz)
+[  2.33s] target 0 err=0.478 m | 11 plans, recent 230 ms/plan (4.7 Hz)
+[  3.36s] target 0 err=0.114 m | 18 plans, recent 189 ms/plan (5.4 Hz)
+[  1.05s] target 0 strict reach (17.5 mm) in 1.05 s
+  reached_strict=True reached_5cm=True min_err=0.0107 violation=False safe_stall=False
+
+=== [36/50] sqp_mpc seed=2 target=0 (0.45, 0.3, 0.3) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed2.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.01s] target 0 err=0.575 m | 5 plans, recent 250 ms/plan (4.9 Hz)
+[  2.24s] target 0 err=0.439 m | 10 plans, recent 244 ms/plan (4.5 Hz)
+[  3.48s] target 0 err=0.448 m | 15 plans, recent 246 ms/plan (4.3 Hz)
+[  4.67s] target 0 err=0.467 m | 20 plans, recent 240 ms/plan (4.3 Hz)
+[  5.91s] target 0 err=0.507 m | 25 plans, recent 244 ms/plan (4.2 Hz)
+[  6.99s] target 0 err=0.487 m | 29 plans, recent 248 ms/plan (4.1 Hz)
+[  8.01s] target 0 err=0.520 m | 33 plans, recent 249 ms/plan (4.1 Hz)
+[  9.09s] target 0 err=0.564 m | 38 plans, recent 243 ms/plan (4.2 Hz)
+[ 10.22s] target 0 err=0.599 m | 43 plans, recent 239 ms/plan (4.2 Hz)
+[ 11.45s] target 0 err=0.670 m | 48 plans, recent 236 ms/plan (4.2 Hz)
+[ 12.66s] target 0 err=0.663 m | 53 plans, recent 236 ms/plan (4.2 Hz)
+[ 13.84s] target 0 err=0.670 m | 58 plans, recent 234 ms/plan (4.2 Hz)
+[ 14.91s] target 0 err=0.681 m | 63 plans, recent 233 ms/plan (4.2 Hz)
+[ 15.92s] target 0 err=0.677 m | 69 plans, recent 206 ms/plan (4.3 Hz)
+[ 17.10s] target 0 err=0.636 m | 74 plans, recent 205 ms/plan (4.3 Hz)
+[ 18.20s] target 0 err=0.566 m | 80 plans, recent 197 ms/plan (4.4 Hz)
+[ 19.24s] target 0 err=0.483 m | 87 plans, recent 185 ms/plan (4.5 Hz)
+[ 20.35s] target 0 err=0.394 m | 92 plans, recent 186 ms/plan (4.5 Hz)
+[ 21.42s] target 0 err=0.390 m | 96 plans, recent 195 ms/plan (4.5 Hz)
+[ 22.46s] target 0 err=0.418 m | 102 plans, recent 209 ms/plan (4.5 Hz)
+[ 23.66s] target 0 err=0.436 m | 107 plans, recent 220 ms/plan (4.5 Hz)
+[ 24.88s] target 0 err=0.467 m | 112 plans, recent 225 ms/plan (4.5 Hz)
+[ 26.12s] target 0 err=0.444 m | 117 plans, recent 224 ms/plan (4.5 Hz)
+[ 27.29s] target 0 err=0.436 m | 122 plans, recent 239 ms/plan (4.5 Hz)
+[ 28.34s] target 0 err=0.532 m | 126 plans, recent 244 ms/plan (4.4 Hz)
+[ 29.41s] target 0 err=0.603 m | 131 plans, recent 236 ms/plan (4.5 Hz)
+  reached_strict=False reached_5cm=False min_err=0.3898 violation=False safe_stall=True
+
+=== [37/50] sqp_mpc seed=2 target=1 (0.55, 0.3, 0.25) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed2.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.20s] target 0 err=0.524 m | 6 plans, recent 246 ms/plan (5.0 Hz)
+[  2.24s] target 0 err=0.482 m | 10 plans, recent 243 ms/plan (4.5 Hz)
+[  3.37s] target 0 err=0.447 m | 15 plans, recent 242 ms/plan (4.4 Hz)
+[  4.43s] target 0 err=0.458 m | 19 plans, recent 247 ms/plan (4.3 Hz)
+[  5.49s] target 0 err=0.478 m | 23 plans, recent 250 ms/plan (4.2 Hz)
+[  6.65s] target 0 err=0.513 m | 28 plans, recent 244 ms/plan (4.2 Hz)
+[  7.70s] target 0 err=0.537 m | 32 plans, recent 253 ms/plan (4.2 Hz)
+[  8.77s] target 0 err=0.539 m | 36 plans, recent 255 ms/plan (4.1 Hz)
+[  9.87s] target 0 err=0.547 m | 40 plans, recent 255 ms/plan (4.1 Hz)
+[ 10.97s] target 0 err=0.630 m | 45 plans, recent 255 ms/plan (4.1 Hz)
+[ 12.10s] target 0 err=0.666 m | 51 plans, recent 226 ms/plan (4.2 Hz)
+[ 13.28s] target 0 err=0.734 m | 57 plans, recent 209 ms/plan (4.3 Hz)
+[ 14.38s] target 0 err=0.834 m | 64 plans, recent 177 ms/plan (4.5 Hz)
+[ 15.50s] target 0 err=0.866 m | 70 plans, recent 178 ms/plan (4.5 Hz)
+[ 16.70s] target 0 err=0.778 m | 76 plans, recent 177 ms/plan (4.6 Hz)
+[ 17.76s] target 0 err=0.674 m | 82 plans, recent 184 ms/plan (4.6 Hz)
+[ 18.91s] target 0 err=0.726 m | 89 plans, recent 180 ms/plan (4.7 Hz)
+[ 20.04s] target 0 err=0.688 m | 94 plans, recent 188 ms/plan (4.7 Hz)
+[ 21.16s] target 0 err=0.535 m | 99 plans, recent 203 ms/plan (4.7 Hz)
+[ 22.22s] target 0 err=0.485 m | 104 plans, recent 205 ms/plan (4.7 Hz)
+[ 23.27s] target 0 err=0.419 m | 110 plans, recent 208 ms/plan (4.7 Hz)
+[ 24.31s] target 0 err=0.364 m | 117 plans, recent 181 ms/plan (4.8 Hz)
+[ 25.44s] target 0 err=0.335 m | 124 plans, recent 155 ms/plan (4.9 Hz)
+[ 26.45s] target 0 err=0.325 m | 129 plans, recent 168 ms/plan (4.9 Hz)
+[ 27.55s] target 0 err=0.319 m | 134 plans, recent 190 ms/plan (4.9 Hz)
+[ 28.64s] target 0 err=0.318 m | 139 plans, recent 201 ms/plan (4.9 Hz)
+[ 29.87s] target 0 err=0.325 m | 144 plans, recent 228 ms/plan (4.8 Hz)
+  reached_strict=False reached_5cm=False min_err=0.3180 violation=False safe_stall=True
+
+=== [38/50] sqp_mpc seed=2 target=2 (0.35, 0.3, 0.35) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed2.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.19s] target 0 err=0.507 m | 6 plans, recent 228 ms/plan (5.0 Hz)
+[  2.37s] target 0 err=0.443 m | 11 plans, recent 238 ms/plan (4.6 Hz)
+[  3.38s] target 0 err=0.468 m | 15 plans, recent 236 ms/plan (4.4 Hz)
+[  4.50s] target 0 err=0.384 m | 20 plans, recent 236 ms/plan (4.4 Hz)
+[  1.30s] target 0 strict reach (20.2 mm) in 1.30 s
+[  5.51s] target 0 err=0.007 m | 31 plans, recent 145 ms/plan (5.6 Hz)
+  reached_strict=True reached_5cm=True min_err=0.0061 violation=False safe_stall=False
+
+=== [39/50] sqp_mpc seed=2 target=3 (0.5, 0.35, 0.2) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed2.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.10s] target 0 err=0.606 m | 5 plans, recent 275 ms/plan (4.5 Hz)
+[  2.28s] target 0 err=0.534 m | 10 plans, recent 243 ms/plan (4.4 Hz)
+[  3.38s] target 0 err=0.487 m | 15 plans, recent 240 ms/plan (4.4 Hz)
+[  4.50s] target 0 err=0.514 m | 20 plans, recent 238 ms/plan (4.4 Hz)
+[  5.58s] target 0 err=0.533 m | 25 plans, recent 222 ms/plan (4.5 Hz)
+[  6.61s] target 0 err=0.551 m | 29 plans, recent 226 ms/plan (4.4 Hz)
+[  7.72s] target 0 err=0.573 m | 34 plans, recent 229 ms/plan (4.4 Hz)
+[  8.94s] target 0 err=0.581 m | 39 plans, recent 228 ms/plan (4.4 Hz)
+[ 10.04s] target 0 err=0.589 m | 44 plans, recent 236 ms/plan (4.4 Hz)
+[ 11.16s] target 0 err=0.611 m | 48 plans, recent 240 ms/plan (4.3 Hz)
+[ 12.21s] target 0 err=0.632 m | 52 plans, recent 244 ms/plan (4.3 Hz)
+[ 13.22s] target 0 err=0.630 m | 57 plans, recent 241 ms/plan (4.3 Hz)
+[ 14.33s] target 0 err=0.525 m | 62 plans, recent 235 ms/plan (4.3 Hz)
+[ 15.47s] target 0 err=0.646 m | 69 plans, recent 192 ms/plan (4.5 Hz)
+[ 16.61s] target 0 err=0.868 m | 77 plans, recent 163 ms/plan (4.6 Hz)
+[ 17.77s] target 0 err=0.864 m | 82 plans, recent 171 ms/plan (4.6 Hz)
+[ 18.94s] target 0 err=0.841 m | 87 plans, recent 192 ms/plan (4.6 Hz)
+[ 20.14s] target 0 err=0.647 m | 93 plans, recent 211 ms/plan (4.6 Hz)
+[ 21.18s] target 0 err=0.623 m | 99 plans, recent 202 ms/plan (4.7 Hz)
+[ 22.27s] target 0 err=0.651 m | 106 plans, recent 172 ms/plan (4.8 Hz)
+[ 23.38s] target 0 err=0.507 m | 114 plans, recent 150 ms/plan (4.9 Hz)
+[ 24.39s] target 0 err=0.477 m | 120 plans, recent 160 ms/plan (4.9 Hz)
+[ 25.49s] target 0 err=0.397 m | 127 plans, recent 158 ms/plan (5.0 Hz)
+[ 26.63s] target 0 err=0.377 m | 133 plans, recent 168 ms/plan (5.0 Hz)
+[ 27.89s] target 0 err=0.365 m | 139 plans, recent 188 ms/plan (5.0 Hz)
+[ 28.94s] target 0 err=0.361 m | 143 plans, recent 205 ms/plan (4.9 Hz)
+  reached_strict=False reached_5cm=False min_err=0.3540 violation=False safe_stall=True
+
+=== [40/50] sqp_mpc seed=2 target=4 (0.4, 0.28, 0.4) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed2.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.17s] target 0 err=0.492 m | 6 plans, recent 214 ms/plan (5.1 Hz)
+[  2.30s] target 0 err=0.421 m | 11 plans, recent 229 ms/plan (4.8 Hz)
+[  3.57s] target 0 err=0.439 m | 16 plans, recent 239 ms/plan (4.5 Hz)
+[  4.74s] target 0 err=0.261 m | 21 plans, recent 238 ms/plan (4.4 Hz)
+[  5.87s] target 0 err=0.040 m | 26 plans, recent 239 ms/plan (4.4 Hz)
+[  6.88s] target 0 err=0.030 m | 32 plans, recent 210 ms/plan (4.6 Hz)
+[  1.60s] target 0 strict reach (24.4 mm) in 1.60 s
+  reached_strict=True reached_5cm=True min_err=0.0067 violation=False safe_stall=False
+
+=== [41/50] sqp_mpc seed=3 target=0 (0.45, 0.3, 0.3) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed3.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.01s] target 0 err=0.577 m | 5 plans, recent 245 ms/plan (4.9 Hz)
+[  2.23s] target 0 err=0.518 m | 10 plans, recent 250 ms/plan (4.5 Hz)
+[  3.34s] target 0 err=0.503 m | 15 plans, recent 233 ms/plan (4.5 Hz)
+[  4.53s] target 0 err=0.527 m | 21 plans, recent 223 ms/plan (4.6 Hz)
+[  5.78s] target 0 err=0.644 m | 27 plans, recent 215 ms/plan (4.7 Hz)
+[  6.95s] target 0 err=0.713 m | 33 plans, recent 195 ms/plan (4.7 Hz)
+[  8.13s] target 0 err=0.728 m | 41 plans, recent 172 ms/plan (5.0 Hz)
+[  9.18s] target 0 err=0.705 m | 47 plans, recent 164 ms/plan (5.1 Hz)
+[ 10.36s] target 0 err=0.691 m | 55 plans, recent 156 ms/plan (5.3 Hz)
+[ 11.38s] target 0 err=0.728 m | 62 plans, recent 160 ms/plan (5.4 Hz)
+[ 12.40s] target 0 err=0.783 m | 69 plans, recent 147 ms/plan (5.6 Hz)
+[ 13.47s] target 0 err=0.796 m | 76 plans, recent 143 ms/plan (5.6 Hz)
+[ 14.52s] target 0 err=0.790 m | 83 plans, recent 147 ms/plan (5.7 Hz)
+[ 15.64s] target 0 err=0.760 m | 91 plans, recent 153 ms/plan (5.8 Hz)
+[ 16.66s] target 0 err=0.726 m | 96 plans, recent 166 ms/plan (5.8 Hz)
+[ 17.76s] target 0 err=0.711 m | 101 plans, recent 181 ms/plan (5.7 Hz)
+[ 18.93s] target 0 err=0.710 m | 107 plans, recent 197 ms/plan (5.7 Hz)
+[ 19.96s] target 0 err=0.706 m | 113 plans, recent 188 ms/plan (5.7 Hz)
+[ 21.07s] target 0 err=0.688 m | 120 plans, recent 170 ms/plan (5.7 Hz)
+[ 22.18s] target 0 err=0.667 m | 127 plans, recent 160 ms/plan (5.7 Hz)
+[ 23.30s] target 0 err=0.653 m | 133 plans, recent 169 ms/plan (5.7 Hz)
+[ 24.32s] target 0 err=0.651 m | 138 plans, recent 176 ms/plan (5.7 Hz)
+[ 25.33s] target 0 err=0.653 m | 143 plans, recent 197 ms/plan (5.6 Hz)
+[ 26.36s] target 0 err=0.653 m | 150 plans, recent 183 ms/plan (5.7 Hz)
+[ 27.46s] target 0 err=0.652 m | 155 plans, recent 192 ms/plan (5.6 Hz)
+[ 28.57s] target 0 err=0.648 m | 161 plans, recent 178 ms/plan (5.6 Hz)
+[ 29.69s] target 0 err=0.644 m | 167 plans, recent 184 ms/plan (5.6 Hz)
+  reached_strict=False reached_5cm=False min_err=0.4892 violation=False safe_stall=True
+
+=== [42/50] sqp_mpc seed=3 target=1 (0.55, 0.3, 0.25) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed3.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.01s] target 0 err=0.549 m | 6 plans, recent 214 ms/plan (5.9 Hz)
+[  2.03s] target 0 err=0.569 m | 11 plans, recent 195 ms/plan (5.4 Hz)
+[  3.15s] target 0 err=0.569 m | 17 plans, recent 194 ms/plan (5.4 Hz)
+[  4.21s] target 0 err=0.559 m | 24 plans, recent 175 ms/plan (5.7 Hz)
+[  5.22s] target 0 err=0.540 m | 30 plans, recent 164 ms/plan (5.7 Hz)
+[  6.38s] target 0 err=0.515 m | 37 plans, recent 163 ms/plan (5.8 Hz)
+[  7.44s] target 0 err=0.493 m | 43 plans, recent 166 ms/plan (5.8 Hz)
+[  8.54s] target 0 err=0.470 m | 49 plans, recent 175 ms/plan (5.7 Hz)
+[  9.66s] target 0 err=0.456 m | 54 plans, recent 196 ms/plan (5.6 Hz)
+[ 10.78s] target 0 err=0.456 m | 59 plans, recent 202 ms/plan (5.5 Hz)
+[ 11.98s] target 0 err=0.461 m | 64 plans, recent 222 ms/plan (5.3 Hz)
+[ 13.14s] target 0 err=0.464 m | 68 plans, recent 240 ms/plan (5.2 Hz)
+[ 14.33s] target 0 err=0.467 m | 73 plans, recent 245 ms/plan (5.1 Hz)
+[ 15.40s] target 0 err=0.495 m | 78 plans, recent 241 ms/plan (5.1 Hz)
+[ 16.50s] target 0 err=0.550 m | 83 plans, recent 237 ms/plan (5.0 Hz)
+[ 17.52s] target 0 err=0.573 m | 87 plans, recent 231 ms/plan (5.0 Hz)
+[ 18.69s] target 0 err=0.563 m | 93 plans, recent 216 ms/plan (5.0 Hz)
+[ 19.80s] target 0 err=0.551 m | 99 plans, recent 206 ms/plan (5.0 Hz)
+[ 20.95s] target 0 err=0.552 m | 105 plans, recent 191 ms/plan (5.0 Hz)
+[ 22.06s] target 0 err=0.548 m | 112 plans, recent 175 ms/plan (5.1 Hz)
+[ 23.09s] target 0 err=0.505 m | 118 plans, recent 175 ms/plan (5.1 Hz)
+[ 24.11s] target 0 err=0.505 m | 125 plans, recent 158 ms/plan (5.2 Hz)
+[ 25.25s] target 0 err=0.561 m | 131 plans, recent 171 ms/plan (5.2 Hz)
+[ 26.31s] target 0 err=0.619 m | 136 plans, recent 174 ms/plan (5.2 Hz)
+[ 27.44s] target 0 err=0.695 m | 143 plans, recent 178 ms/plan (5.2 Hz)
+[ 28.59s] target 0 err=0.802 m | 150 plans, recent 180 ms/plan (5.2 Hz)
+[ 29.60s] target 0 err=0.893 m | 155 plans, recent 172 ms/plan (5.2 Hz)
+  reached_strict=False reached_5cm=False min_err=0.4545 violation=False safe_stall=True
+
+=== [43/50] sqp_mpc seed=3 target=2 (0.35, 0.3, 0.35) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed3.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.26s] target 0 err=0.533 m | 7 plans, recent 219 ms/plan (5.6 Hz)
+[  2.45s] target 0 err=0.486 m | 12 plans, recent 224 ms/plan (4.9 Hz)
+[  3.59s] target 0 err=0.418 m | 17 plans, recent 224 ms/plan (4.7 Hz)
+[  4.63s] target 0 err=0.263 m | 22 plans, recent 214 ms/plan (4.7 Hz)
+[  5.67s] target 0 err=0.032 m | 33 plans, recent 144 ms/plan (5.8 Hz)
+[  1.65s] target 0 strict reach (22.2 mm) in 1.65 s
+  reached_strict=True reached_5cm=True min_err=0.0043 violation=False safe_stall=False
+
+=== [44/50] sqp_mpc seed=3 target=3 (0.5, 0.35, 0.2) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed3.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.10s] target 0 err=0.656 m | 8 plans, recent 156 ms/plan (7.3 Hz)
+[  2.16s] target 0 err=0.575 m | 15 plans, recent 150 ms/plan (6.9 Hz)
+[  3.23s] target 0 err=0.551 m | 24 plans, recent 136 ms/plan (7.4 Hz)
+[  4.33s] target 0 err=0.523 m | 33 plans, recent 120 ms/plan (7.6 Hz)
+[  5.35s] target 0 err=0.501 m | 42 plans, recent 115 ms/plan (7.8 Hz)
+[  6.48s] target 0 err=0.503 m | 53 plans, recent 107 ms/plan (8.2 Hz)
+[  7.48s] target 0 err=0.511 m | 60 plans, recent 120 ms/plan (8.0 Hz)
+[  8.58s] target 0 err=0.529 m | 67 plans, recent 145 ms/plan (7.8 Hz)
+[  9.61s] target 0 err=0.543 m | 73 plans, recent 156 ms/plan (7.6 Hz)
+[ 10.84s] target 0 err=0.544 m | 79 plans, recent 177 ms/plan (7.3 Hz)
+[ 11.98s] target 0 err=0.559 m | 84 plans, recent 189 ms/plan (7.0 Hz)
+[ 13.09s] target 0 err=0.597 m | 91 plans, recent 188 ms/plan (7.0 Hz)
+[ 14.10s] target 0 err=0.598 m | 97 plans, recent 183 ms/plan (6.9 Hz)
+[ 15.13s] target 0 err=0.523 m | 103 plans, recent 163 ms/plan (6.8 Hz)
+[ 16.14s] target 0 err=0.455 m | 108 plans, recent 181 ms/plan (6.7 Hz)
+[ 17.20s] target 0 err=0.486 m | 112 plans, recent 198 ms/plan (6.5 Hz)
+[ 18.46s] target 0 err=0.534 m | 118 plans, recent 209 ms/plan (6.4 Hz)
+[ 19.64s] target 0 err=0.613 m | 124 plans, recent 219 ms/plan (6.3 Hz)
+[ 20.82s] target 0 err=0.586 m | 130 plans, recent 205 ms/plan (6.2 Hz)
+[ 21.83s] target 0 err=0.498 m | 137 plans, recent 173 ms/plan (6.3 Hz)
+[ 23.08s] target 0 err=0.476 m | 143 plans, recent 183 ms/plan (6.2 Hz)
+[ 24.28s] target 0 err=0.441 m | 148 plans, recent 195 ms/plan (6.1 Hz)
+[ 25.48s] target 0 err=0.288 m | 153 plans, recent 214 ms/plan (6.0 Hz)
+[ 26.62s] target 0 err=0.236 m | 158 plans, recent 230 ms/plan (5.9 Hz)
+[ 27.65s] target 0 err=0.214 m | 163 plans, recent 228 ms/plan (5.9 Hz)
+[ 28.65s] target 0 err=0.196 m | 167 plans, recent 231 ms/plan (5.8 Hz)
+[ 29.76s] target 0 err=0.079 m | 172 plans, recent 225 ms/plan (5.8 Hz)
+  reached_strict=False reached_5cm=False min_err=0.0694 violation=False safe_stall=True
+
+=== [45/50] sqp_mpc seed=3 target=4 (0.4, 0.28, 0.4) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed3.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.08s] target 0 err=0.499 m | 6 plans, recent 212 ms/plan (5.5 Hz)
+[  2.25s] target 0 err=0.448 m | 11 plans, recent 229 ms/plan (4.9 Hz)
+[  3.41s] target 0 err=0.310 m | 16 plans, recent 228 ms/plan (4.7 Hz)
+[  4.45s] target 0 err=0.028 m | 22 plans, recent 209 ms/plan (4.9 Hz)
+[  1.10s] target 0 strict reach (23.7 mm) in 1.10 s
+  reached_strict=True reached_5cm=True min_err=0.0025 violation=False safe_stall=False
+
+=== [46/50] sqp_mpc seed=4 target=0 (0.45, 0.3, 0.3) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed4.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.17s] target 0 err=0.563 m | 6 plans, recent 231 ms/plan (5.1 Hz)
+[  2.34s] target 0 err=0.569 m | 11 plans, recent 227 ms/plan (4.7 Hz)
+[  3.38s] target 0 err=0.575 m | 16 plans, recent 217 ms/plan (4.7 Hz)
+[  4.52s] target 0 err=0.558 m | 21 plans, recent 220 ms/plan (4.6 Hz)
+[  5.66s] target 0 err=0.414 m | 27 plans, recent 216 ms/plan (4.8 Hz)
+[  6.67s] target 0 err=0.310 m | 31 plans, recent 212 ms/plan (4.6 Hz)
+[  7.77s] target 0 err=0.103 m | 38 plans, recent 199 ms/plan (4.9 Hz)
+[  8.82s] target 0 err=0.030 m | 43 plans, recent 197 ms/plan (4.9 Hz)
+[ 10.01s] target 0 err=0.047 m | 49 plans, recent 183 ms/plan (4.9 Hz)
+[ 11.20s] target 0 err=0.038 m | 57 plans, recent 175 ms/plan (5.1 Hz)
+[ 12.43s] target 0 err=0.026 m | 63 plans, recent 183 ms/plan (5.1 Hz)
+[  3.15s] target 0 strict reach (22.3 mm) in 3.15 s
+[ 13.53s] target 0 err=0.019 m | 68 plans, recent 189 ms/plan (5.0 Hz)
+  reached_strict=True reached_5cm=True min_err=0.0181 violation=False safe_stall=False
+
+=== [47/50] sqp_mpc seed=4 target=1 (0.55, 0.3, 0.25) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed4.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.08s] target 0 err=0.591 m | 6 plans, recent 201 ms/plan (5.6 Hz)
+[  2.09s] target 0 err=0.558 m | 12 plans, recent 186 ms/plan (5.7 Hz)
+[  3.16s] target 0 err=0.514 m | 17 plans, recent 197 ms/plan (5.4 Hz)
+[  4.24s] target 0 err=0.453 m | 22 plans, recent 201 ms/plan (5.2 Hz)
+[  5.42s] target 0 err=0.429 m | 27 plans, recent 215 ms/plan (5.0 Hz)
+[  6.50s] target 0 err=0.442 m | 32 plans, recent 219 ms/plan (4.9 Hz)
+[  7.55s] target 0 err=0.458 m | 38 plans, recent 202 ms/plan (5.0 Hz)
+[  8.60s] target 0 err=0.472 m | 44 plans, recent 194 ms/plan (5.1 Hz)
+[  9.79s] target 0 err=0.484 m | 49 plans, recent 196 ms/plan (5.0 Hz)
+[ 10.98s] target 0 err=0.489 m | 54 plans, recent 214 ms/plan (4.9 Hz)
+[ 12.07s] target 0 err=0.485 m | 59 plans, recent 224 ms/plan (4.9 Hz)
+[ 13.18s] target 0 err=0.476 m | 65 plans, recent 219 ms/plan (4.9 Hz)
+[ 14.34s] target 0 err=0.465 m | 70 plans, recent 219 ms/plan (4.9 Hz)
+[ 15.34s] target 0 err=0.450 m | 74 plans, recent 219 ms/plan (4.8 Hz)
+[ 16.38s] target 0 err=0.437 m | 78 plans, recent 228 ms/plan (4.8 Hz)
+[ 17.59s] target 0 err=0.420 m | 83 plans, recent 239 ms/plan (4.7 Hz)
+[ 18.80s] target 0 err=0.417 m | 88 plans, recent 247 ms/plan (4.7 Hz)
+[ 19.83s] target 0 err=0.415 m | 93 plans, recent 236 ms/plan (4.7 Hz)
+[ 20.94s] target 0 err=0.415 m | 98 plans, recent 219 ms/plan (4.7 Hz)
+[ 22.15s] target 0 err=0.417 m | 104 plans, recent 216 ms/plan (4.7 Hz)
+[ 23.40s] target 0 err=0.418 m | 109 plans, recent 220 ms/plan (4.7 Hz)
+[ 24.45s] target 0 err=0.424 m | 114 plans, recent 217 ms/plan (4.7 Hz)
+[ 25.64s] target 0 err=0.444 m | 121 plans, recent 210 ms/plan (4.7 Hz)
+[ 26.80s] target 0 err=0.459 m | 127 plans, recent 190 ms/plan (4.7 Hz)
+[ 27.93s] target 0 err=0.472 m | 133 plans, recent 186 ms/plan (4.8 Hz)
+[ 29.05s] target 0 err=0.484 m | 139 plans, recent 190 ms/plan (4.8 Hz)
+  reached_strict=False reached_5cm=False min_err=0.4140 violation=False safe_stall=True
+
+=== [48/50] sqp_mpc seed=4 target=2 (0.35, 0.3, 0.35) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed4.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.15s] target 0 err=0.554 m | 6 plans, recent 224 ms/plan (5.2 Hz)
+[  2.41s] target 0 err=0.534 m | 11 plans, recent 238 ms/plan (4.6 Hz)
+[  3.61s] target 0 err=0.520 m | 16 plans, recent 237 ms/plan (4.4 Hz)
+[  4.69s] target 0 err=0.503 m | 21 plans, recent 231 ms/plan (4.5 Hz)
+[  5.88s] target 0 err=0.428 m | 26 plans, recent 239 ms/plan (4.4 Hz)
+[  7.05s] target 0 err=0.239 m | 31 plans, recent 226 ms/plan (4.4 Hz)
+[  2.00s] target 0 strict reach (24.4 mm) in 2.00 s
+[  8.09s] target 0 err=0.024 m | 41 plans, recent 165 ms/plan (5.1 Hz)
+  reached_strict=True reached_5cm=True min_err=0.0041 violation=False safe_stall=False
+
+=== [49/50] sqp_mpc seed=4 target=3 (0.5, 0.35, 0.2) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed4.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.08s] target 0 err=0.605 m | 6 plans, recent 221 ms/plan (5.5 Hz)
+[  2.17s] target 0 err=0.611 m | 11 plans, recent 222 ms/plan (5.1 Hz)
+[  3.18s] target 0 err=0.641 m | 16 plans, recent 211 ms/plan (5.0 Hz)
+[  4.35s] target 0 err=0.664 m | 21 plans, recent 218 ms/plan (4.8 Hz)
+[  5.62s] target 0 err=0.612 m | 26 plans, recent 224 ms/plan (4.6 Hz)
+[  6.66s] target 0 err=0.601 m | 30 plans, recent 234 ms/plan (4.5 Hz)
+[  7.94s] target 0 err=0.349 m | 35 plans, recent 250 ms/plan (4.4 Hz)
+[  9.14s] target 0 err=0.061 m | 40 plans, recent 251 ms/plan (4.4 Hz)
+[ 10.23s] target 0 err=0.028 m | 45 plans, recent 234 ms/plan (4.4 Hz)
+[  2.25s] target 0 strict reach (24.4 mm) in 2.25 s
+  reached_strict=True reached_5cm=True min_err=0.0161 violation=False safe_stall=False
+
+=== [50/50] sqp_mpc seed=4 target=4 (0.4, 0.28, 0.4) ===
+loaded=/home/home/mbd/koopman/mbd_koopman/out/franka/models/bk_seed4.pt
+SQP-MPC: 3 SQP re-freezes, act_dist 999.0, whole_arm=True, 1 box(es), 62 keep-out rows/step (compiled once, DPP)
+warm-up: 3 throwaway plans
+[  1.16s] target 0 err=0.543 m | 6 plans, recent 224 ms/plan (5.2 Hz)
+[  2.39s] target 0 err=0.452 m | 11 plans, recent 241 ms/plan (4.6 Hz)
+[  3.47s] target 0 err=0.276 m | 15 plans, recent 243 ms/plan (4.3 Hz)
+[  1.05s] target 0 strict reach (16.8 mm) in 1.05 s
+  reached_strict=True reached_5cm=True min_err=0.0038 violation=False safe_stall=False
+
+exp_c done: 50 trials in 12.6 min

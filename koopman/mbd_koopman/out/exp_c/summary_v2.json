@@ -1,0 +1,20 @@
+{
+  "bk_mbd": {
+    "n_trials": 30,
+    "reach_5cm": 17,
+    "reach_strict_2p5cm": 15,
+    "reach_min_err_2p5cm": 15,
+    "executed_violations": 0,
+    "safe_stalls": 15,
+    "mean_min_err_m": 0.0763032468521758
+  },
+  "sqp_mpc": {
+    "n_trials": 30,
+    "reach_5cm": 8,
+    "reach_strict_2p5cm": 8,
+    "reach_min_err_2p5cm": 8,
+    "executed_violations": 0,
+    "safe_stalls": 22,
+    "mean_min_err_m": 0.27227110181429326
+  }
+}

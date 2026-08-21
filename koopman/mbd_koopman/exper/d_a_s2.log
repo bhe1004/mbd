@@ -1,0 +1,155 @@
+model=bilinear r=20 N=800 S=5 sigma=1.2->0.3 T=15 seeds=[2]
+cells 15 x seeds 1 x targets 10 = 150 trials -> /home/home/mbd/koopman/mbd_koopman/exper/out/d_a_s2/trials.jsonl
+  loaded phys_bilinear_r20_seed2.pt
+[1/150] a=0.4    fixed0.3  s2 t0 err=0.0785 steps=120 N_eff= 793.4 -> miss
+[2/150] a=0.4    fixed0.3  s2 t1 err=0.0687 steps=120 N_eff= 792.8 -> miss
+[3/150] a=0.4    fixed0.3  s2 t2 err=0.0329 steps=120 N_eff= 791.0 -> miss
+[4/150] a=0.4    fixed0.3  s2 t3 err=0.0240 steps=120 N_eff= 795.5 -> miss
+[5/150] a=0.4    fixed0.3  s2 t4 err=0.0318 steps= 18 N_eff= 794.9 -> STRICT
+[6/150] a=0.4    fixed0.3  s2 t5 err=0.0169 steps= 60 N_eff= 798.2 -> STRICT
+[7/150] a=0.4    fixed0.3  s2 t6 err=0.0595 steps=120 N_eff= 791.9 -> miss
+[8/150] a=0.4    fixed0.3  s2 t7 err=0.0632 steps=120 N_eff= 795.4 -> miss
+[9/150] a=0.4    fixed0.3  s2 t8 err=0.1061 steps= 20 N_eff= 795.7 -> STRICT
+[10/150] a=0.4    fixed0.3  s2 t9 err=0.0169 steps= 31 N_eff= 790.3 -> STRICT
+[11/150] a=0.4    fixed0.5  s2 t0 err=0.0306 steps= 23 N_eff= 768.4 -> STRICT
+[12/150] a=0.4    fixed0.5  s2 t1 err=0.0468 steps=120 N_eff= 764.2 -> miss
+[13/150] a=0.4    fixed0.5  s2 t2 err=0.0093 steps=117 N_eff= 754.7 -> STRICT
+[14/150] a=0.4    fixed0.5  s2 t3 err=0.0201 steps= 14 N_eff= 775.4 -> STRICT
+[15/150] a=0.4    fixed0.5  s2 t4 err=0.0099 steps=102 N_eff= 774.3 -> STRICT
+[16/150] a=0.4    fixed0.5  s2 t5 err=0.0125 steps= 58 N_eff= 791.6 -> STRICT
+[17/150] a=0.4    fixed0.5  s2 t6 err=0.0428 steps= 15 N_eff= 758.7 -> STRICT
+[18/150] a=0.4    fixed0.5  s2 t7 err=0.0285 steps=120 N_eff= 775.5 -> miss
+[19/150] a=0.4    fixed0.5  s2 t8 err=0.0328 steps= 20 N_eff= 777.7 -> STRICT
+[20/150] a=0.4    fixed0.5  s2 t9 err=0.0119 steps=120 N_eff= 751.9 -> miss
+[21/150] a=0.4    fixed0.8  s2 t0 err=0.0122 steps= 31 N_eff= 695.6 -> STRICT
+[22/150] a=0.4    fixed0.8  s2 t1 err=0.0168 steps= 28 N_eff= 686.5 -> STRICT
+[23/150] a=0.4    fixed0.8  s2 t2 err=0.0174 steps= 36 N_eff= 659.1 -> STRICT
+[24/150] a=0.4    fixed0.8  s2 t3 err=0.0079 steps= 21 N_eff= 716.1 -> STRICT
+[25/150] a=0.4    fixed0.8  s2 t4 err=0.0130 steps= 16 N_eff= 710.4 -> STRICT
+[26/150] a=0.4    fixed0.8  s2 t5 err=0.0100 steps= 57 N_eff= 767.1 -> STRICT
+[27/150] a=0.4    fixed0.8  s2 t6 err=0.0113 steps= 28 N_eff= 673.5 -> STRICT
+[28/150] a=0.4    fixed0.8  s2 t7 err=0.0114 steps= 20 N_eff= 717.2 -> STRICT
+[29/150] a=0.4    fixed0.8  s2 t8 err=0.0124 steps= 26 N_eff= 720.3 -> STRICT
+[30/150] a=0.4    fixed0.8  s2 t9 err=0.0101 steps= 35 N_eff= 653.0 -> STRICT
+[31/150] a=0.4    fixed1.2  s2 t0 err=0.0130 steps= 46 N_eff= 611.6 -> STRICT
+[32/150] a=0.4    fixed1.2  s2 t1 err=0.0076 steps= 45 N_eff= 596.6 -> STRICT
+[33/150] a=0.4    fixed1.2  s2 t2 err=0.0102 steps= 46 N_eff= 558.1 -> STRICT
+[34/150] a=0.4    fixed1.2  s2 t3 err=0.0121 steps= 34 N_eff= 641.2 -> STRICT
+[35/150] a=0.4    fixed1.2  s2 t4 err=0.0083 steps= 23 N_eff= 631.9 -> STRICT
+[36/150] a=0.4    fixed1.2  s2 t5 err=0.0079 steps= 62 N_eff= 727.7 -> STRICT
+[37/150] a=0.4    fixed1.2  s2 t6 err=0.0037 steps= 39 N_eff= 578.8 -> STRICT
+[38/150] a=0.4    fixed1.2  s2 t7 err=0.0033 steps= 23 N_eff= 643.7 -> STRICT
+[39/150] a=0.4    fixed1.2  s2 t8 err=0.0047 steps= 47 N_eff= 647.1 -> STRICT
+[40/150] a=0.4    fixed1.2  s2 t9 err=0.0092 steps= 67 N_eff= 548.0 -> STRICT
+[41/150] a=0.4    anneal    s2 t0 err=0.0112 steps= 46 N_eff= 794.4 -> STRICT
+[42/150] a=0.4    anneal    s2 t1 err=0.0175 steps= 28 N_eff= 793.7 -> STRICT
+[43/150] a=0.4    anneal    s2 t2 err=0.0146 steps= 42 N_eff= 791.0 -> STRICT
+[44/150] a=0.4    anneal    s2 t3 err=0.0091 steps= 21 N_eff= 795.8 -> STRICT
+[45/150] a=0.4    anneal    s2 t4 err=0.0115 steps= 18 N_eff= 795.3 -> STRICT
+[46/150] a=0.4    anneal    s2 t5 err=0.0084 steps= 59 N_eff= 798.7 -> STRICT
+[47/150] a=0.4    anneal    s2 t6 err=0.0110 steps= 28 N_eff= 792.5 -> STRICT
+[48/150] a=0.4    anneal    s2 t7 err=0.0104 steps= 21 N_eff= 795.9 -> STRICT
+[49/150] a=0.4    anneal    s2 t8 err=0.0158 steps= 33 N_eff= 796.0 -> STRICT
+[50/150] a=0.4    anneal    s2 t9 err=0.0075 steps= 37 N_eff= 790.0 -> STRICT
+[51/150] a=0.1    fixed0.3  s2 t0 err=0.0295 steps=120 N_eff= 743.8 -> miss
+[52/150] a=0.1    fixed0.3  s2 t1 err=0.0455 steps=120 N_eff= 739.7 -> miss
+[53/150] a=0.1    fixed0.3  s2 t2 err=0.0135 steps=120 N_eff= 720.4 -> miss
+[54/150] a=0.1    fixed0.3  s2 t3 err=0.0241 steps= 10 N_eff= 756.1 -> STRICT
+[55/150] a=0.1    fixed0.3  s2 t4 err=0.0193 steps= 11 N_eff= 753.4 -> STRICT
+[56/150] a=0.1    fixed0.3  s2 t5 err=0.0170 steps=120 N_eff= 783.3 -> miss
+[57/150] a=0.1    fixed0.3  s2 t6 err=0.0412 steps= 13 N_eff= 728.4 -> STRICT
+[58/150] a=0.1    fixed0.3  s2 t7 err=0.0317 steps=120 N_eff= 755.4 -> miss
+[59/150] a=0.1    fixed0.3  s2 t8 err=0.0107 steps= 73 N_eff= 758.9 -> STRICT
+[60/150] a=0.1    fixed0.3  s2 t9 err=0.0162 steps= 17 N_eff= 714.7 -> STRICT
+[61/150] a=0.1    fixed0.5  s2 t0 err=0.0087 steps= 36 N_eff= 600.2 -> STRICT
+[62/150] a=0.1    fixed0.5  s2 t1 err=0.0187 steps= 16 N_eff= 590.8 -> STRICT
+[63/150] a=0.1    fixed0.5  s2 t2 err=0.0137 steps= 15 N_eff= 554.8 -> STRICT
+[64/150] a=0.1    fixed0.5  s2 t3 err=0.0067 steps= 35 N_eff= 630.5 -> STRICT
+[65/150] a=0.1    fixed0.5  s2 t4 err=0.0095 steps= 10 N_eff= 626.0 -> STRICT
+[66/150] a=0.1    fixed0.5  s2 t5 err=0.0070 steps= 32 N_eff= 720.1 -> STRICT
+[67/150] a=0.1    fixed0.5  s2 t6 err=0.0220 steps= 13 N_eff= 568.2 -> STRICT
+[68/150] a=0.1    fixed0.5  s2 t7 err=0.0139 steps= 11 N_eff= 634.6 -> STRICT
+[69/150] a=0.1    fixed0.5  s2 t8 err=0.0080 steps= 17 N_eff= 639.6 -> STRICT
+[70/150] a=0.1    fixed0.5  s2 t9 err=0.0110 steps= 17 N_eff= 550.4 -> STRICT
+[71/150] a=0.1    fixed0.8  s2 t0 err=0.0074 steps= 20 N_eff= 401.9 -> STRICT
+[72/150] a=0.1    fixed0.8  s2 t1 err=0.0071 steps= 16 N_eff= 388.6 -> STRICT
+[73/150] a=0.1    fixed0.8  s2 t2 err=0.0129 steps= 19 N_eff= 341.9 -> STRICT
+[74/150] a=0.1    fixed0.8  s2 t3 err=0.0050 steps= 20 N_eff= 440.2 -> STRICT
+[75/150] a=0.1    fixed0.8  s2 t4 err=0.0122 steps= 16 N_eff= 432.9 -> STRICT
+[76/150] a=0.1    fixed0.8  s2 t5 err=0.0038 steps= 30 N_eff= 578.2 -> STRICT
+[77/150] a=0.1    fixed0.8  s2 t6 err=0.0105 steps= 16 N_eff= 364.3 -> STRICT
+[78/150] a=0.1    fixed0.8  s2 t7 err=0.0072 steps= 10 N_eff= 447.2 -> STRICT
+[79/150] a=0.1    fixed0.8  s2 t8 err=0.0059 steps= 24 N_eff= 452.4 -> STRICT
+[80/150] a=0.1    fixed0.8  s2 t9 err=0.0112 steps= 22 N_eff= 344.7 -> STRICT
+[81/150] a=0.1    fixed1.2  s2 t0 err=0.0071 steps= 23 N_eff= 272.1 -> STRICT
+[82/150] a=0.1    fixed1.2  s2 t1 err=0.0049 steps= 20 N_eff= 254.3 -> STRICT
+[83/150] a=0.1    fixed1.2  s2 t2 err=0.0118 steps= 22 N_eff= 217.3 -> STRICT
+[84/150] a=0.1    fixed1.2  s2 t3 err=0.0088 steps= 20 N_eff= 303.8 -> STRICT
+[85/150] a=0.1    fixed1.2  s2 t4 err=0.0087 steps= 12 N_eff= 294.0 -> STRICT
+[86/150] a=0.1    fixed1.2  s2 t5 err=0.0051 steps= 31 N_eff= 446.1 -> STRICT
+[87/150] a=0.1    fixed1.2  s2 t6 err=0.0086 steps= 22 N_eff= 236.6 -> STRICT
+[88/150] a=0.1    fixed1.2  s2 t7 err=0.0047 steps= 13 N_eff= 309.3 -> STRICT
+[89/150] a=0.1    fixed1.2  s2 t8 err=0.0146 steps= 26 N_eff= 315.3 -> STRICT
+[90/150] a=0.1    fixed1.2  s2 t9 err=0.0117 steps= 29 N_eff= 214.6 -> STRICT
+[91/150] a=0.1    anneal    s2 t0 err=0.0078 steps= 20 N_eff= 744.4 -> STRICT
+[92/150] a=0.1    anneal    s2 t1 err=0.0123 steps= 16 N_eff= 740.2 -> STRICT
+[93/150] a=0.1    anneal    s2 t2 err=0.0122 steps= 17 N_eff= 721.2 -> STRICT
+[94/150] a=0.1    anneal    s2 t3 err=0.0062 steps= 19 N_eff= 756.5 -> STRICT
+[95/150] a=0.1    anneal    s2 t4 err=0.0102 steps= 11 N_eff= 753.3 -> STRICT
+[96/150] a=0.1    anneal    s2 t5 err=0.0030 steps= 33 N_eff= 783.9 -> STRICT
+[97/150] a=0.1    anneal    s2 t6 err=0.0081 steps= 16 N_eff= 731.5 -> STRICT
+[98/150] a=0.1    anneal    s2 t7 err=0.0077 steps= 10 N_eff= 757.1 -> STRICT
+[99/150] a=0.1    anneal    s2 t8 err=0.0046 steps= 16 N_eff= 759.2 -> STRICT
+[100/150] a=0.1    anneal    s2 t9 err=0.0067 steps= 23 N_eff= 717.9 -> STRICT
+[101/150] a=0.025  fixed0.3  s2 t0 err=0.0128 steps= 39 N_eff= 514.2 -> STRICT
+[102/150] a=0.025  fixed0.3  s2 t1 err=0.0187 steps=120 N_eff= 498.5 -> miss
+[103/150] a=0.025  fixed0.3  s2 t2 err=0.0176 steps=120 N_eff= 453.9 -> miss
+[104/150] a=0.025  fixed0.3  s2 t3 err=0.0101 steps= 14 N_eff= 549.5 -> STRICT
+[105/150] a=0.025  fixed0.3  s2 t4 err=0.0164 steps=120 N_eff= 543.9 -> miss
+[106/150] a=0.025  fixed0.3  s2 t5 err=0.0119 steps=120 N_eff= 668.3 -> miss
+[107/150] a=0.025  fixed0.3  s2 t6 err=0.0197 steps= 11 N_eff= 474.2 -> STRICT
+[108/150] a=0.025  fixed0.3  s2 t7 err=0.0176 steps=120 N_eff= 551.5 -> miss
+[109/150] a=0.025  fixed0.3  s2 t8 err=0.0130 steps= 12 N_eff= 559.5 -> STRICT
+[110/150] a=0.025  fixed0.3  s2 t9 err=0.0140 steps= 14 N_eff= 452.2 -> STRICT
+[111/150] a=0.025  fixed0.5  s2 t0 err=0.0086 steps= 13 N_eff= 248.4 -> STRICT
+[112/150] a=0.025  fixed0.5  s2 t1 err=0.0081 steps= 12 N_eff= 237.1 -> STRICT
+[113/150] a=0.025  fixed0.5  s2 t2 err=0.0115 steps= 12 N_eff= 197.6 -> STRICT
+[114/150] a=0.025  fixed0.5  s2 t3 err=0.0056 steps= 14 N_eff= 278.9 -> STRICT
+[115/150] a=0.025  fixed0.5  s2 t4 err=0.0107 steps= 12 N_eff= 272.1 -> STRICT
+[116/150] a=0.025  fixed0.5  s2 t5 err=0.0065 steps= 24 N_eff= 416.5 -> STRICT
+[117/150] a=0.025  fixed0.5  s2 t6 err=0.0121 steps=  8 N_eff= 217.6 -> STRICT
+[118/150] a=0.025  fixed0.5  s2 t7 err=0.0096 steps= 12 N_eff= 287.6 -> STRICT
+[119/150] a=0.025  fixed0.5  s2 t8 err=0.0046 steps= 12 N_eff= 290.6 -> STRICT
+[120/150] a=0.025  fixed0.5  s2 t9 err=0.0085 steps= 13 N_eff= 199.3 -> STRICT
+[121/150] a=0.025  fixed0.8  s2 t0 err=0.0073 steps= 13 N_eff=  85.6 -> STRICT
+[122/150] a=0.025  fixed0.8  s2 t1 err=0.0065 steps= 12 N_eff=  76.9 -> STRICT
+[123/150] a=0.025  fixed0.8  s2 t2 err=0.0096 steps= 13 N_eff=  60.1 -> STRICT
+[124/150] a=0.025  fixed0.8  s2 t3 err=0.0068 steps= 17 N_eff= 100.0 -> STRICT
+[125/150] a=0.025  fixed0.8  s2 t4 err=0.0102 steps= 12 N_eff=  98.4 -> STRICT
+[126/150] a=0.025  fixed0.8  s2 t5 err=0.0036 steps= 21 N_eff= 175.2 -> STRICT
+[127/150] a=0.025  fixed0.8  s2 t6 err=0.0209 steps= 11 N_eff=  71.2 -> STRICT
+[128/150] a=0.025  fixed0.8  s2 t7 err=0.0099 steps=  8 N_eff= 102.4 -> STRICT
+[129/150] a=0.025  fixed0.8  s2 t8 err=0.0148 steps= 16 N_eff= 107.9 -> STRICT
+[130/150] a=0.025  fixed0.8  s2 t9 err=0.0088 steps= 22 N_eff=  62.3 -> STRICT
+[131/150] a=0.025  fixed1.2  s2 t0 err=0.0129 steps= 12 N_eff=  37.8 -> STRICT
+[132/150] a=0.025  fixed1.2  s2 t1 err=0.0044 steps= 14 N_eff=  29.9 -> STRICT
+[133/150] a=0.025  fixed1.2  s2 t2 err=0.0142 steps= 28 N_eff=  26.1 -> STRICT
+[134/150] a=0.025  fixed1.2  s2 t3 err=0.0065 steps= 20 N_eff=  42.7 -> STRICT
+[135/150] a=0.025  fixed1.2  s2 t4 err=0.0044 steps= 10 N_eff=  40.6 -> STRICT
+[136/150] a=0.025  fixed1.2  s2 t5 err=0.0047 steps= 24 N_eff=  82.8 -> STRICT
+[137/150] a=0.025  fixed1.2  s2 t6 err=0.0328 steps= 20 N_eff=  30.1 -> STRICT
+[138/150] a=0.025  fixed1.2  s2 t7 err=0.0114 steps=  7 N_eff=  42.1 -> STRICT
+[139/150] a=0.025  fixed1.2  s2 t8 err=0.0410 steps= 19 N_eff=  43.8 -> STRICT
+[140/150] a=0.025  fixed1.2  s2 t9 err=0.0134 steps= 37 N_eff=  23.5 -> STRICT
+[141/150] a=0.025  anneal    s2 t0 err=0.0130 steps= 12 N_eff= 509.4 -> STRICT
+[142/150] a=0.025  anneal    s2 t1 err=0.0102 steps= 11 N_eff= 498.3 -> STRICT
+[143/150] a=0.025  anneal    s2 t2 err=0.0125 steps= 28 N_eff= 450.6 -> STRICT
+[144/150] a=0.025  anneal    s2 t3 err=0.0065 steps= 11 N_eff= 550.2 -> STRICT
+[145/150] a=0.025  anneal    s2 t4 err=0.0089 steps= 10 N_eff= 543.1 -> STRICT
+[146/150] a=0.025  anneal    s2 t5 err=0.0040 steps= 20 N_eff= 664.8 -> STRICT
+[147/150] a=0.025  anneal    s2 t6 err=0.0184 steps=  9 N_eff= 476.3 -> STRICT
+[148/150] a=0.025  anneal    s2 t7 err=0.0093 steps=  7 N_eff= 558.1 -> STRICT
+[149/150] a=0.025  anneal    s2 t8 err=0.0097 steps= 11 N_eff= 561.3 -> STRICT
+[150/150] a=0.025  anneal    s2 t9 err=0.0072 steps= 14 N_eff= 451.1 -> STRICT
+
+done -> /home/home/mbd/koopman/mbd_koopman/exper/out/d_a_s2/trials.jsonl

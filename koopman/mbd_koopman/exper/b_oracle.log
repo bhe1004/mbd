@@ -1,0 +1,12 @@
+model=bilinear r=20 N=800 S=5 sigma=1.2->0.3 T=15 seeds=[0]
+conditions 1 x seeds 1 x targets 10 = 10 trials -> /home/home/mbd/koopman/mbd_koopman/exper/out/b_sweep/trials.jsonl
+[1/10] oracle        s0 t0 err=0.0040 steps=21 ms=2638 -> STRICT
+[2/10] oracle        s0 t1 err=0.0039 steps=33 ms=2611 -> STRICT
+[3/10] oracle        s0 t2 err=0.0042 steps=38 ms=2568 -> STRICT
+[4/10] oracle        s0 t3 err=0.0080 steps=21 ms=2640 -> STRICT
+[5/10] oracle        s0 t4 err=0.0079 steps=22 ms=2591 -> STRICT
+[6/10] oracle        s0 t5 err=0.0071 steps=32 ms=2505 -> STRICT
+[7/10] oracle        s0 t6 err=0.0064 steps=28 ms=2606 -> STRICT
+[8/10] oracle        s0 t7 err=0.0046 steps=21 ms=2589 -> STRICT
+[9/10] oracle        s0 t8 err=0.0108 steps=26 ms=2640 -> STRICT
+[10/10] oracle        s0 t9 err=0.0110 steps=43 ms=2572 -> STRICT

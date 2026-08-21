@@ -39,7 +39,7 @@ import sys
 import threading
 import time
 from collections import Counter
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Callable, List, Optional
 
@@ -58,10 +58,16 @@ from bk_mbd.train import load_checkpoint  # noqa: E402
 from bk_mbd.tube import (  # noqa: E402
     bilinear_norm_bounds,
     compute_one_step_residuals,
+    cost_sensitivity_torch,
     fit_tube_constants,
     propagate_tube_batch_torch,
 )
-from envs.franka import NUM_JOINTS, SCENE_XML_PATH, FrankaTask  # noqa: E402
+from envs.franka import (  # noqa: E402
+    NUM_JOINTS,
+    SCENE_XML_PATH,
+    FrankaTask,
+    FrankaTaskConfig,
+)
 
 METHOD_COLORS = {
     "vanilla_mbd_true": (0.13, 0.65, 0.22),
@@ -69,6 +75,161 @@ METHOD_COLORS = {
     "dk_mbd_split": (1.00, 0.50, 0.05),
     "bk_mbd": (0.84, 0.15, 0.16),
 }
+
+# ======================================================================
+# TUNE HERE: the keep-out obstacles, spheres and/or axis-aligned boxes.
+# Each entry is one of:
+#     ((x, y, z), radius)                     # sphere (shorthand)
+#     ("sphere", (x, y, z), radius)           # sphere (explicit)
+#     ("box",    (x, y, z), (hx, hy, hz))     # box: center + half-extents
+# Add, remove, move, or resize entries freely; every obstacle is charged to
+# the whole-arm sphere cloud by the planner and scored margin-free by the
+# referee. A sphere center may be the string "auto": that ball is placed 40%
+# of the way from the home tool position to the FIRST target (on the straight
+# line, biased toward home: at the midpoint it ends up so close to the target
+# that reaching would need the wrist and gripper to enter it, and the penalty
+# balances the goal cost ~50 mm short). Empty list = no obstacles.
+# ======================================================================
+OBSTACLES = [
+
+    # ("box", (0.7, 0.0, 0.453), (0.2, 0.05, 0.7)),
+    ("box", (0.55, 0.0, 0.9), (0.2, 0.05, 0.1)),
+    ("box", (0.55, 0.0, 0.1), (0.2, 0.05, 0.4)),
+
+]
+
+# ======================================================================
+# ADAPTIVE NOISE (flip in code, no CLI flag): shrink the per-plan sigma
+# schedule as the tool nears the goal. MBD already anneals sigma high->low
+# WITHIN each plan (explore -> refine); this adds a SECOND, across-plans
+# shrink so that once the tool is close, the same optimizer stops re-blasting
+# its converged plan with the full sigma_start every replan (which otherwise
+# leaves the tool jittering tens of mm short of the goal). Set ADAPT_NOISE
+# = False to use the optimizer verbatim (the paper-protocol fixed schedule).
+# ======================================================================
+ADAPT_NOISE = True
+ADAPT_ERR_FULL = 0.60   # metres: at/above this reach error, the schedule is
+                        # left at full scale (maximum exploration)
+ADAPT_FLOOR = 0.05      # smallest scale factor applied right at the goal
+
+# ======================================================================
+# ROBOT SPEED: the joint-velocity limit [rad/s] the planner may command and
+# the arm executes. Lower = slower motion. The task default is 1.5; set None
+# to use it unchanged. Same control period, so a lower cap simply reduces how
+# far each joint can move per step.
+# ======================================================================
+MAX_JOINT_VELOCITY = 1.0
+
+# ======================================================================
+# PLANNING HORIZON: how many control steps each plan looks ahead. None = the
+# task default (15). A longer horizon lets the sampler SEE a longer detour
+# (e.g. swinging the whole arm around a wide wall) and its payoff inside one
+# plan, at the cost of slower planning (~linear in the horizon).
+# ======================================================================
+HORIZON = 15
+
+# ======================================================================
+# START POSE: the TCP position [x, y, z] in the base frame the arm starts
+# from. None = the scene's "home" keyframe unchanged. Solved by damped-
+# least-squares IK from the home configuration (orientation free); the
+# achieved TCP is printed, so if the target is out of reach you will see it.
+# The home keyframe TCP is about (0.554, 0.0, 0.521).
+# ======================================================================
+START_TCP = (0.45, -0.4, 0.3)
+# START_TCP = (0.3, 0.0, 0.5)
+
+# ======================================================================
+# TARGET: override the reach target [x, y, z] in the base frame. None = use
+# the task's built-in target selected by --target-id / --targets. When set,
+# every segment reaches THIS point (the built-in target list is ignored).
+# ======================================================================
+TARGET = (0.45, 0.3, 0.3)
+
+
+def home_at_tcp(task, tcp_xyz, iters: int = 200) -> np.ndarray:
+    """Joints reaching TCP position ``tcp_xyz`` (orientation free), solved by
+    damped-least-squares IK from the home configuration."""
+
+    q = np.asarray(task.home_qpos, dtype=np.float64).copy()
+    target = np.asarray(tcp_xyz, dtype=np.float64)
+    eps = 1e-4
+    for _ in range(iters):
+        p = np.asarray(task.ee_of_q(q), dtype=np.float64)
+        err = target - p
+        if np.linalg.norm(err) < 1e-4:
+            break
+        J = np.zeros((3, NUM_JOINTS))
+        for i in range(NUM_JOINTS):
+            dq = q.copy(); dq[i] += eps
+            J[:, i] = (np.asarray(task.ee_of_q(dq)) - p) / eps
+        q = q + J.T @ np.linalg.solve(J @ J.T + 1e-4 * np.eye(3), err)
+    return q
+
+# ======================================================================
+# START ON ENTER: if True, the script builds the scene and viewer, holds the
+# arm at the start pose, and WAITS for you to press Enter in the terminal
+# before any motion/planning begins. False = start immediately.
+# ======================================================================
+WAIT_FOR_START = True
+
+# ======================================================================
+# JOINT LIMIT COST: penalize candidate rollouts whose joints exceed their
+# limits, or come within JOINT_LIMIT_MARGIN [rad] of them. Charged
+# weight * encroachment^2 per joint per step. 0 = off. Keeps the sampler
+# from proposing plans that ride a joint stop (where tracking degrades).
+# ======================================================================
+W_JOINT_LIMIT = 200.0
+JOINT_LIMIT_MARGIN = 0.3
+
+# ======================================================================
+# WHOLE-ARM COLLISION BODY: how densely the arm is covered by check spheres.
+# Fewer spheres = faster planning (the penalty is evaluated per sphere).
+#   ARM_FIRST_LINK: which frame the cover STARTS at (higher = drop the
+#     body/proximal links, keep the reaching arm). 3=upper arm+elbow onward,
+#     4=elbow onward, 5=forearm/wrist onward (drops the bulky upper arm).
+#   ARM_LINK_SAMPLES: extra spheres interpolated per covered segment. Keep
+#     this to keep the reaching arm dense.
+#   ARM_GRIPPER_FINGERS: True = 4 gripper spheres (crossbar + finger prongs),
+#     False = 2 (crossbar only).
+# ======================================================================
+ARM_FIRST_LINK = 3
+ARM_LINK_SAMPLES = 3
+ARM_GRIPPER_FINGERS = False
+
+
+class AdaptiveNoise:
+    """Wraps an MBDOptimizer and, when enabled, scales BOTH ends of its noise
+    schedule by ``clip(err / err_full, floor, 1)`` per plan.
+
+    Far from the goal the scale is 1 and the optimizer runs its full schedule;
+    near the goal the schedule shrinks proportionally, turning the same
+    sampler into a fine-positioning loop. Scaled optimizers are cached by
+    (rounded) scale so a new one is not built every plan.
+    """
+
+    def __init__(self, optimizer: MBDOptimizer, base_config: MBDConfig,
+                 enabled: bool, err_full: float, floor: float) -> None:
+        self.optimizer = optimizer
+        self.base_config = base_config
+        self.enabled = bool(enabled)
+        self.err_full = float(err_full)
+        self.floor = float(floor)
+        self._cache: dict = {}
+
+    def optimize(self, U, evaluate, rng, err: float):
+        if not self.enabled:
+            return self.optimizer.optimize(U, evaluate, rng=rng)
+        scale = min(1.0, max(err / self.err_full, self.floor))
+        key = round(scale, 2)
+        opt = self._cache.get(key)
+        if opt is None:
+            cfg = replace(self.base_config,
+                          sigma_start=self.base_config.sigma_start * scale,
+                          sigma_end=self.base_config.sigma_end * scale)
+            opt = MBDOptimizer(cfg, self.optimizer.action_low,
+                               self.optimizer.action_high)
+            self._cache[key] = opt
+        return opt.optimize(U, evaluate, rng=rng)
 
 
 def parse_args() -> argparse.Namespace:
@@ -102,12 +263,26 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--data-seed", type=int, default=1)
     parser.add_argument("--beta-e", type=float, default=0.0002)
+    parser.add_argument(
+        "--tube-mode",
+        choices=["none", "plain", "cost-sens"],
+        default="none",
+        help="bk_mbd tube penalty: 'none' = no tube at all (skips fitting and "
+        "propagation entirely - the beta_e=0 ablation without the tube's "
+        "compute); 'plain' = beta_e * sum_t e_t (raw lifted error, bk-mppi "
+        "style); 'cost-sens' = beta_e * sum_t ||grad c(b_t)|| e_t "
+        "(first-order bound on the candidate cost error - model error is "
+        "only charged where it can move the cost / distort the score). NOTE: "
+        "the modes live on different scales; 'cost-sens' puts the penalty "
+        "in cost units, so re-tune --beta-e (try ~1.0) instead of reusing the "
+        "plain default",
+    )
     # MBD settings: identical defaults to run_franka.py so latency matches.
-    parser.add_argument("--num-samples", type=int, default=800)
-    parser.add_argument("--num-diffusion-steps", type=int, default=5)
-    parser.add_argument("--sigma-start", type=float, default=1.2)
-    parser.add_argument("--sigma-end", type=float, default=0.3)
-    parser.add_argument("--alpha", type=float, default=0.4)
+    parser.add_argument("--num-samples", type=int, default=512)
+    parser.add_argument("--num-diffusion-steps", type=int, default=8)
+    parser.add_argument("--sigma-start", type=float, default=3.0)
+    parser.add_argument("--sigma-end", type=float, default=0.1)
+    parser.add_argument("--alpha", type=float, default=0.03)
     parser.add_argument("--eta", type=float, default=1.0)
     parser.add_argument(
         "--update-rule",
@@ -124,7 +299,7 @@ def parse_args() -> argparse.Namespace:
         "10 threads on a loaded desktop causes 10-30x straggler spikes in plan "
         "latency; 4 threads gives flat ~20 ms plans on this 10-core machine",
     )
-    parser.add_argument("--max-time", type=float, default=15.0, help="wall-clock limit [s]")
+    parser.add_argument("--max-time", type=float, default=30.0, help="wall-clock limit [s]")
     parser.add_argument(
         "--settle-time",
         type=float,
@@ -146,7 +321,38 @@ def parse_args() -> argparse.Namespace:
         help="throwaway plans before the clock starts (torch/threadpool warm-up, "
         "as deployment on the real arm would do); excluded from all statistics",
     )
+    parser.add_argument(
+        "--obs-margin", type=float, default=0.02,
+        help="planning margin: the penalty inflates the ball by this much, "
+        "the referee never does",
+    )
+    parser.add_argument("--w-obs", type=float, default=5000.0,
+                        help="obstacle penalty weight: flat cost per "
+                        "overlapping (arm sphere, ball) pair in the default "
+                        "hard mode; per squared metre of penetration when "
+                        "--graded-obs is set")
+    parser.add_argument("--graded-obs", action="store_true",
+                        help="use the depth-squared penalty instead of the "
+                        "default binary overlap/no-overlap penalty")
+    parser.add_argument(
+        "--obs-substeps", type=int, default=2,
+        help="extra penalty samples between control instants, so a fast "
+        "candidate cannot cross the ball unseen between two steps",
+    )
+    parser.add_argument("--no-obstacle", action="store_true",
+                        help="run the original obstacle-free experiment")
     parser.add_argument("--no-viewer", action="store_true")
+    parser.add_argument(
+        "--interactive", action="store_true",
+        help="drive the target live from the keyboard while the planner tracks "
+        "it in real time (async mode + viewer). Arrow keys move x/y, E/Q move z, "
+        "[ / ] shrink/grow the step, R resets to the start target. Auto-advance "
+        "and the max-time limit are disabled; close the viewer (ESC) to stop.",
+    )
+    parser.add_argument(
+        "--goal-step", type=float, default=0.02,
+        help="metres the interactive target moves per key press",
+    )
     parser.add_argument(
         "--output-dir", type=Path, default=PROJECT_ROOT / "out" / "franka" / "realtime"
     )
@@ -154,16 +360,67 @@ def parse_args() -> argparse.Namespace:
 
 
 # --------------------------------------------------------------------- backends
-def build_backend(task: FrankaTask, method: str, model, device, tube_constants, beta_e):
+def build_backend(
+    task: FrankaTask,
+    method: str,
+    model,
+    device,
+    tube_constants,
+    beta_e,
+    tube_mode: str = "plain",
+    fk=None,
+    obstacle=None,
+    obs_substeps: int = 2,
+):
     """Return (make_evaluate, predict_ee) for one planner backend.
 
     `make_evaluate(x, goal, u_prev)` builds the candidate-scoring closure the
     MBD optimizer calls (same math as the offline closed-loop runs);
     `predict_ee(x, U)` returns the planner's own predicted EE path for the
     final control sequence (viewer overlay only).
+
+    With ``obstacle`` set, every candidate additionally pays the whole-arm
+    penetration penalty: the decoded joints of every rollout step are pushed
+    through the true batched kinematics (``fk.spheres``) and each of the arm
+    spheres is charged against the ball -- per step and at interpolated
+    points between steps. No convexification, no linearization: this is the
+    sampling planner's native way of eating geometry.
     """
 
+    jl_lo = torch.as_tensor(task.joint_low + JOINT_LIMIT_MARGIN,
+                            dtype=torch.float32, device=device)
+    jl_hi = torch.as_tensor(task.joint_high - JOINT_LIMIT_MARGIN,
+                            dtype=torch.float32, device=device)
+
+    def joint_limit_penalty(q_path: torch.Tensor) -> torch.Tensor:
+        """q_path: (N, T, 7) decoded joints -> (N,) squared encroachment past
+        the (margin-inset) joint limits, summed over joints and steps."""
+
+        over = (q_path - jl_hi).clamp(min=0.0)
+        under = (jl_lo - q_path).clamp(min=0.0)
+        return W_JOINT_LIMIT * (over.pow(2) + under.pow(2)).sum(dim=(-2, -1))
+
+    def arm_penalty(q_path: torch.Tensor, q_now: np.ndarray) -> torch.Tensor:
+        """q_path: (N, T, 7) decoded joints -> (N,) summed obstacle penalty."""
+
+        pts = fk.spheres(q_path)                              # (N, T, P, 3)
+        pen = obstacle.penalty(pts, fk.radii).sum(dim=1)      # (N,)
+        q0 = torch.as_tensor(np.asarray(q_now, dtype=np.float32)[:NUM_JOINTS],
+                             device=pts.device)
+        p_prev = torch.cat([fk.spheres(q0[None])[None].expand(pts.shape[0], 1, -1, -1),
+                            pts[:, :-1]], dim=1)
+        for i in range(obs_substeps):
+            f = (i + 1.0) / (obs_substeps + 1.0)
+            pen = pen + obstacle.penalty(p_prev + f * (pts - p_prev),
+                                         fk.radii).sum(dim=1)
+        return pen
+
     if method == MethodName.VANILLA_MBD_TRUE.value:
+        if obstacle is not None:
+            raise SystemExit(
+                "--method vanilla_mbd_true has no obstacle support (its "
+                "scoring lives inside task.make_true_evaluate); run bk_mbd, "
+                "or pass --no-obstacle")
 
         def make_evaluate(x, goal, u_prev):
             return task.make_true_evaluate(x, goal, u_prev, device)
@@ -193,6 +450,10 @@ def build_backend(task: FrankaTask, method: str, model, device, tube_constants, 
                     U_t = torch.as_tensor(candidates, dtype=torch.float32, device=device)
                     bs = rollout_base(x, U_t)
                     costs = task.trajectory_cost_base_torch(bs, U_t, goal, u_prev=u_prev)
+                    if obstacle is not None:
+                        costs = costs + arm_penalty(bs[..., :NUM_JOINTS], x)
+                    if W_JOINT_LIMIT:
+                        costs = costs + joint_limit_penalty(bs[:, 1:, :NUM_JOINTS])
                     return costs.cpu().numpy()
 
             return evaluate
@@ -223,11 +484,27 @@ def build_backend(task: FrankaTask, method: str, model, device, tube_constants, 
                 U_t = torch.as_tensor(candidates, dtype=torch.float32, device=device)
                 zs, bs = rollout_candidates(x, U_t)
                 costs = task.trajectory_cost_base_torch(bs, U_t, goal, u_prev=u_prev)
+                if obstacle is not None:
+                    costs = costs + arm_penalty(bs[..., :NUM_JOINTS], x)
+                if W_JOINT_LIMIT:
+                    costs = costs + joint_limit_penalty(bs[:, 1:, :NUM_JOINTS])
                 if use_tube:
                     tubes = propagate_tube_batch_torch(
                         zs, U_t, norm_a=norm_a, norm_bs=norm_bs, constants=tube_constants
                     )
-                    costs = costs + beta_e * tubes.sum(dim=1)
+                    if tube_mode == "cost-sens":
+                        # Weight each e_t by the local cost slope so the
+                        # penalty bounds the *cost* error (score fidelity),
+                        # not the raw state error.
+                        L = cost_sensitivity_torch(
+                            bs,
+                            lambda b: task.trajectory_cost_base_torch(
+                                b, U_t, goal, u_prev=u_prev
+                            ),
+                        )
+                        costs = costs + beta_e * (L * tubes).sum(dim=1)
+                    else:
+                        costs = costs + beta_e * tubes.sum(dim=1)
                 return costs.cpu().numpy()
 
         return evaluate
@@ -267,12 +544,13 @@ class SharedState:
 
 def planner_loop(
     shared: SharedState,
-    optimizer: MBDOptimizer,
+    optimizer: "AdaptiveNoise",
     make_evaluate: Callable,
     predict_ee: Callable,
     horizon: int,
     period: float,
     rng: np.random.Generator,
+    task: FrankaTask,
     min_plan_s: float = 0.0,
 ) -> None:
     """Continuously replan from the newest snapshot (async mode).
@@ -303,8 +581,9 @@ def planner_loop(
                 U[horizon - shift :] = U[horizon - shift - 1]
 
         evaluate = make_evaluate(x, goal, u_prev)
+        err = float(np.linalg.norm(task.ee_of_q(x[:NUM_JOINTS]) - goal))
         t0 = time.perf_counter()
-        result = optimizer.optimize(U, evaluate, rng=rng)
+        result = optimizer.optimize(U, evaluate, rng, err)
         latency = time.perf_counter() - t0
         if latency < min_plan_s:
             time.sleep(min_plan_s - latency)
@@ -321,8 +600,14 @@ def planner_loop(
 
 
 # --------------------------------------------------------------------- overlay
-def draw_overlay(viewer, target, threshold, trail, pred, color) -> None:
-    """Target sphere + reach shell + actual TCP trail + planned EE path."""
+def draw_overlay(viewer, target, threshold, trail, pred, color,
+                 obstacle=None, arm_spheres=None) -> None:
+    """Target sphere + reach shell + actual TCP trail + planned EE path.
+
+    ``arm_spheres`` (centers Nx3, radii N), when given, draws the exact
+    whole-arm collision spheres the planner and referee use, as translucent
+    orange balls -- what you see being checked is what is checked.
+    """
 
     scn = viewer.user_scn
     scn.ngeom = 0
@@ -334,6 +619,19 @@ def draw_overlay(viewer, target, threshold, trail, pred, color) -> None:
             scn.geoms[scn.ngeom],
             type=mujoco.mjtGeom.mjGEOM_SPHERE,
             size=[size, 0, 0],
+            pos=np.asarray(pos, dtype=np.float64),
+            mat=np.eye(3).flatten(),
+            rgba=np.asarray(rgba, dtype=np.float32),
+        )
+        scn.ngeom += 1
+
+    def add_box(pos, half, rgba):
+        if scn.ngeom >= scn.maxgeom:
+            return
+        mujoco.mjv_initGeom(
+            scn.geoms[scn.ngeom],
+            type=mujoco.mjtGeom.mjGEOM_BOX,
+            size=np.asarray(half, dtype=np.float64),
             pos=np.asarray(pos, dtype=np.float64),
             mat=np.eye(3).flatten(),
             rgba=np.asarray(rgba, dtype=np.float32),
@@ -364,6 +662,11 @@ def draw_overlay(viewer, target, threshold, trail, pred, color) -> None:
             scn.ngeom += 1
             prev = pts[j]
 
+    if obstacle is not None:
+        for c, r in obstacle.spheres_draw:
+            add_sphere(c, r, [0.8, 0.25, 0.2, 0.45])
+        for c, h in obstacle.boxes_draw:
+            add_box(c, h, [0.8, 0.25, 0.2, 0.45])
     add_sphere(target, 0.012, [0.1, 0.8, 0.1, 1.0])
     add_sphere(target, threshold, [0.1, 0.8, 0.1, 0.15])
     if pred is not None:
@@ -386,6 +689,7 @@ def summarize(
     warmup: int,
     max_overrun: float,
     segments: List[dict],
+    viol_log: Optional[List[int]] = None,
 ) -> str:
     lines = ["", "=" * 72, f"REAL-TIME VERDICT  ({method}, mode={mode})", "=" * 72]
     lat = np.asarray(latencies) * 1000.0
@@ -412,6 +716,13 @@ def summarize(
             f" warm-up boundaries before the first plan: {warmup}"
         )
         lines.append(f"worst real-time pacing overrun: {max_overrun * 1000:.1f} ms")
+    if viol_log is not None:
+        n_bad = sum(1 for v in viol_log if v)
+        lines.append(
+            f"whole-arm collision (referee, margin-free): "
+            f"{n_bad}/{len(viol_log)} control boundaries with an arm sphere "
+            f"inside the ball" + ("" if n_bad == 0 else "  <- NOT collision-free")
+        )
     for seg in segments:
         status = (
             f"strict reach in {seg['t_reach']:.2f} s"
@@ -459,9 +770,18 @@ def main() -> None:
         torch.set_num_threads(args.torch_threads)
 
     setup_t0 = time.perf_counter()
-    task = FrankaTask()
+    cfg_kw = {}
+    if MAX_JOINT_VELOCITY is not None:
+        cfg_kw["action_limit"] = float(MAX_JOINT_VELOCITY)
+    if HORIZON is not None:
+        cfg_kw["horizon"] = int(HORIZON)
+    task = FrankaTask(FrankaTaskConfig(**cfg_kw) if cfg_kw else None)
+    print(f"robot speed: joint-velocity limit {task.config.action_limit} rad/s"
+          + ("" if MAX_JOINT_VELOCITY is not None else " (task default)"))
     period = task.config.control_dt
     horizon = task.config.horizon
+    print(f"planning horizon: {horizon} steps ({horizon * period:.2f} s lookahead)"
+          + ("" if HORIZON is not None else " (task default)"))
 
     mbd_config = MBDConfig(
         num_samples=args.num_samples,
@@ -477,6 +797,11 @@ def main() -> None:
     optimizer = MBDOptimizer(
         mbd_config, action_low=task.action_bounds[0], action_high=task.action_bounds[1]
     )
+    adaptive = AdaptiveNoise(optimizer, mbd_config, ADAPT_NOISE,
+                             ADAPT_ERR_FULL, ADAPT_FLOOR)
+    print(f"adaptive noise: {'ON' if ADAPT_NOISE else 'OFF'}"
+          + (f" (full schedule at err >= {ADAPT_ERR_FULL} m, floor "
+             f"{ADAPT_FLOOR})" if ADAPT_NOISE else ""))
 
     # Koopman checkpoint + tube constants, exactly as run_franka.py.
     model = None
@@ -499,7 +824,7 @@ def main() -> None:
         model, _ = load_checkpoint(checkpoint, device=device)
         model.eval()
         print(f"loaded={checkpoint}")
-        if args.method == MethodName.BK_MBD.value:
+        if args.method == MethodName.BK_MBD.value and args.tube_mode != "none":
             print("fitting tube constants (one-step residuals on the training set)...")
             dataset = task.sample_dataset(args.data_seed)
             zs, us, residuals = compute_one_step_residuals(
@@ -508,11 +833,58 @@ def main() -> None:
             tube_constants = fit_tube_constants(zs, us, residuals, quantile=0.999)
             print(
                 f"tube constants: c_x={tube_constants.c_x:.4e} "
-                f"c_u={tube_constants.c_u:.4e} beta_e={args.beta_e}"
+                f"c_u={tube_constants.c_u:.4e} beta_e={args.beta_e} "
+                f"tube_mode={args.tube_mode}"
             )
+        elif args.method == MethodName.BK_MBD.value:
+            print("tube disabled (--tube-mode none): plain bilinear rollout, no penalty")
+
+    # ---- the keep-out obstacles + the whole-arm body that must avoid them --
+    fk = None
+    obstacle = None
+    if not args.no_obstacle and OBSTACLES:
+        from experiments.arm_collision import ArmFK, ObstacleField
+
+        first_goal = (np.asarray(TARGET, dtype=np.float64) if TARGET is not None
+                      else task.targets[(args.targets or [args.target_id])[0]])
+        home_ee = task.ee_of_q(task.home_qpos)
+        auto = home_ee + 0.4 * (np.asarray(first_goal) - home_ee)
+        print(f"auto obstacle center = {np.round(auto, 3)}")
+
+        def parse_entry(e):
+            # ((x,y,z), r) sphere shorthand, or (kind, center, size) tagged.
+            kind, c, size = ("sphere", e[0], e[1]) if len(e) == 2 else e
+            center = auto if (isinstance(c, str) and c == "auto") \
+                else np.asarray(c, dtype=np.float64)
+            return kind, center, size
+
+        entries = [parse_entry(e) for e in OBSTACLES]
+        fk = ArmFK(task, device=device, first_link=ARM_FIRST_LINK,
+                   link_samples=ARM_LINK_SAMPLES,
+                   hand_fingers=ARM_GRIPPER_FINGERS)
+        obstacle = ObstacleField(entries, margin=args.obs_margin,
+                                 weight=args.w_obs, device=device,
+                                 hard=not args.graded_obs)
+        mode = "graded (depth^2)" if args.graded_obs else "HARD (flat per overlap)"
+        print(f"penalty: {mode}, weight {args.w_obs}, margin {args.obs_margin}")
+        for kind, c, size in entries:
+            print(f"obstacle: {kind} at {np.round(np.asarray(c), 3)} "
+                  f"{'radius' if kind == 'sphere' else 'half'} "
+                  f"{np.round(np.asarray(size), 3)}")
+        start_q = home_at_tcp(task, START_TCP) if START_TCP is not None \
+            else task.home_qpos
+        d0 = obstacle.clearance(fk.spheres_np(start_q), fk.radii_np)
+        print(f"whole arm = {fk.num_points} spheres (chain + gripper T) | "
+              f"closest arm sphere at start {d0 * 1000:.0f} mm clear")
+        if d0 <= 0:
+            print("  WARNING: the arm already penetrates an obstacle at the "
+                  "start pose (showing it anyway -- edit OBSTACLES/START_TCP "
+                  "to separate them)")
 
     make_evaluate, predict_ee = build_backend(
-        task, args.method, model, device, tube_constants, args.beta_e
+        task, args.method, model, device, tube_constants, args.beta_e,
+        args.tube_mode, fk=fk, obstacle=obstacle,
+        obs_substeps=args.obs_substeps,
     )
 
     # Simulation model: the visualization scene *includes* the task model, so
@@ -526,6 +898,13 @@ def main() -> None:
     sub_dt = period / nsub
     sim = mujoco.MjData(scene_model)
     mujoco.mj_resetDataKeyframe(scene_model, sim, scene_model.key("home").id)
+    if START_TCP is not None:
+        q_home = home_at_tcp(task, START_TCP)
+        sim.qpos[:NUM_JOINTS] = q_home
+        tip = np.asarray(task.ee_of_q(q_home))
+        print(f"start pose: TCP target {np.round(np.asarray(START_TCP), 3)} "
+              f"-> achieved {np.round(tip, 3)} "
+              f"(err {np.linalg.norm(tip - np.asarray(START_TCP)) * 1000:.0f} mm)")
     sim.qvel[:] = 0.0
     mujoco.mj_forward(scene_model, sim)
     tcp = scene_model.site("tcp").id
@@ -534,6 +913,17 @@ def main() -> None:
     for t_id in target_ids:
         if not 0 <= t_id < len(task.targets):
             raise SystemExit(f"target id {t_id} out of range 0..{len(task.targets) - 1}")
+
+    def goal_pt(i: int) -> np.ndarray:
+        """The reach point for segment ``i`` -- the TARGET override if set,
+        else the task's built-in target."""
+
+        if TARGET is not None:
+            return np.asarray(TARGET, dtype=np.float64).copy()
+        return np.asarray(task.targets[target_ids[i]], dtype=np.float64).copy()
+
+    if TARGET is not None:
+        print(f"target override: {np.round(np.asarray(TARGET), 3)}")
     strict = task.config.strict_threshold
     color = METHOD_COLORS.get(args.method, (0.6, 0.6, 0.6))
     print(
@@ -543,24 +933,70 @@ def main() -> None:
     )
 
     x0 = np.concatenate([sim.qpos[:NUM_JOINTS], sim.qvel[:NUM_JOINTS]])
-    shared = SharedState(x0, task.targets[target_ids[0]])
+    shared = SharedState(x0, goal_pt(0))
     rng = np.random.default_rng(args.seed)
 
     planner = None
     if args.mode == "async":
         planner = threading.Thread(
             target=planner_loop,
-            args=(shared, optimizer, make_evaluate, predict_ee, horizon, period, rng),
+            args=(shared, adaptive, make_evaluate, predict_ee, horizon,
+                  period, rng, task),
             kwargs={"min_plan_s": args.min_plan_ms / 1000.0},
             daemon=True,
         )
 
+    # ---- interactive target: a keyboard-driven goal the planner chases live ---
+    # The passive viewer forwards key presses to key_callback (GLFW keycodes). We
+    # keep the goal in a 1-element dict so the closure can mutate it in place; the
+    # control loop reads it each boundary and pushes it into shared.goal.
+    GOAL_LOW = np.array([0.25, -0.45, 0.15])
+    GOAL_HIGH = np.array([0.75, 0.45, 0.95])
+    interactive = args.interactive
+    if interactive:
+        if args.no_viewer:
+            raise SystemExit("--interactive needs the viewer (drop --no-viewer)")
+        if args.mode != "async":
+            raise SystemExit("--interactive requires --mode async (the default)")
+    ig = {"p": goal_pt(0), "step": float(args.goal_step)}
+
+    def key_callback(keycode: int) -> None:
+        p, s = ig["p"], ig["step"]
+        if keycode == 265:      # Up arrow  -> +x (away from base)
+            p[0] += s
+        elif keycode == 264:    # Down arrow -> -x
+            p[0] -= s
+        elif keycode == 263:    # Left arrow -> +y
+            p[1] += s
+        elif keycode == 262:    # Right arrow -> -y
+            p[1] -= s
+        elif keycode in (69, 334):   # 'E' or keypad '+' -> +z
+            p[2] += s
+        elif keycode in (81, 333):   # 'Q' or keypad '-' -> -z
+            p[2] -= s
+        elif keycode == 93:     # ']' -> larger step
+            ig["step"] = min(0.1, s * 1.5)
+        elif keycode == 91:     # '[' -> smaller step
+            ig["step"] = max(0.002, s / 1.5)
+        elif keycode == 82:     # 'R' -> reset to the start target
+            ig["p"][:] = goal_pt(0)
+        np.clip(ig["p"], GOAL_LOW, GOAL_HIGH, out=ig["p"])
+
     viewer_ctx = (
         None
         if args.no_viewer
-        else mujoco.viewer.launch_passive(scene_model, sim)
+        else mujoco.viewer.launch_passive(
+            scene_model, sim, key_callback=key_callback if interactive else None)
     )
     viewer = viewer_ctx.__enter__() if viewer_ctx else None
+    if interactive:
+        print(
+            "\nINTERACTIVE TARGET — move it while the arm tracks in real time:\n"
+            "  arrows: Up/Down = +x/-x (forward/back),  Left/Right = +y/-y\n"
+            "  E / Q : up / down (z)     [ / ] : smaller / larger step\n"
+            "  R     : reset target      ESC (close viewer): quit\n"
+            f"  step = {ig['step']*1000:.0f} mm/press\n"
+        )
 
     # Logs shared by both modes.
     states = [x0.copy()]
@@ -575,9 +1011,10 @@ def main() -> None:
     lockstep_latencies: List[float] = []
     segments: List[dict] = []
     trail: List[np.ndarray] = []
+    viol_log: List[int] = []   # per-boundary arm spheres inside the ball
 
     seg_idx = 0
-    goal = task.targets[target_ids[seg_idx]].copy()
+    goal = goal_pt(seg_idx)
     seg = {"target_id": target_ids[seg_idx], "t_start": 0.0, "t_reach": None, "min_err": np.inf}
     done = False
     U_lock = np.zeros((horizon, NUM_JOINTS), dtype=np.float64)
@@ -597,7 +1034,7 @@ def main() -> None:
             if not args.cycle:
                 return True
             seg_idx = 0
-        goal = task.targets[target_ids[seg_idx]].copy()
+        goal = goal_pt(seg_idx)
         seg = {
             "target_id": target_ids[seg_idx],
             "t_start": wall,
@@ -620,6 +1057,31 @@ def main() -> None:
             f"{time.perf_counter() - t_warm:.2f} s"
         )
 
+    if WAIT_FOR_START:
+        if viewer is not None:
+            draw_overlay(viewer, goal, strict, [], None, color,
+                         obstacle=obstacle)
+            # Draw the whole-arm collision spheres ONLY at the start pose (not
+            # during motion): translucent orange balls at exactly the centres
+            # and radii the planner and referee check.
+            if fk is not None:
+                scn = viewer.user_scn
+                pts = fk.spheres_np(sim.qpos[:NUM_JOINTS])
+                for p, r in zip(pts, fk.radii_np):
+                    if scn.ngeom >= scn.maxgeom:
+                        break
+                    mujoco.mjv_initGeom(
+                        scn.geoms[scn.ngeom], type=mujoco.mjtGeom.mjGEOM_SPHERE,
+                        size=[float(r), 0, 0], pos=np.asarray(p, np.float64),
+                        mat=np.eye(3).flatten(),
+                        rgba=np.asarray([0.95, 0.55, 0.10, 0.4], np.float32))
+                    scn.ngeom += 1
+            viewer.sync()
+        try:
+            input("\nready at the start pose — press Enter to start motion... ")
+        except EOFError:
+            pass
+
     if planner:
         planner.start()
     t0_wall = time.perf_counter()
@@ -632,8 +1094,12 @@ def main() -> None:
             # in lockstep the sim is decoupled from the wall clock, so report
             # reach times in sim time (boundaries x control period).
             t_seg = wall if args.mode == "async" else boundary * period
-            if wall >= args.max_time:
+            if wall >= args.max_time and not interactive:
                 break
+
+            # In interactive mode the goal is whatever the keyboard last set.
+            if interactive:
+                goal = ig["p"].copy()
 
             # ---- control boundary: measure, (plan,) apply -----------------
             x = np.concatenate([sim.qpos[:NUM_JOINTS], sim.qvel[:NUM_JOINTS]])
@@ -641,7 +1107,16 @@ def main() -> None:
             err = float(np.linalg.norm(ee - goal))
             seg["min_err"] = min(seg["min_err"], err)
             errors.append(err)
+            if obstacle is not None:
+                nv = obstacle.violations(fk.spheres_np(x[:NUM_JOINTS]),
+                                         fk.radii_np)
+                viol_log.append(nv)
+                if nv and (not viol_log[-2:-1] or not viol_log[-2]):
+                    print(f"[{wall:6.2f}s] COLLISION: {nv} arm sphere(s) "
+                          f"inside a ball")
             trail.append(ee)
+            if interactive and len(trail) > 300:   # keep only a recent trail
+                del trail[0]
 
             if seg["t_reach"] is None and err < strict:
                 seg["t_reach"] = t_seg - seg["t_start"]
@@ -649,7 +1124,9 @@ def main() -> None:
                     f"[{t_seg:6.2f}s] target {seg['target_id']} strict reach "
                     f"({err * 1000:.1f} mm) in {seg['t_reach']:.2f} s"
                 )
-            if seg["t_reach"] is not None and (
+            # Auto-advance through the preset targets only in scripted mode; the
+            # interactive target never "completes", it just keeps tracking.
+            if not interactive and seg["t_reach"] is not None and (
                 t_seg - seg["t_start"] - seg["t_reach"] >= args.settle_time
             ):
                 done = advance_segment(t_seg)
@@ -683,7 +1160,7 @@ def main() -> None:
             else:  # lockstep: plan synchronously (the viewer freezes meanwhile)
                 evaluate = make_evaluate(x, goal, u_prev_lock)
                 t_plan = time.perf_counter()
-                result = optimizer.optimize(U_lock, evaluate, rng=rng)
+                result = adaptive.optimize(U_lock, evaluate, rng, err)
                 if time.perf_counter() - t_plan < args.min_plan_ms / 1000.0:
                     time.sleep(args.min_plan_ms / 1000.0 - (time.perf_counter() - t_plan))
                 lockstep_latencies.append(time.perf_counter() - t_plan)
@@ -700,7 +1177,8 @@ def main() -> None:
             controls.append(u.copy())
 
             if viewer:
-                draw_overlay(viewer, goal, strict, trail, ee_pred, color)
+                draw_overlay(viewer, goal, strict, trail, ee_pred, color,
+                             obstacle=obstacle)
 
             # ---- advance the plant one control period ---------------------
             # async: paced against the global wall clock (hard real time);
@@ -759,39 +1237,56 @@ def main() -> None:
         warmup=warmup,
         max_overrun=max_overrun,
         segments=segments,
+        viol_log=viol_log if obstacle is not None else None,
     )
     print(report)
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    stem = f"{args.method}_{args.mode}_seed{args.seed}"
-    np.savez(
-        args.output_dir / f"{stem}.npz",
-        states=np.stack(states),
-        controls=np.stack(controls) if controls else np.zeros((0, NUM_JOINTS)),
-        errors=np.asarray(errors),
-        plan_latencies=np.asarray(latencies),
-        applied_k=np.asarray(k_log, dtype=np.int64),
-        plan_age_ms=np.asarray(age_log),
-        wall_time=wall,
-        method=args.method,
-        mode=args.mode,
-    )
-    print(f"saved={args.output_dir / (stem + '.npz')}")
+    # Tag the tube mode in the filename so none/plain/cost-sens runs don't
+    # clobber each other (only bk_mbd actually uses the tube; 'plain' keeps
+    # the historical untagged name).
+    tube_tag = ""
+    if args.method == MethodName.BK_MBD.value:
+        tube_tag = {"none": "_notube", "cost-sens": "_costsens"}.get(args.tube_mode, "")
+    stem = f"{args.method}{tube_tag}_{args.mode}_seed{args.seed}"
+    # np.savez(
+    #     args.output_dir / f"{stem}.npz",
+    #     states=np.stack(states),
+    #     controls=np.stack(controls) if controls else np.zeros((0, NUM_JOINTS)),
+    #     errors=np.asarray(errors),
+    #     plan_latencies=np.asarray(latencies),
+    #     applied_k=np.asarray(k_log, dtype=np.int64),
+    #     plan_age_ms=np.asarray(age_log),
+    #     wall_time=wall,
+    #     method=args.method,
+    #     mode=args.mode,
+    #     tube_mode=args.tube_mode,
+    #     obstacle_viol=np.asarray(viol_log, dtype=np.int64),
+    #     obstacle_sphere_centers=(obstacle.s_centers_np if obstacle is not None
+    #                              else np.zeros((0, 3))),
+    #     obstacle_sphere_radii=(obstacle.s_radii_np if obstacle is not None
+    #                            else np.zeros(0)),
+    #     obstacle_box_centers=(obstacle.b_centers_np if obstacle is not None
+    #                           else np.zeros((0, 3))),
+    #     obstacle_box_halfs=(obstacle.b_halfs_np if obstacle is not None
+    #                         else np.zeros((0, 3))),
+    # )
+    # print(f"saved={args.output_dir / (stem + '.npz')}")
 
-    if planner and planner.is_alive():
-        planner.join(timeout=10.0)
-    if viewer:
-        print("holding at zero velocity - close the viewer (ESC) to exit")
-        try:
-            while viewer.is_running():
-                sim.ctrl[:] = 0.0
-                mujoco.mj_step(scene_model, sim)
-                viewer.sync()
-                time.sleep(sub_dt)
-        except KeyboardInterrupt:
-            pass
-    if viewer_ctx:
-        viewer_ctx.__exit__(None, None, None)
+    # if planner and planner.is_alive():
+    #     planner.join(timeout=10.0)
+    # if viewer:
+    #     print("holding at zero velocity - close the viewer (ESC) to exit")
+    #     try:
+    #         while viewer.is_running():
+    #             sim.ctrl[:] = 0.0
+    #             mujoco.mj_step(scene_model, sim)
+    #             viewer.sync()
+    #             time.sleep(sub_dt)
+    #     except KeyboardInterrupt:
+    #         pass
+    # if viewer_ctx:
+    #     viewer_ctx.__exit__(None, None, None)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,15 @@
+reference: 2 ms CPU rollout = MBD-true, 10/10 at 1 cm, 2598 ms/step
+
+ rollout dt  chain  reach 5cm  reach 1cm   final med  ms/step  misses
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link0_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link1_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link2_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+Failed to import warp: No module named 'warp'
+Failed to import mujoco_warp: No module named 'warp'
+      50.0ms     75      10/10       10/10      0.0056m    76.5    1200
+      25.0ms    150      10/10       10/10      0.0058m   147.7    1200
+      10.0ms    375      10/10       10/10      0.0061m   346.4    1200
+GPUCLOSEDDONE

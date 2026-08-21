@@ -1,0 +1,17 @@
+model=bilinear r=20 N=800 S=5 sigma=1.2->0.3 T=15 seeds=[0, 1, 2, 3, 4]
+  loaded phys_linear_r20_seed0.pt
+  loaded phys_linear_r20_seed0.pt
+  loaded phys_bilinear_r20_seed0.pt
+t5 oracle    final 0.0071 min 0.0021 strict True 2407.0 ms
+t5 linear    final 0.1166 min 0.1138 strict False 7.8 ms
+t5 split     final 0.0092 min 0.0018 strict True 18.9 ms
+t5 bilinear  final 0.0155 min 0.0093 strict True 16.0 ms
+t6 oracle    final 0.0064 min 0.0007 strict True 2528.7 ms
+t6 linear    final 0.0904 min 0.0686 strict False 7.8 ms
+t6 split     final 0.0079 min 0.0022 strict True 19.1 ms
+t6 bilinear  final 0.0144 min 0.0012 strict True 16.0 ms
+t7 oracle    final 0.0046 min 0.0016 strict True 2512.7 ms
+t7 linear    final 0.1314 min 0.1311 strict False 7.8 ms
+t7 split     final 0.0056 min 0.0015 strict True 19.1 ms
+t7 bilinear  final 0.0119 min 0.0045 strict True 16.0 ms
+wrote /home/home/mbd/koopman/mbd_koopman/exper/out/traj_fig/paths.npz

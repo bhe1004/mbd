@@ -1,0 +1,8 @@
+loaded /home/home/mbd/koopman/mbd_koopman/drone/saved/drone_window_bk_seed0.pt
+running BK-MBD live...
+  BK-MBD: err=0.026 viol=0 steps=31
+running QP-MPC live (slower)...
+/home/home/mbd/koopman/mbd_koopman/drone/drone_window.py:336: UserWarning: The problem includes expressions that don't support CPP backend. Defaulting to the SCIPY backend for canonicalization.
+  prob.solve(solver=cp.OSQP, warm_start=True)
+  QP-MPC: err=0.469 viol=0 steps=70
+done — close the window to exit.

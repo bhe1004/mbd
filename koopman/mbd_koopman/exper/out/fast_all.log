@@ -1,0 +1,287 @@
+model=bilinear r=20 N=800 S=5 sigma=1.2->0.3 T=15 seeds=[0, 1, 2, 3, 4]
+  loaded phys_linear_r20_seed0.pt
+linear        s0 t0 final 0.0698 strict False 7.6 ms worst 10.9 misses 0
+linear        s0 t1 final 0.0840 strict False 7.6 ms worst 12.5 misses 0
+linear        s0 t2 final 0.0794 strict False 7.6 ms worst 10.3 misses 0
+linear        s0 t3 final 0.0456 strict False 7.6 ms worst 8.6 misses 0
+linear        s0 t4 final 0.1885 strict False 7.6 ms worst 11.3 misses 0
+linear        s0 t5 final 0.1166 strict False 7.6 ms worst 8.8 misses 0
+linear        s0 t6 final 0.0904 strict False 7.6 ms worst 7.9 misses 0
+linear        s0 t7 final 0.1314 strict False 7.6 ms worst 7.8 misses 0
+linear        s0 t8 final 0.0548 strict False 7.6 ms worst 7.8 misses 0
+linear        s0 t9 final 0.0960 strict False 7.6 ms worst 8.6 misses 0
+  loaded phys_linear_r20_seed1.pt
+linear        s1 t0 final 0.1144 strict False 7.6 ms worst 7.8 misses 0
+linear        s1 t1 final 0.0951 strict False 7.6 ms worst 7.8 misses 0
+linear        s1 t2 final 0.0822 strict False 7.6 ms worst 7.8 misses 0
+linear        s1 t3 final 0.1149 strict False 7.6 ms worst 7.9 misses 0
+linear        s1 t4 final 0.2100 strict False 7.6 ms worst 7.8 misses 0
+linear        s1 t5 final 0.0989 strict False 7.6 ms worst 8.3 misses 0
+linear        s1 t6 final 0.1234 strict False 7.6 ms worst 7.8 misses 0
+linear        s1 t7 final 0.1425 strict False 7.6 ms worst 7.8 misses 0
+linear        s1 t8 final 0.1040 strict False 7.6 ms worst 8.2 misses 0
+linear        s1 t9 final 0.0545 strict False 7.6 ms worst 7.8 misses 0
+  loaded phys_linear_r20_seed2.pt
+linear        s2 t0 final 0.0446 strict False 7.6 ms worst 7.9 misses 0
+linear        s2 t1 final 0.0572 strict False 7.6 ms worst 7.8 misses 0
+linear        s2 t2 final 0.0645 strict False 7.6 ms worst 7.7 misses 0
+linear        s2 t3 final 0.0256 strict False 7.6 ms worst 8.2 misses 0
+linear        s2 t4 final 0.0456 strict False 7.6 ms worst 7.8 misses 0
+linear        s2 t5 final 0.0777 strict False 7.6 ms worst 7.8 misses 0
+linear        s2 t6 final 0.0614 strict False 7.6 ms worst 7.8 misses 0
+linear        s2 t7 final 0.0295 strict True 7.6 ms worst 9.1 misses 0
+linear        s2 t8 final 0.0438 strict False 7.6 ms worst 8.4 misses 0
+linear        s2 t9 final 0.0560 strict False 7.6 ms worst 8.0 misses 0
+  loaded phys_linear_r20_seed3.pt
+linear        s3 t0 final 0.4841 strict False 7.6 ms worst 7.7 misses 0
+linear        s3 t1 final 0.4600 strict False 7.6 ms worst 7.7 misses 0
+linear        s3 t2 final 0.0913 strict False 7.6 ms worst 7.8 misses 0
+linear        s3 t3 final 0.4395 strict False 7.6 ms worst 7.9 misses 0
+linear        s3 t4 final 0.5390 strict False 7.6 ms worst 8.2 misses 0
+linear        s3 t5 final 0.1029 strict False 7.6 ms worst 7.7 misses 0
+linear        s3 t6 final 0.3966 strict False 7.6 ms worst 7.8 misses 0
+linear        s3 t7 final 0.4240 strict False 7.6 ms worst 9.0 misses 0
+linear        s3 t8 final 0.3497 strict False 7.6 ms worst 7.8 misses 0
+linear        s3 t9 final 0.5014 strict False 7.6 ms worst 7.7 misses 0
+  loaded phys_linear_r20_seed4.pt
+linear        s4 t0 final 0.7528 strict False 7.6 ms worst 7.7 misses 0
+linear        s4 t1 final 0.6938 strict False 7.6 ms worst 7.6 misses 0
+linear        s4 t2 final 0.1109 strict False 7.6 ms worst 7.8 misses 0
+linear        s4 t3 final 0.8164 strict False 7.6 ms worst 10.6 misses 0
+linear        s4 t4 final 0.7506 strict False 7.6 ms worst 7.7 misses 0
+linear        s4 t5 final 0.1114 strict False 7.6 ms worst 7.7 misses 0
+linear        s4 t6 final 0.5963 strict False 7.6 ms worst 7.7 misses 0
+linear        s4 t7 final 0.6163 strict False 7.6 ms worst 7.7 misses 0
+linear        s4 t8 final 0.8121 strict False 7.6 ms worst 7.7 misses 0
+linear        s4 t9 final 0.7392 strict False 7.6 ms worst 8.0 misses 0
+  loaded phys_linear_r50_seed0_large.pt
+linear_large  s0 t0 final 0.0611 strict False 9.1 ms worst 9.7 misses 0
+linear_large  s0 t1 final 0.0750 strict False 9.0 ms worst 23.5 misses 0
+linear_large  s0 t2 final 0.0785 strict False 9.0 ms worst 9.3 misses 0
+linear_large  s0 t3 final 0.0385 strict False 9.0 ms worst 9.6 misses 0
+linear_large  s0 t4 final 0.1750 strict False 9.0 ms worst 9.2 misses 0
+linear_large  s0 t5 final 0.1165 strict False 9.1 ms worst 18.4 misses 0
+linear_large  s0 t6 final 0.0855 strict False 9.1 ms worst 9.2 misses 0
+linear_large  s0 t7 final 0.1190 strict False 9.1 ms worst 9.3 misses 0
+linear_large  s0 t8 final 0.0518 strict False 9.0 ms worst 10.0 misses 0
+linear_large  s0 t9 final 0.0848 strict False 9.1 ms worst 9.2 misses 0
+  loaded phys_linear_r50_seed1_large.pt
+linear_large  s1 t0 final 0.1097 strict False 9.1 ms worst 9.3 misses 0
+linear_large  s1 t1 final 0.0901 strict False 9.1 ms worst 9.3 misses 0
+linear_large  s1 t2 final 0.0857 strict False 9.1 ms worst 9.4 misses 0
+linear_large  s1 t3 final 0.1050 strict False 9.1 ms worst 9.3 misses 0
+linear_large  s1 t4 final 0.2123 strict False 9.1 ms worst 9.4 misses 0
+linear_large  s1 t5 final 0.1006 strict False 9.1 ms worst 9.9 misses 0
+linear_large  s1 t6 final 0.1234 strict False 9.1 ms worst 9.5 misses 0
+linear_large  s1 t7 final 0.1419 strict False 9.1 ms worst 9.2 misses 0
+linear_large  s1 t8 final 0.0978 strict False 9.1 ms worst 9.3 misses 0
+linear_large  s1 t9 final 0.0518 strict False 9.1 ms worst 9.2 misses 0
+  loaded phys_linear_r50_seed2_large.pt
+linear_large  s2 t0 final 0.0435 strict False 9.1 ms worst 9.3 misses 0
+linear_large  s2 t1 final 0.0544 strict False 9.1 ms worst 9.2 misses 0
+linear_large  s2 t2 final 0.0660 strict False 9.1 ms worst 10.4 misses 0
+linear_large  s2 t3 final 0.0229 strict False 9.2 ms worst 21.7 misses 0
+linear_large  s2 t4 final 0.0414 strict False 9.2 ms worst 14.2 misses 0
+linear_large  s2 t5 final 0.0774 strict False 9.2 ms worst 10.4 misses 0
+linear_large  s2 t6 final 0.0613 strict False 9.2 ms worst 10.2 misses 0
+linear_large  s2 t7 final 0.0281 strict True 9.2 ms worst 14.0 misses 0
+linear_large  s2 t8 final 0.0421 strict False 9.1 ms worst 11.1 misses 0
+linear_large  s2 t9 final 0.0534 strict False 9.1 ms worst 9.4 misses 0
+  loaded phys_linear_r50_seed3_large.pt
+linear_large  s3 t0 final 0.5155 strict False 9.0 ms worst 9.7 misses 0
+linear_large  s3 t1 final 0.4929 strict False 9.0 ms worst 10.1 misses 0
+linear_large  s3 t2 final 0.0906 strict False 9.2 ms worst 9.9 misses 0
+linear_large  s3 t3 final 0.4707 strict False 9.0 ms worst 12.1 misses 0
+linear_large  s3 t4 final 0.5713 strict False 9.1 ms worst 9.6 misses 0
+linear_large  s3 t5 final 0.1019 strict False 9.0 ms worst 9.6 misses 0
+linear_large  s3 t6 final 0.4272 strict False 9.1 ms worst 10.3 misses 0
+linear_large  s3 t7 final 0.4497 strict False 9.0 ms worst 9.2 misses 0
+linear_large  s3 t8 final 0.3771 strict False 9.0 ms worst 9.4 misses 0
+linear_large  s3 t9 final 0.5448 strict False 9.0 ms worst 9.3 misses 0
+  loaded phys_linear_r50_seed4_large.pt
+linear_large  s4 t0 final 0.6682 strict False 9.1 ms worst 10.0 misses 0
+linear_large  s4 t1 final 0.6371 strict False 9.0 ms worst 10.1 misses 0
+linear_large  s4 t2 final 0.1084 strict False 9.0 ms worst 10.3 misses 0
+linear_large  s4 t3 final 0.7294 strict False 9.0 ms worst 9.4 misses 0
+linear_large  s4 t4 final 0.6954 strict False 9.0 ms worst 9.3 misses 0
+linear_large  s4 t5 final 0.1116 strict False 9.1 ms worst 9.8 misses 0
+linear_large  s4 t6 final 0.5232 strict False 9.0 ms worst 9.3 misses 0
+linear_large  s4 t7 final 0.5672 strict False 9.0 ms worst 9.5 misses 0
+linear_large  s4 t8 final 0.7302 strict False 9.0 ms worst 9.2 misses 0
+linear_large  s4 t9 final 0.6575 strict False 9.1 ms worst 10.0 misses 0
+  loaded phys_mlp_r20_seed0.pt
+mlp           s0 t0 final 0.0439 strict False 16.6 ms worst 17.4 misses 0
+mlp           s0 t1 final 0.0425 strict False 16.6 ms worst 17.4 misses 0
+mlp           s0 t2 final 0.0510 strict False 16.7 ms worst 18.6 misses 0
+mlp           s0 t3 final 0.0433 strict False 16.6 ms worst 17.5 misses 0
+mlp           s0 t4 final 0.0484 strict False 16.6 ms worst 20.9 misses 0
+mlp           s0 t5 final 0.0581 strict False 16.6 ms worst 17.5 misses 0
+mlp           s0 t6 final 0.0489 strict False 16.6 ms worst 17.2 misses 0
+mlp           s0 t7 final 0.0445 strict False 16.6 ms worst 17.6 misses 0
+mlp           s0 t8 final 0.0474 strict False 16.6 ms worst 17.2 misses 0
+mlp           s0 t9 final 0.0485 strict False 16.6 ms worst 17.5 misses 0
+  loaded phys_mlp_r20_seed1.pt
+mlp           s1 t0 final 0.0690 strict False 16.6 ms worst 16.8 misses 0
+mlp           s1 t1 final 0.0378 strict False 16.6 ms worst 16.8 misses 0
+mlp           s1 t2 final 0.0508 strict False 16.6 ms worst 17.4 misses 0
+mlp           s1 t3 final 0.0774 strict False 16.6 ms worst 19.4 misses 0
+mlp           s1 t4 final 0.0553 strict False 16.5 ms worst 27.0 misses 0
+mlp           s1 t5 final 0.0565 strict False 16.6 ms worst 17.2 misses 0
+mlp           s1 t6 final 0.0809 strict False 16.5 ms worst 16.9 misses 0
+mlp           s1 t7 final 0.0582 strict False 16.6 ms worst 17.4 misses 0
+mlp           s1 t8 final 0.0912 strict False 16.6 ms worst 16.8 misses 0
+mlp           s1 t9 final 0.0402 strict False 16.5 ms worst 18.3 misses 0
+  loaded phys_mlp_r20_seed2.pt
+mlp           s2 t0 final 0.0495 strict False 16.5 ms worst 17.6 misses 0
+mlp           s2 t1 final 0.0599 strict False 16.5 ms worst 16.9 misses 0
+mlp           s2 t2 final 0.0458 strict False 16.5 ms worst 17.0 misses 0
+mlp           s2 t3 final 0.0585 strict False 16.6 ms worst 17.4 misses 0
+mlp           s2 t4 final 0.0510 strict False 16.6 ms worst 17.5 misses 0
+mlp           s2 t5 final 0.0497 strict False 16.4 ms worst 16.7 misses 0
+mlp           s2 t6 final 0.0535 strict False 16.4 ms worst 16.9 misses 0
+mlp           s2 t7 final 0.0521 strict False 16.4 ms worst 17.6 misses 0
+mlp           s2 t8 final 0.0598 strict False 16.4 ms worst 16.7 misses 0
+mlp           s2 t9 final 0.0374 strict False 16.5 ms worst 17.4 misses 0
+  loaded phys_mlp_r20_seed3.pt
+mlp           s3 t0 final 0.0397 strict False 16.4 ms worst 17.1 misses 0
+mlp           s3 t1 final 0.0739 strict False 16.5 ms worst 16.9 misses 0
+mlp           s3 t2 final 0.0618 strict False 16.4 ms worst 17.6 misses 0
+mlp           s3 t3 final 0.0520 strict False 16.5 ms worst 17.3 misses 0
+mlp           s3 t4 final 0.0793 strict False 16.5 ms worst 17.4 misses 0
+mlp           s3 t5 final 0.0749 strict False 16.4 ms worst 16.7 misses 0
+mlp           s3 t6 final 0.0593 strict False 16.5 ms worst 16.9 misses 0
+mlp           s3 t7 final 0.0839 strict False 16.5 ms worst 16.9 misses 0
+mlp           s3 t8 final 0.0633 strict False 16.4 ms worst 16.7 misses 0
+mlp           s3 t9 final 0.0588 strict False 16.4 ms worst 17.2 misses 0
+  loaded phys_mlp_r20_seed4.pt
+mlp           s4 t0 final 0.0351 strict False 16.6 ms worst 17.6 misses 0
+mlp           s4 t1 final 0.0457 strict False 16.6 ms worst 17.4 misses 0
+mlp           s4 t2 final 0.0623 strict False 16.6 ms worst 17.1 misses 0
+mlp           s4 t3 final 0.0250 strict False 16.6 ms worst 18.9 misses 0
+mlp           s4 t4 final 0.0467 strict False 16.7 ms worst 34.5 misses 0
+mlp           s4 t5 final 0.0462 strict False 16.7 ms worst 21.9 misses 0
+mlp           s4 t6 final 0.0484 strict False 16.6 ms worst 19.2 misses 0
+mlp           s4 t7 final 0.0488 strict False 16.6 ms worst 16.9 misses 0
+mlp           s4 t8 final 0.0332 strict False 16.6 ms worst 16.9 misses 0
+mlp           s4 t9 final 0.0398 strict False 16.6 ms worst 17.1 misses 0
+  loaded phys_linear_r20_seed0.pt
+split         s0 t0 final 0.0052 strict True 18.2 ms worst 18.9 misses 0
+split         s0 t1 final 0.0052 strict True 18.2 ms worst 19.1 misses 0
+split         s0 t2 final 0.0060 strict True 18.2 ms worst 19.2 misses 0
+split         s0 t3 final 0.0096 strict True 18.1 ms worst 20.4 misses 0
+split         s0 t4 final 0.0095 strict True 18.2 ms worst 18.4 misses 0
+split         s0 t5 final 0.0092 strict True 18.1 ms worst 19.2 misses 0
+split         s0 t6 final 0.0079 strict True 18.2 ms worst 19.7 misses 0
+split         s0 t7 final 0.0056 strict True 18.2 ms worst 18.5 misses 0
+split         s0 t8 final 0.0097 strict True 18.3 ms worst 19.3 misses 0
+split         s0 t9 final 0.0110 strict True 18.2 ms worst 18.5 misses 0
+  loaded phys_linear_r20_seed1.pt
+split         s1 t0 final 0.0055 strict True 18.2 ms worst 19.7 misses 0
+split         s1 t1 final 0.0049 strict True 18.2 ms worst 18.5 misses 0
+split         s1 t2 final 0.0060 strict True 18.2 ms worst 19.1 misses 0
+split         s1 t3 final 0.0094 strict True 18.2 ms worst 18.4 misses 0
+split         s1 t4 final 0.0091 strict True 18.2 ms worst 18.5 misses 0
+split         s1 t5 final 0.0088 strict True 18.2 ms worst 18.9 misses 0
+split         s1 t6 final 0.0077 strict True 18.2 ms worst 19.3 misses 0
+split         s1 t7 final 0.0053 strict True 18.2 ms worst 19.2 misses 0
+split         s1 t8 final 0.0103 strict True 18.2 ms worst 18.5 misses 0
+split         s1 t9 final 0.0113 strict True 18.2 ms worst 19.9 misses 0
+  loaded phys_linear_r20_seed2.pt
+split         s2 t0 final 0.0056 strict True 18.2 ms worst 18.5 misses 0
+split         s2 t1 final 0.0052 strict True 18.2 ms worst 19.4 misses 0
+split         s2 t2 final 0.0071 strict True 18.2 ms worst 18.8 misses 0
+split         s2 t3 final 0.0095 strict True 18.2 ms worst 18.6 misses 0
+split         s2 t4 final 0.0089 strict True 18.2 ms worst 19.2 misses 0
+split         s2 t5 final 0.0087 strict True 18.2 ms worst 19.2 misses 0
+split         s2 t6 final 0.0086 strict True 18.2 ms worst 19.9 misses 0
+split         s2 t7 final 0.0054 strict True 18.2 ms worst 18.5 misses 0
+split         s2 t8 final 0.0105 strict True 18.2 ms worst 18.6 misses 0
+split         s2 t9 final 0.0118 strict True 18.2 ms worst 18.5 misses 0
+  loaded phys_linear_r20_seed3.pt
+split         s3 t0 final 0.0057 strict True 18.2 ms worst 19.4 misses 0
+split         s3 t1 final 0.0056 strict True 18.1 ms worst 18.5 misses 0
+split         s3 t2 final 0.0067 strict True 18.2 ms worst 18.9 misses 0
+split         s3 t3 final 0.0098 strict True 18.2 ms worst 19.4 misses 0
+split         s3 t4 final 0.0090 strict True 18.1 ms worst 19.4 misses 0
+split         s3 t5 final 0.0091 strict True 18.1 ms worst 19.6 misses 0
+split         s3 t6 final 0.0082 strict True 18.1 ms worst 18.4 misses 0
+split         s3 t7 final 0.0059 strict True 18.1 ms worst 18.7 misses 0
+split         s3 t8 final 0.0100 strict True 18.2 ms worst 18.5 misses 0
+split         s3 t9 final 0.0113 strict True 18.2 ms worst 19.0 misses 0
+  loaded phys_linear_r20_seed4.pt
+split         s4 t0 final 0.0056 strict True 18.2 ms worst 18.5 misses 0
+split         s4 t1 final 0.0052 strict True 18.2 ms worst 18.5 misses 0
+split         s4 t2 final 0.0069 strict True 18.2 ms worst 19.1 misses 0
+split         s4 t3 final 0.0096 strict True 18.2 ms worst 19.3 misses 0
+split         s4 t4 final 0.0086 strict True 18.2 ms worst 20.1 misses 0
+split         s4 t5 final 0.0088 strict True 18.2 ms worst 18.5 misses 0
+split         s4 t6 final 0.0082 strict True 18.2 ms worst 18.7 misses 0
+split         s4 t7 final 0.0050 strict True 18.2 ms worst 19.5 misses 0
+split         s4 t8 final 0.0104 strict True 18.1 ms worst 19.2 misses 0
+split         s4 t9 final 0.0110 strict True 18.2 ms worst 18.6 misses 0
+  loaded phys_bilinear_r20_seed0.pt
+bilinear      s0 t0 final 0.0082 strict True 11.0 ms worst 14.7 misses 0
+bilinear      s0 t1 final 0.0156 strict True 11.0 ms worst 12.9 misses 0
+bilinear      s0 t2 final 0.0090 strict True 11.0 ms worst 12.1 misses 0
+bilinear      s0 t3 final 0.0135 strict True 11.0 ms worst 12.2 misses 0
+bilinear      s0 t4 final 0.0117 strict True 11.0 ms worst 11.7 misses 0
+bilinear      s0 t5 final 0.0155 strict True 11.0 ms worst 11.9 misses 0
+bilinear      s0 t6 final 0.0144 strict True 11.0 ms worst 11.2 misses 0
+bilinear      s0 t7 final 0.0119 strict True 11.0 ms worst 11.1 misses 0
+bilinear      s0 t8 final 0.0127 strict True 11.0 ms worst 11.4 misses 0
+bilinear      s0 t9 final 0.0136 strict True 11.0 ms worst 11.5 misses 0
+  loaded phys_bilinear_r20_seed1.pt
+bilinear      s1 t0 final 0.0091 strict True 11.0 ms worst 11.2 misses 0
+bilinear      s1 t1 final 0.0270 strict True 10.9 ms worst 11.1 misses 0
+bilinear      s1 t2 final 0.0243 strict True 11.0 ms worst 11.8 misses 0
+bilinear      s1 t3 final 0.0052 strict True 11.0 ms worst 11.5 misses 0
+bilinear      s1 t4 final 0.0134 strict True 11.0 ms worst 11.2 misses 0
+bilinear      s1 t5 final 0.0107 strict True 11.0 ms worst 11.3 misses 0
+bilinear      s1 t6 final 0.0200 strict True 11.0 ms worst 12.2 misses 0
+bilinear      s1 t7 final 0.0141 strict True 11.0 ms worst 11.4 misses 0
+bilinear      s1 t8 final 0.0163 strict True 11.0 ms worst 11.6 misses 0
+bilinear      s1 t9 final 0.0208 strict True 11.0 ms worst 11.6 misses 0
+  loaded phys_bilinear_r20_seed2.pt
+bilinear      s2 t0 final 0.0112 strict True 11.0 ms worst 11.7 misses 0
+bilinear      s2 t1 final 0.0175 strict True 11.0 ms worst 11.1 misses 0
+bilinear      s2 t2 final 0.0146 strict True 11.0 ms worst 11.2 misses 0
+bilinear      s2 t3 final 0.0091 strict True 11.0 ms worst 11.3 misses 0
+bilinear      s2 t4 final 0.0115 strict True 11.0 ms worst 11.4 misses 0
+bilinear      s2 t5 final 0.0084 strict True 11.0 ms worst 11.3 misses 0
+bilinear      s2 t6 final 0.0110 strict True 11.0 ms worst 11.3 misses 0
+bilinear      s2 t7 final 0.0104 strict True 11.0 ms worst 12.6 misses 0
+bilinear      s2 t8 final 0.0158 strict True 11.0 ms worst 12.2 misses 0
+bilinear      s2 t9 final 0.0075 strict True 11.0 ms worst 12.5 misses 0
+  loaded phys_bilinear_r20_seed3.pt
+bilinear      s3 t0 final 0.0096 strict True 11.0 ms worst 11.6 misses 0
+bilinear      s3 t1 final 0.0134 strict True 11.0 ms worst 11.5 misses 0
+bilinear      s3 t2 final 0.0131 strict True 11.0 ms worst 11.2 misses 0
+bilinear      s3 t3 final 0.0082 strict True 11.0 ms worst 11.2 misses 0
+bilinear      s3 t4 final 0.0103 strict True 11.0 ms worst 11.5 misses 0
+bilinear      s3 t5 final 0.0149 strict True 11.0 ms worst 11.5 misses 0
+bilinear      s3 t6 final 0.0079 strict True 11.0 ms worst 11.1 misses 0
+bilinear      s3 t7 final 0.0058 strict True 11.0 ms worst 11.7 misses 0
+bilinear      s3 t8 final 0.0117 strict True 11.0 ms worst 11.9 misses 0
+bilinear      s3 t9 final 0.0025 strict True 11.0 ms worst 11.2 misses 0
+  loaded phys_bilinear_r20_seed4.pt
+bilinear      s4 t0 final 0.0085 strict True 11.0 ms worst 11.2 misses 0
+bilinear      s4 t1 final 0.0212 strict True 11.0 ms worst 11.2 misses 0
+bilinear      s4 t2 final 0.0151 strict True 11.0 ms worst 11.8 misses 0
+bilinear      s4 t3 final 0.0089 strict True 10.9 ms worst 11.1 misses 0
+bilinear      s4 t4 final 0.0074 strict True 11.0 ms worst 11.2 misses 0
+bilinear      s4 t5 final 0.0115 strict True 11.0 ms worst 11.7 misses 0
+bilinear      s4 t6 final 0.0138 strict True 11.0 ms worst 11.4 misses 0
+bilinear      s4 t7 final 0.0097 strict True 11.0 ms worst 11.2 misses 0
+bilinear      s4 t8 final 0.0118 strict True 11.0 ms worst 11.1 misses 0
+bilinear      s4 t9 final 0.0110 strict True 11.0 ms worst 11.4 misses 0
+
+linear        50 trials | reach 5cm 10/50 | reach 1cm 1/50 | median 7.6 ms | worst 12.5 ms | misses 0
+
+linear_large  50 trials | reach 5cm 11/50 | reach 1cm 1/50 | median 9.1 ms | worst 23.5 ms | misses 0
+
+mlp           50 trials | reach 5cm 41/50 | reach 1cm 0/50 | median 16.6 ms | worst 34.5 ms | misses 0
+
+split         50 trials | reach 5cm 50/50 | reach 1cm 50/50 | median 18.2 ms | worst 20.4 ms | misses 0
+
+bilinear      50 trials | reach 5cm 50/50 | reach 1cm 50/50 | median 11.0 ms | worst 14.7 ms | misses 0
+ALLDONE

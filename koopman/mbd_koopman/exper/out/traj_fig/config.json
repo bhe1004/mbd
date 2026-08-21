@@ -1,0 +1,67 @@
+{
+  "plant": {
+    "control_dt": 0.05,
+    "action_limit": 1.5,
+    "rollout_threads": 16,
+    "kinematic": false
+  },
+  "data": {
+    "num_snippets": 6000,
+    "snippet_horizon": 15,
+    "joint_margin": 0.15,
+    "coherent_frac": 0.6,
+    "jitter_frac": 0.5,
+    "white": false
+  },
+  "model": {
+    "variant": "bilinear",
+    "lift_dim": 20,
+    "lift_dim_large": 50,
+    "hidden": 96,
+    "layers": 2
+  },
+  "train": {
+    "horizon": 15,
+    "latent_weight": 0.1,
+    "epochs": 300,
+    "batch_size": 512,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "grad_clip": 2.0,
+    "one_step": false
+  },
+  "planner": {
+    "num_samples": 800,
+    "stages": 5,
+    "sigma_start": 1.2,
+    "sigma_end": 0.3,
+    "alpha": 0.4,
+    "alpha_adaptive": false,
+    "alpha_scale": 0.5,
+    "horizon": 15,
+    "eta": 1.0,
+    "w_ee": 1.0,
+    "w_ctrl": 0.002,
+    "w_term": 10.0
+  },
+  "task": {
+    "steps": 120,
+    "reach": 0.05,
+    "strict": 0.01,
+    "num_targets": 10,
+    "target_seed": 20260804
+  },
+  "run": {
+    "model_seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "rng_base": 1000,
+    "torch_threads": 4,
+    "out_dir": "out",
+    "tag": "fig"
+  }
+}

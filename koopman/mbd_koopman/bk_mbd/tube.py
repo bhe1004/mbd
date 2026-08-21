@@ -17,7 +17,7 @@ Follows `koopman/mppi_koopman/verify/tube_deep.py`:
 
 from __future__ import annotations
 
-from typing import Tuple
+from typing import Callable, Tuple
 
 import numpy as np
 import torch
@@ -55,6 +55,30 @@ def tube_penalty(tubes: Array, beta_e: float) -> float:
     """Return beta_e * sum_t e_t."""
 
     return float(beta_e * np.sum(np.asarray(tubes)))
+
+
+def cost_sensitivity_torch(
+    bs: torch.Tensor,
+    cost_fn: Callable[[torch.Tensor], torch.Tensor],
+) -> torch.Tensor:
+    """Per-step cost sensitivities L[k, t] = ||d cost_fn / d bs[k, t]||_2.
+
+    One backward pass over the whole candidate batch: trajectory costs are
+    additive over steps, so the gradient of the batch-summed cost w.r.t.
+    bs[k, t] is exactly the stage-cost gradient at that (candidate, step).
+
+    Used by the "cost-sens" tube mode: the penalty beta_e * sum_t L_t e_t is
+    a first-order bound on the candidate cost error
+    |J_true - J_hat| <= sum_t L_t ||C|| e_t (decode is a projection here, so
+    ||C|| = 1). Model error is charged only where it can actually move the
+    cost, i.e. where it can distort the softmax weights of the MBD update.
+    """
+
+    with torch.enable_grad():
+        bs_g = bs.detach().requires_grad_(True)
+        total = cost_fn(bs_g).sum()
+        (grad,) = torch.autograd.grad(total, bs_g)
+    return grad.norm(dim=-1)
 
 
 @torch.no_grad()

@@ -1,0 +1,59 @@
+model=bilinear r=20 N=800 S=5 sigma=1.2->0.3 T=15 seeds=[0, 1, 2, 3, 4]
+  loaded phys_bilinear_r20_seed0.pt
+s0 t0 final 0.0082 strict True 10.9 ms worst 17.2 misses 0
+s0 t1 final 0.0156 strict True 10.9 ms worst 12.8 misses 0
+s0 t2 final 0.0090 strict True 10.9 ms worst 11.8 misses 0
+s0 t3 final 0.0135 strict True 10.9 ms worst 11.7 misses 0
+s0 t4 final 0.0117 strict True 10.9 ms worst 16.9 misses 0
+s0 t5 final 0.0155 strict True 10.9 ms worst 11.4 misses 0
+s0 t6 final 0.0144 strict True 10.9 ms worst 11.1 misses 0
+s0 t7 final 0.0119 strict True 10.9 ms worst 11.3 misses 0
+s0 t8 final 0.0127 strict True 10.8 ms worst 13.6 misses 0
+s0 t9 final 0.0136 strict True 10.9 ms worst 11.7 misses 0
+  loaded phys_bilinear_r20_seed1.pt
+s1 t0 final 0.0091 strict True 10.9 ms worst 11.4 misses 0
+s1 t1 final 0.0270 strict True 10.9 ms worst 11.4 misses 0
+s1 t2 final 0.0243 strict True 10.9 ms worst 15.1 misses 0
+s1 t3 final 0.0052 strict True 10.9 ms worst 11.0 misses 0
+s1 t4 final 0.0134 strict True 10.9 ms worst 12.1 misses 0
+s1 t5 final 0.0107 strict True 10.9 ms worst 12.4 misses 0
+s1 t6 final 0.0200 strict True 10.9 ms worst 11.1 misses 0
+s1 t7 final 0.0141 strict True 10.9 ms worst 13.4 misses 0
+s1 t8 final 0.0163 strict True 10.9 ms worst 11.2 misses 0
+s1 t9 final 0.0208 strict True 10.9 ms worst 11.4 misses 0
+  loaded phys_bilinear_r20_seed2.pt
+s2 t0 final 0.0112 strict True 10.9 ms worst 11.0 misses 0
+s2 t1 final 0.0175 strict True 10.9 ms worst 11.1 misses 0
+s2 t2 final 0.0146 strict True 10.9 ms worst 11.1 misses 0
+s2 t3 final 0.0091 strict True 10.9 ms worst 11.3 misses 0
+s2 t4 final 0.0115 strict True 10.9 ms worst 11.0 misses 0
+s2 t5 final 0.0084 strict True 10.9 ms worst 11.5 misses 0
+s2 t6 final 0.0110 strict True 10.9 ms worst 11.1 misses 0
+s2 t7 final 0.0104 strict True 10.9 ms worst 11.0 misses 0
+s2 t8 final 0.0158 strict True 10.9 ms worst 11.0 misses 0
+s2 t9 final 0.0075 strict True 10.9 ms worst 11.5 misses 0
+  loaded phys_bilinear_r20_seed3.pt
+s3 t0 final 0.0096 strict True 10.9 ms worst 12.6 misses 0
+s3 t1 final 0.0134 strict True 10.9 ms worst 11.1 misses 0
+s3 t2 final 0.0131 strict True 10.9 ms worst 11.0 misses 0
+s3 t3 final 0.0082 strict True 10.9 ms worst 11.0 misses 0
+s3 t4 final 0.0103 strict True 10.9 ms worst 11.2 misses 0
+s3 t5 final 0.0149 strict True 10.9 ms worst 11.0 misses 0
+s3 t6 final 0.0079 strict True 10.9 ms worst 11.0 misses 0
+s3 t7 final 0.0058 strict True 10.9 ms worst 11.1 misses 0
+s3 t8 final 0.0117 strict True 10.9 ms worst 15.2 misses 0
+s3 t9 final 0.0025 strict True 10.9 ms worst 11.0 misses 0
+  loaded phys_bilinear_r20_seed4.pt
+s4 t0 final 0.0085 strict True 10.9 ms worst 11.8 misses 0
+s4 t1 final 0.0212 strict True 10.9 ms worst 11.6 misses 0
+s4 t2 final 0.0151 strict True 11.0 ms worst 11.1 misses 0
+s4 t3 final 0.0089 strict True 10.9 ms worst 11.0 misses 0
+s4 t4 final 0.0074 strict True 10.9 ms worst 11.1 misses 0
+s4 t5 final 0.0115 strict True 10.9 ms worst 14.6 misses 0
+s4 t6 final 0.0138 strict True 10.9 ms worst 11.1 misses 0
+s4 t7 final 0.0097 strict True 10.9 ms worst 11.4 misses 0
+s4 t8 final 0.0118 strict True 10.9 ms worst 11.4 misses 0
+s4 t9 final 0.0110 strict True 10.9 ms worst 11.5 misses 0
+
+50 trials | reach 5cm 50/50 | reach 1cm 50/50 | median 10.9 ms | worst 17.2 ms | misses 0
+EXACTDONE

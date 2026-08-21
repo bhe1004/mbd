@@ -1,0 +1,178 @@
+# ============================================================================
+# mbd_main -- BK-MBD on the Franka FR3.  Everything tunable lives in this file.
+# Paths are relative to mbd_main/ unless absolute.
+# ============================================================================
+
+paths:
+  dataset: data/fr3_snippets.npz     # written by `collect`, read by `train`
+  checkpoint: models/bk_koopman.pt   # written by `train`, read by `run`
+  output_dir: out                    # replays and run artefacts
+
+# ---------------------------------------------------------------------------
+# The whole-arm collision body: how densely the arm is covered by check
+# spheres. Fewer spheres = faster planning (the penalty is per sphere).
+# ---------------------------------------------------------------------------
+robot:
+  first_link: 1        # frame the cover starts at: 0=base .. 4=elbow .. 8=TCP
+  link_samples: 2      # extra spheres interpolated per covered segment
+  arm_radius: 0.05     # [m]
+  tcp_radius: 0.04
+  gripper_fingers: false   # true adds the two finger prongs (4 hand spheres)
+  hand_back: 0.05      # crossbar offset behind the tool [m]
+  hand_side: 0.05      # half the finger separation [m]
+  hand_radius: 0.035
+
+# ---------------------------------------------------------------------------
+# The reaching task: timing, limits, and what a candidate trajectory costs.
+# ---------------------------------------------------------------------------
+task:
+  control_dt: 0.05          # [s] one control period -> 20 Hz control
+  horizon: 15               # planning steps of control_dt each (15 -> 0.75 s
+                            # lookahead). Longer lets the sampler SEE a detour
+                            # and its payoff inside one plan, at ~linear cost in
+                            # planning time; obstacle courses usually want 25.
+  action_limit: 1.0         # commanded joint-velocity cap [rad/s]
+  reach_threshold: 0.05     # counted as reached [m]
+  strict_threshold: 0.025   # counted as settled, ends a segment [m]
+  weights:
+    ee: 1.0                 # per-step squared tool error
+    control: 0.002          # per-step squared joint velocity
+    terminal_ee: 10.0       # squared tool error at the end of the horizon
+    joint_limit: 200.0      # squared encroachment past the inset joint limits
+    joint_limit_margin: 0.3 # [rad] inset before the true joint stops
+
+# ---------------------------------------------------------------------------
+# The world. Obstacles are data: add, move, or delete entries freely.
+#   ["box",    [x, y, z], [hx, hy, hz]]   centre + half-extents
+#   ["sphere", [x, y, z], r]              centre + radius
+#   ["sphere", "auto",    r]              placed 40% of the way home -> goal
+# An empty list means no obstacles.
+# ---------------------------------------------------------------------------
+scene:
+  obstacles:
+    - ["box", [0.5, 0.0, 0.2], [0.35, 0.05, 0.35]]
+  start_tcp: [0.45, -0.4, 0.3]   # start tool position; null = home keyframe
+  target: [0.50, 0.35, 0.2]      # override every segment's goal; null = use the
+                                 # built-in target list selected by run.target_ids
+  targets: null                  # optional custom target list, e.g. [[x,y,z], ...]
+
+collision:
+  margin: 0.02        # [m] the PLANNER inflates obstacles by this; the referee never does
+  weight: 50000.0     # flat cost per overlapping (arm sphere, obstacle) pair
+  hard: true          # false = graded depth^2 penalty instead of the binary one
+  substeps: 2         # interpolated checks between two control instants
+  floor_z: 0.0        # keep every arm sphere above this height; null = off
+
+# ---------------------------------------------------------------------------
+# Stage 1: recording the Koopman training dataset.
+# ---------------------------------------------------------------------------
+collect:
+  num_snippets: 6000
+  snippet_horizon: 15    # steps per snippet; must be >= train.rollout_horizon.
+                         # Longer snippets also yield more training windows per
+                         # snippet (one per start offset), so epochs get slower.
+  joint_margin: 0.15     # [rad] kept away from the joint stops when drawing starts
+  coherent_frac: 0.6     # per-snippet constant drift, as a fraction of the limit
+  jitter_frac: 0.5       # per-step noise, as a fraction of the limit
+  chunk_size: 1000
+  seed: 1
+  num_threads: 16
+
+# ---------------------------------------------------------------------------
+# Stage 2: the model.  z = [b, encoder(b)] with b = [q (7), ee (3)].
+# ---------------------------------------------------------------------------
+koopman:
+  lift_extra: 10          # learned features appended to the raw ones -> lift 20
+  hidden_width: 96
+  hidden_depth: 2
+  encoder_input: sincos_prefix   # identity | sincos_prefix ([sin q, cos q])
+  angle_dim: 7                   # how many leading features are angles
+
+train:
+  rollout_horizon: 15     # steps the loss rolls in the lifted space
+  gamma_latent: 0.1       # weight of the latent-consistency term
+  batch_size: 512
+  num_epochs: 300
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  grad_clip: 2.0
+  val_fraction: 0.2
+  cosine_lr: true
+  eval_every: 10
+  seed: 0
+  device: cpu
+
+# ---------------------------------------------------------------------------
+# Stage 3: the sampler.  sigma anneals start -> end WITHIN each plan.
+# ---------------------------------------------------------------------------
+mbd:
+  num_samples: 512
+  num_diffusion_steps: 5
+  sigma_start: 3.0
+  sigma_end: 1.0
+  alpha: 0.03             # softmax temperature on the candidate costs
+  eta: 1.0                # score step; 1.0 without noise == the weighted mean
+  update_rule: score_langevin   # score_langevin | weighted_mean
+  langevin_noise: false
+  eta_relative: true
+  seed: 0
+
+# Across-plans noise shrink: near the goal the whole schedule is scaled down so
+# a converged plan is not re-blasted with the full sigma_start every replan.
+adaptive:
+  enabled: true
+  err_full: 0.40    # [m] at or above this error the schedule runs at full scale
+  floor: 0.05       # smallest scale factor, applied right at the goal
+
+# ---------------------------------------------------------------------------
+# Where the target comes from. `fixed` holds the configured target; the others
+# move it while the planner tracks, which needs run.mode async.
+#   fixed     the target list / scene.target, one segment at a time
+#   keyboard  driven from the MuJoCo viewer window (run.plant: mujoco only)
+#   terminal  driven from raw terminal keys (works with the ROS plant too)
+#   circle    swept around a circle at constant speed
+# ---------------------------------------------------------------------------
+goal:
+  mode: fixed
+  predict: true       # score candidates against where the target WILL be at each
+                      # planned step. With a moving target, holding it frozen at
+                      # its present position leaves a standing lag of roughly
+                      # (target speed) x (loop delay) -- ~3 cm at 0.2 m/s here.
+  step: 0.02          # [m] per key press (keyboard / terminal)
+  low: [0.25, -0.45, 0.15]     # workspace box the hand-driven target is clipped to
+  high: [0.75, 0.45, 0.95]
+  radius: 0.12        # [m]  circle
+  period: 8.0         # [s]  seconds per revolution -> speed = 2*pi*r/period
+  plane: yz           # xy | yz | zx
+  center: null        # null = placed so the circle starts at the tool position
+  lead_in: 2.0        # [s] the angular rate ramps up over this, from rest
+  clockwise: false
+
+# ---------------------------------------------------------------------------
+# Execution.
+# ---------------------------------------------------------------------------
+run:
+  plant: mujoco       # mujoco | real  (see env/real_plant.py)
+  mode: async         # async = wall-clock real time | lockstep = plan-then-step
+  target_ids: [0]     # indices into the built-in target list (ignored if scene.target is set)
+  cycle: false        # loop over the sequence until max_time
+  max_time: 30.0      # [s]
+  settle_time: 0.4    # [s] held after a reach before switching target
+  warmup_plans: 3     # throwaway plans before the clock starts
+  min_plan_ms: 0.0    # pad every plan to at least this, to emulate a slower planner
+  wait_for_start: true
+  torch_threads: 4    # 0 = library default (causes latency spikes on a busy box)
+  device: cpu
+  save_replay: ask    # ask | always | never
+
+viewer:
+  enabled: true
+  trail: true               # the executed tool path
+  prediction: true          # the planner's own predicted tool path
+  collision_spheres: false  # draw the arm's check spheres at the start pose
+  ghosts:
+    enabled: false
+    interval_s: 0.3
+    alpha: 0.4
+    max_ghosts: 40
+    fade: true

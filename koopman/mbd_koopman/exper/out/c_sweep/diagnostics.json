@@ -1,0 +1,26 @@
+{
+  "lam0.0": {
+    "cold_wide": 0.07862215511850475,
+    "settled_wide": 0.059761297325717375,
+    "cold_narrow": 0.03407986728104928,
+    "settled_narrow": 0.024566478985268297,
+    "narrow_plan_end_pred": 0.02184177442198885,
+    "narrow_plan_end_true": 0.07386660870510321
+  },
+  "lam0.5": {
+    "cold_wide": 0.07651577767205488,
+    "settled_wide": 0.054939067705347795,
+    "cold_narrow": 0.028375371679293483,
+    "settled_narrow": 0.024627523837616024,
+    "narrow_plan_end_pred": 0.06968546742509693,
+    "narrow_plan_end_true": 0.13246539677626848
+  },
+  "lam1.0": {
+    "cold_wide": 0.05693361396835279,
+    "settled_wide": 0.054551214255534185,
+    "cold_narrow": 0.0244476106048136,
+    "settled_narrow": 0.02475198348153145,
+    "narrow_plan_end_pred": 0.6485354088936702,
+    "narrow_plan_end_true": 0.840736625955511
+  }
+}

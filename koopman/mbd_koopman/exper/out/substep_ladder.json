@@ -1,0 +1,62 @@
+{
+  "rows": [
+    {
+      "nsub": 25,
+      "timestep_ms": 2.0,
+      "sequential_steps": 1875,
+      "cpu_control_step_ms": 2171.4460065898797,
+      "median_mm": 0.0,
+      "max_mm": 0.0,
+      "terminal_median_mm": 0.0,
+      "finite": true,
+      "gpu_control_step_ms": 4017.203565066059
+    },
+    {
+      "nsub": 10,
+      "timestep_ms": 5.0,
+      "sequential_steps": 750,
+      "cpu_control_step_ms": 933.5158582932006,
+      "median_mm": 2.235005188704533,
+      "max_mm": 41.05149238228858,
+      "terminal_median_mm": 3.8558694307800208,
+      "finite": true,
+      "gpu_control_step_ms": 1711.6248984045037
+    },
+    {
+      "nsub": 5,
+      "timestep_ms": 10.0,
+      "sequential_steps": 375,
+      "cpu_control_step_ms": 449.65692330151796,
+      "median_mm": 7.29947528013723,
+      "max_mm": 66.03983448081482,
+      "terminal_median_mm": 14.845843812354639,
+      "finite": true,
+      "gpu_control_step_ms": 862.1329915088911
+    },
+    {
+      "nsub": 2,
+      "timestep_ms": 25.0,
+      "sequential_steps": 150,
+      "cpu_control_step_ms": 189.47892162638408,
+      "median_mm": 50.86097445837724,
+      "max_mm": 280.1139580462286,
+      "terminal_median_mm": 94.92046327985851,
+      "finite": true,
+      "gpu_control_step_ms": 353.0323885691663
+    },
+    {
+      "nsub": 1,
+      "timestep_ms": 50.0,
+      "sequential_steps": 75,
+      "cpu_control_step_ms": 101.04607829513648,
+      "median_mm": 248.35050443021277,
+      "max_mm": 1358.4120063189184,
+      "terminal_median_mm": 562.3537650376198,
+      "finite": true,
+      "gpu_control_step_ms": 170.81810006250936
+    }
+  ],
+  "reference_nsub": 25,
+  "path_length_mm": 278.26722663439494,
+  "period_ms": 50.0
+}

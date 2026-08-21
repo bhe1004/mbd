@@ -1,0 +1,21 @@
+{
+  "rows": [
+    {
+      "num_candidates": 800,
+      "disable_contact": true,
+      "compile_s": 7.449354828801006,
+      "rollout_ms": 804.3133724015206,
+      "substep_us": 2144.835659737388,
+      "control_step_ms": 4021.566862007603,
+      "over_budget": 80.43133724015206
+    }
+  ],
+  "agreement": {
+    "tcp_gap_median_m": 0.0020752209149044356,
+    "tcp_gap_max_m": 0.010388975065285118,
+    "tcp_gap_terminal_median_m": 0.003042769380921659,
+    "path_length_m": 0.27826722663439496
+  },
+  "substep_budget_us": 26.666666666666668,
+  "sequential_substeps_per_control_step": 1875
+}

@@ -1,0 +1,16 @@
+# Headless latency benchmark: plan -> apply -> step, serialized, no viewer.
+# Answers "how fast is one plan, and what replanning rate would that give?"
+# rather than "does it keep up in real time" (that is the async default).
+#
+#   python main.py run -c benchmark.yaml
+extends: default.yaml
+
+run:
+  mode: lockstep
+  wait_for_start: false
+  save_replay: never
+  max_time: 60.0
+  warmup_plans: 5        # torch/threadpool warm-up must not pollute the numbers
+
+viewer:
+  enabled: false

@@ -1,0 +1,74 @@
+<mujoco model="fr3 bookshelf scene">
+  <!-- Shelf-reaching demo scene: the velocity-controlled FR3 plus a static
+       bookshelf obstacle (imported from assets/franka_description). The
+       bookshelf boards are VISUAL-ONLY (contype=0 conaffinity=0): the planner
+       treats them as a soft TCP keep-out cost, not a hard collision body, so
+       the arm dynamics are identical to scene_velocity.xml. The reachable
+       open compartment is between shelf_01 (z=0.345) and shelf_02 (z=0.695);
+       the lower closed cabinet sits below the z=0 floor and is occluded. -->
+  <include file="fr3_hand_velocity.xml"/>
+
+  <statistic center="0.4 0 0.5" extent="1.0"/>
+
+  <visual>
+    <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <global azimuth="140" elevation="-20"/>
+  </visual>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/>
+    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3"
+      markrgb="0.8 0.8 0.8" width="300" height="300"/>
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
+    <material name="shelf_wood" rgba="0.55 0.39 0.25 1"/>
+    <material name="shelf_board" rgba="0.60 0.43 0.28 1"/>
+  </asset>
+
+  <worldbody>
+    <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
+    <!-- floor z and the bookshelf/target_book body positions are set from
+         SHELF_OFFSET in franka_bookshelf.py at load time; the values here are
+         placeholders. The pedestal supports the arm above the (lowered) floor
+         so the robot is not left floating. -->
+    <geom name="floor" pos="0 0 -0.78" size="0 0 0.05" type="plane" material="groundplane" contype="0" conaffinity="0"/>
+    <geom name="pedestal" type="box" pos="0 0 -0.5" size="0.13 0.13 0.5"
+          rgba="0.30 0.30 0.33 1" contype="0" conaffinity="0"/>
+
+    <!-- Bookshelf obstacle (visual + cost keep-out only). Geometry copied
+         verbatim from assets/franka_description/robots/object/bookshelf.xml
+         (shape never modified). The body position is overwritten from
+         SHELF_OFFSET in franka_bookshelf.py at load; this pos is a placeholder. -->
+    <body name="bookshelf" pos="0 0 -0.06">
+      <geom name="bookshelf_left_side" type="box" pos="0.7475 -0.385 0.165" size="0.1475 0.010 0.885"
+            material="shelf_wood" contype="0" conaffinity="0"/>
+      <geom name="bookshelf_right_side" type="box" pos="0.7475 0.385 0.165" size="0.1475 0.010 0.885"
+            material="shelf_wood" contype="0" conaffinity="0"/>
+      <geom name="bookshelf_back_panel" type="box" pos="0.885 0.0 0.165" size="0.010 0.395 0.885"
+            rgba="0.49 0.34 0.22 1" contype="0" conaffinity="0"/>
+      <geom name="bookshelf_bottom_board" type="box" pos="0.7375 0.0 -0.705" size="0.1375 0.375 0.015"
+            material="shelf_board" contype="0" conaffinity="0"/>
+      <geom name="bookshelf_lower_closed_panel" type="box" pos="0.7375 0.0 -0.355" size="0.1375 0.375 0.335"
+            rgba="0.50 0.35 0.23 1" contype="0" conaffinity="0"/>
+      <geom name="bookshelf_shelf_00" type="box" pos="0.7375 0.0 -0.005" size="0.1375 0.375 0.015"
+            material="shelf_board" contype="0" conaffinity="0"/>
+      <geom name="bookshelf_shelf_01" type="box" pos="0.7375 0.0 0.345" size="0.1375 0.375 0.015"
+            material="shelf_board" contype="0" conaffinity="0"/>
+      <geom name="bookshelf_shelf_02" type="box" pos="0.7375 0.0 0.695" size="0.1375 0.375 0.015"
+            material="shelf_board" contype="0" conaffinity="0"/>
+      <geom name="bookshelf_top_board" type="box" pos="0.7375 0.0 1.035" size="0.1375 0.375 0.015"
+            material="shelf_board" contype="0" conaffinity="0"/>
+    </body>
+
+    <!-- The book to reach: an upright book standing on the (lowered) shelf_01,
+         at mid-height inside the shelf_01..shelf_02 compartment (z~0.16..0.48).
+         The arm inserts the hand horizontally between the two boards. Visual. -->
+    <!-- Book turned 90 deg in world yaw (quat = rot z 90 deg), so its wide face
+         turns sideways; the gripper must roll 90 deg (fingers open along world
+         y) to grasp it. -->
+    <body name="target_book" pos="0.64 0.0 0.47" quat="0.70710678 0 0 0.70710678">
+      <geom name="target_book_geom" type="box" size="0.020 0.055 0.100"
+            rgba="0.20 0.45 0.80 1" contype="0" conaffinity="0"/>
+    </body>
+  </worldbody>
+</mujoco>

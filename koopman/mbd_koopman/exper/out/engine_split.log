@@ -1,0 +1,15 @@
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link0_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link1_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+/home/home/anaconda3/envs/mjx/lib/python3.11/site-packages/mujoco/mjx/_src/mesh.py:141: UserWarning: Mesh "link2_coll" has a coplanar face with more than 20 vertices. This may lead to performance issues and inaccuracies in collision detection. Consider decimating the mesh.
+  warnings.warn(
+Failed to import warp: No module named 'warp'
+Failed to import mujoco_warp: No module named 'warp'
+probe path length: 300 mm, tolerance the task scores at: 10 mm
+
+  engine gap        MJX 2 ms  vs CPU 2 ms   median     2.08 mm   max     11.24 mm
+  coarsening (MJX)  MJX 50 ms vs MJX 2 ms   median    29.89 mm   max    110.80 mm
+  coarsening (CPU)  CPU 50 ms vs CPU 2 ms   median   247.11 mm   max   1486.64 mm
+  both, as measured MJX 50 ms vs CPU 2 ms   median    30.82 mm   max    112.33 mm
+SPLITDONE

@@ -1,0 +1,5 @@
+configuration               chain     5cm     1cm   final med  ms/step   worst  misses
+S=5 x 800 x 15, dt 50ms        75   10/10    7/10     0.0259m   117.8  142.9    1200
+S=2 x 800 x 15, dt 50ms        30   10/10    2/10     0.0318m    47.2   73.6      66
+S=5 x 800 x 15, dt 25ms       150   10/10    8/10     0.0143m   219.1  303.0    1200
+CPUCOARSEDONE

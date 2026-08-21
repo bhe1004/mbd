@@ -1,0 +1,638 @@
+\documentclass[letterpaper,10pt,conference]{ieeeconf}
+\overrideIEEEmargins
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\usepackage{textcomp}
+\usepackage{stfloats}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{cite}
+
+\usepackage{bm}
+\usepackage{pifont}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{remark}{Remark}
+\usepackage{xcolor}
+\newcommand{\rev}[1]{\textcolor{blue}{#1}}
+\newcommand{\nd}[1]{\textcolor{red}{#1}}
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+\newcommand{\draftnote}[1]{\par\noindent\textcolor{red}{\textbf{$\blacktriangleright$ DRAFT: #1}}\par\medskip}
+\newcommand{\figph}[2]{\fcolorbox{red}{gray!8}{\parbox[c][#1][c]{0.96\linewidth}{\centering
+\color{red!65!black}\small\textbf{[figure placeholder]}\\[3pt] #2}}}
+\graphicspath{{figs/}}
+\hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore Koop-man}
+
+% ---- method-name macros (freeze notation here) ----
+\newcommand{\mbdtrue}{\textsc{MBD-true}}
+\newcommand{\dkmbd}{\textsc{DK-MBD}}
+\newcommand{\dksplit}{\textsc{DK-MBD-split}}
+\newcommand{\bkmbd}{\textsc{BK-MBD}}
+
+% \usepackage[hidelinks]{hyperref}
+\usepackage{hyperref}
+\usepackage{subcaption}
+% (a)/(b) subfigure labels in Times New Roman (ptm = Times); caption text unchanged
+\DeclareCaptionFont{timesnr}{\fontfamily{ptm}\selectfont}
+\captionsetup[subfigure]{labelfont=timesnr}
+
+\begin{document}
+% \setlength{\abovecaptionskip}{0.25\abovecaptionskip} % 그림 캡션 위 간격
+% \setlength{\belowcaptionskip}{0pt}
+
+\title{Koopman-Accelerated Model-Based Diffusion\\for Real-Time Robot Control}
+
+% Author intentionally omitted for blind submission.
+% \author{Author Name(s)\thanks{Affiliation / funding.}}
+
+\maketitle
+
+\begin{abstract}
+Model-Based Diffusion (MBD) provides derivative-free annealed sampling but requires thousands of rollouts per control step, making simulator-based MBD too slow for real-time control.
+We replace the simulator with a learned bilinear deep Koopman surrogate suited to configuration-dependent input gains and use a quantile-fitted error tube for inexpensive candidate ranking.
+Noise then controls both candidate reach and sampling dispersion, so wide stages explore while narrow stages settle.
+On a physics-free, analytically integrated kinematic Franka Research 3 (FR3) testbed and a full rigid-body FR3 simulation in MuJoCo, the surrogate matches the corresponding true-dynamics oracle in all $70$ trials while meeting every $50$\,ms planning deadline, compared with $4.1$\,s per step for the simulator-in-the-loop oracle.
+At equal sample budgets on a $1$\,cm stress test, fixed-noise schedules achieve $19$--$31$ of $35$ successes, whereas annealing achieves $34/35$ with roughly half the median settling time of fixed-wide sampling.
+On non-convex wall reaching, the sampling planner threads the passage without violations, whereas convexified bilinear Koopman model predictive control trades passage completion against safety.
+\nd{Finally, the planner, cost, and hyperparameters transfer unchanged to a physical FR3, tracking a continuously moving target in real time, with only the rollout model reidentified from on-robot data.}
+\end{abstract}
+
+\noindent\textbf{Keywords---}Koopman operator, sampling-based control,
+model-based diffusion, data-driven control, model learning for control.
+
+%==============================================================
+\section{Introduction}\label{sec:intro}
+%==============================================================
+Sampling-based optimal control has become a standard approach for robotic systems with complex nonlinear dynamics.
+Model Predictive Path Integral (MPPI) control~\cite{kappen2005, theodorou2010, williams2017mppi, williams2016aggressive} and Model-Based Diffusion (MBD)~\cite{pan2024model, xue2025full} evaluate hundreds of sampled control sequences by forward simulation and update the nominal sequence by a cost-weighted average.
+MBD reinterprets this primitive as reverse diffusion, in which the weighted mean estimates the score of a Gaussian-smoothed target~\cite{song2019generative, song2020score} and a decreasing noise schedule yields coarse-to-fine search.
+This derivative-free structure is general and parallel, but its rollout model is evaluated thousands of times per control step.
+When those rollouts come from a physics simulator~\cite{pan2024model}, they dominate latency and usually confine MBD to offline optimization, since receding-horizon control repeats the entire population after every action.
+
+The Koopman operator~\cite{koopman1931, mezic2005} provides a principled means of replacing expensive nonlinear rollouts.
+Lifting through hand-designed~\cite{williams2015edmd, proctor2016dmdc} or learned~\cite{lusch2018deep} observables reduces nonlinear rollout to matrix--vector products whose cost depends on the lifted dimension rather than plant complexity.
+Linear lifted predictors are common because they preserve convex Koopman MPC~\cite{korda2018mpc, strasser2026}, and a learned linear model has recently accelerated MPPI~\cite{mppidk2026}.
+Their constant lifted input matrix is nevertheless mismatched to tracked outputs driven through configuration-dependent gains.
+
+A prior representability analysis~\cite{kim2026bilinear} showed that configuration-dependent input gains, such as a manipulator Jacobian, produce irreducible dispersion error under a constant linear input map and identified the bilinear class as the smallest structural remedy.
+In MPC, the bilinear term destroys convexity, so prior work freezes the lifted state over the horizon~\cite{bruder2021bilinear}.
+A sampling planner imposes no convexity requirement and can instead roll out the bilinear model directly, retaining the state-dependent input channel within the same matrix--vector computational regime.
+
+Unlike diffusion models used as \emph{learned} motion priors~\cite{janner2022planning, chi2025diffusion, carvalho2023motion}, our method does not learn a trajectory distribution, since diffusion serves only as an optimizer while learning is confined to the rollout dynamics.
+Consequently, the same trained dynamics surrogate can support new goals and costs without retraining a policy or trajectory prior.
+
+We ask whether this surrogate preserves MBD quality at real-time cost, and what annealing contributes when model error corrupts the evaluated landscape.
+Section~\ref{subsec:anneal_theory} separates noise-dependent candidate \emph{reach} from the estimator's \emph{precision floor}, showing that wide stages explore across basins whereas narrow stages settle, a trade-off that no single fixed scale can resolve.
+
+The contributions of this paper are as follows:
+\begin{itemize}
+\item \textbf{Koopman-accelerated MBD at the control rate.}
+We combine bilinear Koopman rollout, a quantile-fitted tube, and MBD, and the surrogate matches the oracle in all $70$ trials and reduces the simulator-inclusive step from $4.1$\,s to $64$\,ms. The optimizer requires $17$\,ms median and $40$\,ms worst-case latency, with zero $50$\,ms deadline misses\nd{, and the planner transfers to a physical FR3 with only the rollout model reidentified on-robot}.
+\item \textbf{Annealing under surrogate error.}
+We identify and measure the two noise levers under one surrogate at equal budgets on a $1$\,cm stress test. Wide-fixed sampling stalls at its dispersion floor ($28$--$31$ of $35$), narrow-fixed sampling locks onto minima of the surrogate's own landscape centimeters from the target ($19/35$), and only annealing supplies both levers, reaching $34/35$ in nearly half the settling time.
+\item \textbf{Beyond convex Koopman MPC.}
+Convexified bilinear MPC matches MBD on quadratic reaching, but on non-convex wall reaching MBD threads the passage without violations while MPC trades passage completion against safety.
+\end{itemize}
+
+%==============================================================
+\section{Preliminaries}\label{sec:prelim}
+%==============================================================
+
+\subsection{Problem Formulation}\label{subsec:problem}
+
+Consider the discrete-time system
+\begin{equation}
+s_{t+1} = f(s_t, u_t), \qquad
+s_t \in \mathcal{X} \subset \mathbb{R}^{n},\quad
+u_t \in \mathcal{U} = [\underline{u}, \bar{u}]^{m},
+\label{eq:sys}
+\end{equation}
+in the \emph{model-free, real-time} setting, where the dynamics $f$ are unknown or too costly to integrate at the sampling rate, so that a true-dynamics rollout is available only as an \emph{oracle} reference, not as a deployable controller.
+The model is learned solely from interaction data $\mathcal{D} = \{(s_i, u_i, s_i^{+})\}$.
+
+Each task defines observable features $b(s) \in \mathbb{R}^{d}$ used both as the Koopman training state and in the cost, and every fidelity level uses $b = [q, p_{\mathrm{tcp}}]$, the joint positions and tool-center-point position.
+The controller operates in a receding horizon, so that at state $s_t$ it seeks a control sequence $U \in \mathbb{R}^{mT}$ minimizing
+\begin{equation}
+J(U; s_t) = \sum_{k=1}^{T} c\big(\hat{b}_k, u_{k-1}\big)
++ \phi\big(\hat{b}_T\big),
+\label{eq:cost}
+\end{equation}
+where $\hat b_k$ is produced by the rollout model under study. The controller applies the first control $u_0$ to \eqref{eq:sys} and then replans.
+
+\subsection{Model-Based Diffusion: A Review}\label{subsec:mbd}
+
+MBD~\cite{pan2024model} treats \eqref{eq:cost} as sampling from the Boltzmann target
+\begin{equation}
+p_0(U) \;\propto\; \exp\!\big(-J(U)/\alpha\big)
+\label{eq:target}
+\end{equation}
+and descends an annealing ladder of Gaussian-smoothed marginals
+\begin{equation}
+p_{\sigma}(U) = \big(p_0 * \varphi_{\sigma}\big)(U)
+= \mathbb{E}_{\varepsilon \sim \mathcal{N}(0, \sigma^{2} I)}
+\big[\, p_0(U - \varepsilon) \,\big],
+\label{eq:smooth}
+\end{equation}
+with $\sigma_1 > \cdots > \sigma_S$.
+By Tweedie's formula, the score of the smoothed target is a denoising mean shift,
+\begin{equation}
+\nabla_U \log p_{\sigma}(U)
+= \frac{\mathbb{E}\big[\,U_0 \mid U\,\big] - U}{\sigma^{2}} .
+\label{eq:tweedie}
+\end{equation}
+Because the smoothing kernel $\varphi_\sigma(U-U')$ is the density of the proposal $U' \sim \mathcal{N}(U,\sigma^2 I)$, the posterior mean in \eqref{eq:tweedie} is a ratio of expectations under this proposal. With $N$ candidates $U_k=U+\sigma\varepsilon_k$, $\varepsilon_k\sim\mathcal{N}(0,I)$, the self-normalized estimator is the cost-weighted mean
+\begin{equation}
+\widehat{\mathbb{E}}\big[U_0 \mid U\big] = \sum_{k=1}^{N} w_k U_k,
+\quad
+w_k = \frac{e^{-(J(U_k) - J_{\min})/\alpha}}
+           {\sum_{j} e^{-(J(U_j) - J_{\min})/\alpha}} .
+\label{eq:weights}
+\end{equation}
+Candidates are projected onto $\mathcal{U}^{T}$, using the same projection for all compared methods.
+The update at stage $s$ is a preconditioned score step with optional Langevin noise, \emph{with the step size tied to the noise level}:
+\begin{equation}
+U \leftarrow U + \eta_s\, \widehat{\nabla_U \log p_{\sigma_s}}(U)
++ \sqrt{2 \eta_s}\, \xi,
+\qquad
+\eta_s = \eta\, \sigma_s^{2} .
+\label{eq:update}
+\end{equation}
+With $\eta = 1$ and no Langevin noise, \eqref{eq:update} reduces exactly to the weighted-mean update $U \leftarrow \sum_k w_k U_k$.
+
+%==============================================================
+\section{Bilinear Koopman Model-Based Diffusion}\label{sec:method}
+%==============================================================
+
+\subsection{Deep Koopman Lifting and Rollout Models}\label{subsec:models}
+
+All learned rollout models share a deep lift with an exact-decoder convention.
+With $d = \dim b$,
+\begin{equation}
+z = \Psi_\theta(b) =
+\begin{bmatrix} b \\ \psi_\theta\big(\tau(b)\big) \end{bmatrix}
+\in \mathbb{R}^{r},
+\qquad
+C z = z_{1:d} = b,
+\label{eq:lift}
+\end{equation}
+where $\psi_\theta$ is a small $\tanh$ network and $\tau$ is a fixed task input map ($\tau(b) = [\sin q, \cos q]$, $r = 20$ at every fidelity level).
+Slicing the decoder avoids learning a fragile reconstruction and ties the first $d$ lifted coordinates to the physical output.
+Two lifted dynamics classes are compared:
+\begin{align}
+\textbf{linear (DK):}\quad
+& z^{+} = A z + B u ,
+\label{eq:lin}\\[2pt]
+\textbf{bilinear (BK):}\quad
+& z^{+} = A z + B_0 u + \sum_{i=1}^{m} u_i B_i z ,
+\label{eq:bil}
+\end{align}
+where \eqref{eq:bil} is compactly written as $z^{+} = M(u)\, z + B_0 u$ with the input-dependent transition matrix $M(u) = A + \sum_i u_i B_i$.
+For control-affine systems the continuous-time Koopman generator carries a bilinear input structure~\cite{iacob2024}, and \eqref{eq:bil} is its finite-dimensional, discrete-time rollout approximation, restricting the input map's state dependence to be linear in the lifted state. Its input tangent map $\partial z^{+} / \partial u_i = B_0 e_i + B_i z$ depends on the state through $B_i z$, whereas the linear form's $\partial z^{+}/\partial u = B$ is constant.
+Both classes roll out in the same matrix--vector regime, and at planning time the current output is lifted once, $z_0 = \Psi_\theta(b(s_t))$, after which every candidate is propagated entirely in the lifted space.
+
+\subsection{The Bilinear Class as the Prescribed Rollout}\label{subsec:representability}
+
+We select the rollout class using the prior representability criterion of~\cite{kim2026bilinear}.
+When the tracked output moves as $\Delta y = \Phi(s)\, u\, \Delta t + O(\Delta t^{2})$ with a configuration-dependent gain $\Phi(s)$, here the manipulator Jacobian on the end-effector rows, every input-to-output Markov parameter $C A^{k} B$ of \eqref{eq:lin} is state-independent, and the best constant input map is the \emph{mean} of $\Phi$ along the visited states, with an irreducible one-step error equal to the gain's dispersion, a model-class property that no amount of training can remove.
+The bilinear form restores exactly the discarded structure, because the columns $C B_i z$ of its input gain are linear in $z$, and the Jacobian's entries, multilinear in $\{\sin q_i, \cos q_i\}$ across joints, become expressible once the learned features supply the cross-products.
+The criterion is a representability statement about the one-step input channel, not a closed-loop theorem. Section~\ref{subsec:exp_mechanism} traces how an optimizer amplifies the gap into closed-loop failure, and Sec.~\ref{subsec:exp_franka} tests the prescription under full rigid-body physics.
+
+\subsection{Multi-Step Training}\label{subsec:training}
+
+All learned models are trained on random-rollout snippets by the same $H$-step loss ($H = 15$),
+\begin{equation}
+\mathcal{L} = \frac{1}{H} \sum_{h=1}^{H}
+\Big[ \big\| C \hat{z}_h - b_h \big\|^{2}
++ \gamma \big\| \hat{z}_h - \Psi_\theta(b_h)^{\mathrm{sg}} \big\|^{2}
+\Big],
+\label{eq:loss}
+\end{equation}
+with $\hat z_0 = \Psi_\theta(b_0)$, $\hat z_{h+1}$ given by \eqref{eq:lin} or \eqref{eq:bil}, $\gamma = 0.1$, and stop-gradient ($\mathrm{sg}$) on the latent target.
+The bilinear input matrices are \emph{zero-initialized}, $B_i = 0$, so that training starts exactly at the linear model and adds bilinear structure only where the data demands it, which stabilizes the $m$ per-channel matrices on the $7$-DOF manipulator.
+Each dataset is generated once and shared across all learned models for a given training seed, so the compared classes differ only in their lifted dynamics, \eqref{eq:lin} versus \eqref{eq:bil}.
+One-step regression in place of \eqref{eq:loss} yields rollouts that diverge before the planning horizon.
+
+\subsection{Model-Error Tube}\label{subsec:tube}
+
+To make the planner aware of where the surrogate can be trusted, the one-step lifted residuals on the training set, $r_k = \Psi_\theta(b_{k+1}) - \big(M(u_k)\Psi_\theta(b_k) + B_0 u_k\big)$, are covered by a proportional bound $\|r_k\| \le c_x \|z_k\| + c_u \|u_k\|$ fitted at quantile coverage, where a least-squares fit of $(\hat c_x, \hat c_u)$ to the residual norms is rescaled by the empirical $(1-\delta)$-quantile of the coverage ratios,
+\begin{equation}
+\begin{aligned}
+s_\delta &= Q_{1-\delta}\!\left[
+\frac{\|r_k\|}{\hat c_x \|z_k\| + \hat c_u \|u_k\|}
+\right], \\
+(c_x, c_u) &= \max(s_\delta, 1) \,(\hat c_x, \hat c_u),
+\end{aligned}
+\label{eq:tubefit}
+\end{equation}
+with $\delta = 10^{-3}$.
+Quantile coverage, rather than a worst-case fit over every residual, keeps the constants proportional to the typical model error, and Sec.~\ref{subsec:exp_cost} quantifies how a worst-case fit lets a few rest-to-motion transients dominate the planning cost.
+During planning a scalar tube is propagated along each candidate with the precomputed norm bound $\bar m(u) = \|A\|_2 + \sum_i |u_i| \|B_i\|_2 \ge \|M(u)\|_2$:
+\begin{equation}
+e_{k+1} = \big(\bar m(u_k) + c_x\big) e_k
++ c_x \|\hat z_k\| + c_u \|u_k\|,
+\qquad e_0 = 0 .
+\label{eq:tube}
+\end{equation}
+Wherever the fitted bound holds, the recursion maintains $e_k \ge \|\delta_k\|$ for the true-vs-predicted lifted error $\delta_k = \Psi_\theta(b_k) - \hat z_k$, by induction on the exact error dynamics $\delta_{k+1} = M(u_k)\delta_k + r_k$ of the bilinear rollout.
+The planner then minimizes the tube-augmented cost
+\begin{equation}
+\tilde J(U) = J(U) + \beta_e \sum_{k} e_k ,
+\label{eq:tubecost}
+\end{equation}
+where $\beta_e$ scales with the task cost magnitude, and $\beta_e = 0$ recovers plain \bkmbd{}.
+
+\subsection{Annealing under Surrogate Error}\label{subsec:anneal_theory}
+
+With a learned rollout the sampler never sees the true objective, and every candidate is instead scored by
+\begin{equation}
+\hat J(U) \;=\; J(U) + \Delta J(U),
+\label{eq:jhat}
+\end{equation}
+where $\Delta J$ collects the effect of model error and the tube term on the evaluated cost.
+Ideally, a stage with noise level $\sigma$ descends a smoothed \emph{Boltzmann} landscape, since by \eqref{eq:tweedie} it ascends $\log p_\sigma$ with $p_\sigma = e^{-\hat J/\alpha} * \varphi_\sigma$, or equivalently descends the free energy
+\begin{equation}
+F_\sigma(U) \;=\; -\alpha \log\, \mathbb{E}_{\varepsilon \sim \mathcal{N}(0, \sigma^{2} I)}\,
+e^{-\hat J(U + \varepsilon)/\alpha} .
+\label{eq:freeenergy}
+\end{equation}
+Equation \eqref{eq:freeenergy} is the unconstrained idealization, whereas the deployed planner projects candidates onto $\mathcal{U}$, under which the Gaussian identities of Sec.~\ref{subsec:mbd} hold only approximately (at a cold-start center, $21\%$ of proposal coordinates clip at $\sigma = 1.2$ under the $1.5$\,rad/s limits), so what Sec.~\ref{subsec:exp_anneal} measures is accordingly the \emph{clipped-proposal} landscape the planner actually evaluates.
+Rather than assert what smoothing does to this landscape's topology, we locate the schedule's leverage in two elementary properties of the update itself, and measure the rest.
+
+\begin{proposition}[Directional reach of a stage]\label{prop:reach}
+Let $U_k = U + \sigma \varepsilon_k$ with $\varepsilon_k \overset{\mathrm{iid}}{\sim} \mathcal{N}(0, I_{mT})$, $k = 1, \dots, N$, and let $U^{+} = \sum_k w_k U_k$ with any weights $w_k \ge 0$, $\sum_k w_k = 1$.
+For every unit direction $v$ and $\rho \in (0, 1)$, with probability at least $1 - \rho$,
+\begin{equation}
+\big\langle U^{+} - U,\, v \big\rangle
+\;\le\; \max_k\, \big\langle \sigma \varepsilon_k,\, v \big\rangle
+\;\le\; \sigma \sqrt{2 \log (N/\rho)} .
+\label{eq:reach}
+\end{equation}
+\end{proposition}
+\begin{proof}
+A convex combination is bounded by its largest element. Because $\langle \varepsilon_k,v\rangle$ are i.i.d.\ standard normal, a Gaussian tail bound followed by a union bound gives $\Pr[\max_k \langle \varepsilon_k,v\rangle > \sqrt{2\log(N/\rho)}] \le N e^{-\log(N/\rho)}=\rho$.
+\end{proof}
+
+The proposition bounds the pre-projection candidate cloud, whereas the deployed box projection can redirect displacements near the bounds and is treated empirically.
+At the deployed $N = 800$ and $\rho = 10^{-3}$, the envelope is approximately $5.2\sigma$. For any fixed direction, a single update exceeds this envelope with probability at most $\rho$. Whether a basin within the envelope is reached depends on its geometry, which Secs.~\ref{subsec:exp_window} and~\ref{subsec:exp_anneal} examine empirically.
+Nor can replanning substitute for reach across a cost barrier, because intermediate nominals are penalized.
+Reach is bought with noise, and noise has a price at the other end.
+
+\begin{remark}[Precision floor]\label{rem:floor}
+The weighted-mean update at noise level $\sigma$ moves the nominal by $\sigma \sum_k w_k \varepsilon_k$, and under a locally frozen-weight approximation (the weights are computed from the same $\varepsilon_k$, so this is a scaling heuristic rather than an exact variance), it disperses per axis on the order of $\sigma / \sqrt{N_{\mathrm{eff}}}$, $N_{\mathrm{eff}} = 1 / \sum_k w_k^{2}$.
+In receding horizon the executed control inherits this dispersion at every step, so a sampler at fixed $\sigma$ resists settling below it, and only annealing, which lowers the final noise level, reduces it at a fixed sample budget.
+Section~\ref{subsec:exp_anneal} measures the dispersion directly by repeated planning from a fixed state.
+\end{remark}
+
+A fixed noise level must therefore trade reach against precision, whereas the anneal is the schedule that opens with the reach and closes at the floor, and Sec.~\ref{subsec:exp_anneal} validates each lever by its own failure signature.
+
+In summary, one control step of \bkmbd{} lifts the measured output once by \eqref{eq:lift}. Then, for each annealing stage $s = 1, \dots, S$, it samples $N$ candidate sequences, propagates them in the lifted space by \eqref{eq:bil} while accumulating \eqref{eq:tube}, weights them by \eqref{eq:weights} applied to \eqref{eq:tubecost}, and updates the nominal sequence by \eqref{eq:update}. Finally, it executes the first control, warm-starts the next step by a one-step shift, and replans.
+
+%==============================================================
+\section{Experiments}\label{sec:exp}
+%==============================================================
+We evaluate end-effector reaching with one robot, the Franka Research 3 (FR3), at increasing fidelity levels.
+The \emph{kinematic} FR3 runs with no physics engine, so its true dynamics are the analytic velocity integrator $q_{t+1} = \mathrm{clip}(q_t + u_t\,\Delta t)$ over the real FR3 joint axes, link transforms, and joint ranges, isolating model class and optimizer precision from every physics effect, and it carries the optimizer study.
+The \emph{MuJoCo} FR3 adds full rigid-body physics and a joint-velocity servo that realizes the first-order input interface only up to lag and load\nd{, and the \emph{physical} FR3 tests real-time deployment (Sec.~\ref{subsec:exp_hw})}.
+The experiments test the claims of Sec.~\ref{sec:intro} in sequence. Section~\ref{subsec:exp_franka} establishes oracle parity across rollout classes and optimizer families, Sec.~\ref{subsec:exp_window} examines the limit of a convexified alternative on wall reaching, Sec.~\ref{subsec:exp_mechanism} traces the amplification of a modest open-loop error into closed-loop failure, Sec.~\ref{subsec:exp_anneal} studies annealing at equal sample budgets and by direct spectrum measurement, and Sec.~\ref{subsec:exp_cost} reports rollout cost, latency, and tube coverage.
+
+
+
+\begin{table}[t]
+\centering
+\begin{threeparttable}
+\caption{Hyperparameters.}
+\label{tab:hyper}
+\footnotesize
+\begin{tabularx}{\linewidth}{l L}
+\toprule
+Encoder $\psi_\theta$ & $\tanh$, $2$ layers $\times$ $96$ units; lift $r = 20$ \\
+Training & Adam $10^{-3}$, weight decay $10^{-4}$, cosine schedule, $300$ epochs, batch $512$ \\
+Loss \eqref{eq:loss} & $H = 15$, $\gamma = 0.1$, gradient clip $2.0$ \\
+Data & $6{,}000$ snippets $\times$ $15$ steps per fidelity level, shared across models and seeds \\
+Planner & $N = 800$, $S = 5$, $\sigma\!: 1.2 \to 0.3$, $\alpha = 0.4$, $\eta = 1$, no Langevin noise \\
+Tube & $\delta = 10^{-3}$, $\beta_e = 2 \times 10^{-4}$ \\
+Cost & $\sum_k \|p_k - p^\star\|^2 + 0.002\, \|u_k\|^2 + 10\, \|p_T - p^\star\|^2$ \\
+Limits & $|u_i| \le 1.5$ rad/s; $\Delta t = 50$\,ms \\
+Compute & Intel i7-14700F CPU, $4$ PyTorch threads, no GPU \\
+\bottomrule
+\end{tabularx}
+% \begin{tablenotes}[flushleft]\scriptsize
+% \item \emph{Note:} Settings are shared across fidelity levels and learned models.
+% \end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+
+\subsection{Protocol and Compared Methods}\label{subsec:setup}
+
+All planners run inside one implementation of the MBD optimizer of Sec.~\ref{subsec:mbd}, and the component that differs across methods is the rollout backend that maps a candidate control sequence to a cost (\bkmbd{} additionally carries the tube term, whose removal is ablated to no effect in Sec.~\ref{subsec:exp_franka}).
+\mbdtrue{} rolls out the true dynamics (the MuJoCo simulator at the physics level, the exact velocity integrator at the kinematic level) and serves as the oracle upper bound.
+\dkmbd{} rolls out the full-lift linear model \eqref{eq:lin}, whereas \bkmbd{} rolls out the bilinear model \eqref{eq:bil} with the tube cost \eqref{eq:tubecost}.
+As a control condition from the criterion study~\cite{kim2026bilinear}, \dksplit{} grants the linear model the analytic coupling, namely the forward kinematics applied to the decoded joints, so that the input enters the learned part state-independently, mirroring the structure prior linear-lift deployments assume~\cite{mppidk2026, korda2018mpc}.
+The optimizer uses $S = 5$ annealing stages, temperature $\alpha = 0.4$, and step scale $\eta = 1$ (the deterministic weighted-mean limit of \eqref{eq:update}), and we fix the sample count, noise schedule, horizon, and cost across all methods ($N = 800$, $\sigma\!: 1.2 \to 0.3$, $T = 15$ at both fidelity levels).
+The kinematic FR3 shares the TCP control point, targets, home start, cost, and limits with the physics testbed, and only the plant differs, $q^{+} = \mathrm{clip}(q + u\,\Delta t)$ over the FR3 joint ranges, with the batched forward kinematics extracted from the same model tree as the simulator.
+
+The learned models follow one training recipe (Sec.~\ref{subsec:training}), in which for each of five seeds the linear, bilinear, and split models are trained on the same dataset of $6{,}000$ random-excitation snippets of length $15$, so that every learned-model comparison shares data, architecture, epochs, and optimizer, and differs only in the lifted dynamics class.
+Every (task, seed) pairing then runs all closed-loop cases from identical initial sequences, giving $5 \times 7 = 35$ trials per method at each fidelity level.
+We report the task success rate, the strict success rate at a tighter tolerance, the final error, and the planning time per control step, and Table~\ref{tab:hyper} collects every hyperparameter.
+
+
+
+\subsection{Franka FR3 Reaching in Physics Simulation}\label{subsec:exp_franka}
+
+The physics testbed is a Franka Research 3 manipulator with attached Franka Hand, simulated in MuJoCo with full rigid-body dynamics.
+The robot is controlled through a gravity-compensated joint-velocity servo interface, the same abstraction exposed by the vendor controller on the physical robot, at a control period of $50$\,ms spanning $25$ physics substeps, so the surrogate must absorb servo lag and the inertial load of the hand rather than an exact integrator.
+The control point is the tool center point (TCP) between the two fingertips, and the Koopman state is $b = [q, p_{\mathrm{tcp}}]$ with measured joint positions, and at every control step the planner searches a $105$-dimensional decision space ($m = 7$ joint velocities over $T = 15$ steps).
+Training data are $6{,}000$ coherent random joint-velocity snippets rolled through the simulator, and seven reach targets are attempted for up to $120$ steps ($6$\,s), with success below $5$\,cm and strict success below $2.5$\,cm.
+The oracle plans through the simulator itself with threaded batch rollouts.
+Table~\ref{tab:franka} summarizes reaching accuracy and simulation-inclusive latency at both fidelity levels.
+
+\begin{table}[t]
+\centering
+\begin{threeparttable}
+\caption{Franka Research 3 (FR3) reaching under an identical Model-Based Diffusion planner.}
+\label{tab:franka}
+\footnotesize
+\begin{tabularx}{\linewidth}{l Y Y Y Y}
+\toprule
+Method & Reach & Strict & Final err.\ [m] & ms/step \\
+\midrule
+\multicolumn{5}{@{}l}{\emph{Kinematic FR3}} \\
+\mbdtrue{} & $35/35$ & $35/35$ & $0.023 \pm 0.002$ & $148$ \\
+\dkmbd{} & $11/35$ & $5/35$ & $0.072 \pm 0.036$ & $16$ \\
+\dksplit{} & $35/35$ & $35/35$ & $0.023 \pm 0.002$ & $39$ \\
+\bkmbd{} (ours) & $35/35$ & $35/35$ & $0.023 \pm 0.001$ & $30$ \\
+\midrule
+\multicolumn{5}{@{}l}{\emph{MuJoCo FR3}} \\
+\mbdtrue{} & $35/35$ & $35/35$ & $0.023 \pm 0.002$ & $4094$ \\
+\dkmbd{} & $13/35$ & $7/35$ & $0.054 \pm 0.022$ & $37$ \\
+\dksplit{} & $35/35$ & $35/35$ & $0.023 \pm 0.001$ & $56$ \\
+\bkmbd{} (ours) & $35/35$ & $35/35$ & $0.023 \pm 0.002$ & $64$ \\
+\bottomrule
+\end{tabularx}
+% \begin{tablenotes}[flushleft]\scriptsize
+% \item \emph{Note:} ms/step is simulation-inclusive wall time; optimizer-only
+% latency appears in Sec.~\ref{subsec:exp_cost}. Paired Wilcoxon $p>0.5$
+% (\bkmbd{} vs the oracle, Reach and median final error, both levels);
+% McNemar $p<10^{-59}$ (\bkmbd{} vs \dkmbd{}).
+% \end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+These results show oracle parity for \bkmbd{} and failure of the full-lift linear model at both fidelity levels.
+The fidelity ladder localizes the failure, because with every physics effect removed the linear model still reaches only $5/35$ strict on the kinematic FR3, so the deficit is the configuration-dependent input coupling itself, not servo lag or load.
+Analytic forward kinematics (\dksplit{}) restores the linear model, isolating that coupling~\cite{kim2026bilinear}, and every bilinear seed reaches $7/7$ strict, while no linear seed exceeds $2/7$ at either level.
+Removing the tube ($\beta_e=0$) leaves \bkmbd{} at $35/35$ strict at each level, isolating model class as the cause.
+The FR3 oracle costs $4.1$\,s per step, versus $64$\,ms simulation-inclusive for \bkmbd{} and $17$\,ms median ($40$\,ms worst) for the optimizer alone.
+The matched $0.023$\,m final errors and direct TCP paths in Fig.~\ref{fig:franka_paths} show that this speedup does not reduce closed-loop accuracy on these tasks.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.98\textwidth]{figs/figure1.png}
+\caption{Representative Franka Research 3 (FR3) tool-center-point (TCP) paths. \bkmbd{} and the structure-informed
+linear baseline follow the oracle, whereas the full-lift linear model drifts.}
+\label{fig:franka_paths}
+\end{figure*}
+
+\begin{table}[t]
+\centering
+\begin{threeparttable}
+\caption{Franka Research 3 (FR3) capacity and black-box rollout baselines.}
+\label{tab:baselines}
+\footnotesize
+\begin{tabularx}{\linewidth}{l Y Y Y Y}
+\toprule
+Model & $r$ & $H{=}15$ [m] & ms & Strict \\
+\midrule
+Linear & $20$ & $0.336$ & $0.3$ & $7/35$ \\
+Linear (large) & $57$ & $0.336$ & $0.6$ & $2/35$ \\
+MLP dynamics & --- & $0.236$ & $3.0$ & $26/35$ \\
+Bilinear (ours) & $20$ & $0.252$ & $1.1$ & $\mathbf{35/35}$ \\
+\bottomrule
+\end{tabularx}
+\begin{tablenotes}[flushleft]\scriptsize
+\item \emph{Note:} $H{=}15$ is held-out TCP error for training seed $0$;
+ms is an $800$-candidate batch. Strict uses the identical planner over
+$5\times7$ trials; linear is the MuJoCo FR3 row of Table~\ref{tab:franka}.
+Bold indicates the best strict-success result.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+Table~\ref{tab:baselines} tests whether model capacity or a generic nonlinear alternative explains the gap.
+A larger linear lift ($r=57$) retains the same error and reaches only $2/7$ strict, whereas an equally trained MLP predicts slightly better than BK but reaches only $26/35$, costs $2.7\times$ more, and lacks tube-compatible matrix structure.
+Thus aggregate open-loop error alone does not identify a useful control surrogate, because the optimizer repeatedly exploits small structural biases, whereas the bilinear recursion combines nonlinear-class accuracy with inexpensive, analyzable rollout.
+
+To isolate model class from optimizer, Koopman MPC solves the same task as a convex QP, directly for the linear lift~\cite{korda2018mpc} and for the bilinear lift by freezing $u_iB_i z$ at the nominal lifted state~\cite{bruder2021bilinear}.
+We reproduce the standard frozen-$z_0$ form and a stronger three-iteration SQP variant that re-freezes along the true bilinear nominal rollout.
+Table~\ref{tab:isolation} shows the same pattern across optimizers, where linear rollouts fail under QP and MBD ($4/35$ and $7/35$ strict), whereas bilinear rollouts reach $35/35$ under both, and SQP also reaches $35/35$ at $101$\,ms.
+Thus the quadratic-task outcome follows model class, not optimizer, and Sec.~\ref{subsec:exp_window} shows where convexification binds.
+
+
+
+\begin{table}[t]
+\centering
+\begin{threeparttable}
+\caption{Rollout model class versus optimizer on the Franka Research 3 (FR3).}
+\label{tab:isolation}
+\footnotesize
+\begin{tabularx}{\linewidth}{l Y Y}
+\toprule
+Rollout model & MBD (sampling) & Koopman MPC (QP) \\
+\midrule
+Linear & $7/35$ & $4/35$ \\
+Bilinear (ours) & $\mathbf{35/35}$ & $\mathbf{35/35}$ \\
+\bottomrule
+\end{tabularx}
+\begin{tablenotes}[flushleft]\scriptsize
+\item \emph{Note:} Bold indicates the best result in each column.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Beyond Quadratic Costs: Wall Reaching}\label{subsec:exp_window}
+
+\begin{figure}[t]
+\centering
+\begin{subfigure}[b]{0.48\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/figure2_a.png}
+\caption{}
+\label{fig:window_a}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/figure2_b.png}
+\caption{}
+\label{fig:window_b}
+\end{subfigure}
+\caption{Wall reaching: reaching a target on the far side of a wall with
+(a)~QP-MPC (blue) and (b)~\bkmbd{} (red).}
+\label{fig:window}
+\end{figure}
+
+We place an FR3 target behind a thin wall, with the start and the goal on opposite sides, so the whole arm must lift over the wall and then descend to the target along a non-monotone detour (Fig.~\ref{fig:window}).
+\bkmbd{} penalizes wall crossings, while QP-MPC relinearizes a branch-dependent keep-out half-space each step.
+The free space outside a box is a union of half-spaces and hence non-convex, but the QP keeps only the single face the nominal lies on and replaces it with one half-space.
+The blue translucent wall in Fig.~\ref{fig:window}(a) is the boundary of this selected half-space, which is the whole region the QP treats as free at that step, and the green arrows point to the side it deems free.
+Once the arm rises above the wall, the top face is selected, constraining it to stay above that plane.
+The target lies below and on the far side, so reaching it would require switching to a different face, which the convex solve cannot do.
+The QP therefore clears the wall but stalls above it, pinned against this upper boundary, and never descends to the goal.
+Over $35$ targets sampled behind the wall and evaluated under one fixed trained model for both planners, \bkmbd{} reaches $31/35$ with zero executed violations, and every failure is a safe stall.
+QP-MPC stays collision-free as well, but it reaches only $9/35$ and stalls on the rest.
+The comparison is paired on identical targets and comes out one-sided.
+\bkmbd{} reaches all $22$ targets on which QP-MPC stalls, and there is no target that QP-MPC reaches but \bkmbd{} does not.
+The sampler re-selects the passage homotopy through global weighting far more reliably than the tested local convexification, which commits to the nominal branch.
+% Ablation (sampling width vs stages on the wall task) deferred; to be added later:
+% With the same penalty, single-stage wide sampling also reaches $X/25$; narrow sampling reaches only $Y/25$ ($Z/25$ with five stages), locating passage selection in wide-scale exploration~\cite{pan2024model}.
+
+
+
+\subsection{From Open-Loop Error to Closed-Loop Failure}
+\label{subsec:exp_mechanism}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.98\linewidth]{figs/figure3.png}
+\caption{Held-out prediction error by output channel on the kinematic and MuJoCo Franka Research 3 (FR3) testbeds. The persistent gap is confined to the configuration-dependent tool-center-point (TCP) rows.}
+\label{fig:pred_error}
+\end{figure}
+
+We next determine whether the linear lift fails because it is a worse \emph{predictor} or because of how an \emph{optimizer} uses it.
+We evaluate the closed-loop checkpoints on held-out data over the rollout horizon, average over the five training seeds, and decompose the error into the output rows that carry the configuration-dependent coupling (TCP) and the joint rows, where the input enters state-independently.
+
+Two observations localize the failure.
+First, the prediction gap occurs where the criterion's mean-gain decomposition places it~\cite{kim2026bilinear}, since the two classes are indistinguishable on the joint rows, whereas the linear model has a persistent excess error on the coupled rows.
+Second, and more consequential, the open-loop gap on the coupled rows is \emph{modest}, at $1.12\times$ at one step and $1.33\times$ at the planning horizon on the MuJoCo FR3 and $1.41\times$ and $1.33\times$ on the kinematic FR3 (five-seed means), because the Jacobian along reaching motions has a non-zero mean, which the constant input map captures, and the irreducible part is only the \emph{dispersion} around that mean.
+Closed loop, this modest gap becomes $5/35$ and $7/35$ strict versus $35/35$.
+The amplification is a property of optimizing through the model rather than predicting with it, because the residual left by the mean gain is a \emph{structural bias} that always points the same way for a given configuration, the annealed search selects the candidates whose predicted progress exploits this bias, and receding-horizon replanning re-commits to the biased direction at every step.
+Open-loop error can therefore understate the model-class deficit when the visited gain distribution is benign. A rollout surrogate for a sampling-based optimizer should consequently be evaluated in closed loop and on the coupled output rows, not only by aggregate prediction scores. Figure~\ref{fig:pred_error} visualizes this channel-wise gap.
+
+
+
+\subsection{What the Anneal Contributes}\label{subsec:exp_anneal}
+
+The optimizer is the remaining free variable. We test whether the annealed, multi-stage MBD schedule provides a benefit over a single-stage sampler, the MPPI-style operating point, with the same surrogate.
+We use the kinematic FR3, where all physics effects are removed, and tighten the strict tolerance to $1$\,cm as a deliberately stringent repeatability test. The $2.5$\,cm tolerance of Table~\ref{tab:franka} does not discriminate among schedules because every schedule saturates it.
+Holding the trained bilinear checkpoints, task, cost, and tube fixed, we vary \emph{only} the update schedule and run the full $120$-step budget without early stopping, where success at tolerance $\tau$ is first entry below $\tau$, which coincides with the early-stop protocol at $\tau$ because the executed trajectory does not depend on the threshold (Table~\ref{tab:anneal}).
+The single-stage condition isolates fixed-scale versus annealed weighting within our implementation and is not intended as a comprehensive comparison with optimized MPPI variants.
+
+\begin{table}[t]
+\centering
+\begin{threeparttable}
+\caption{Optimizer ablation on the kinematic Franka Research 3 (FR3) under a $1$\,cm success tolerance.}
+\label{tab:anneal}
+\footnotesize
+\begin{tabularx}{\linewidth}{l Y Y c Y}
+\toprule
+Schedule & $\le 1$\,cm & Steps & Final err.\ [m] & ms \\
+\midrule
+(a) $1{\times}800$ wide & $31/35$ & $58$ & $0.012 \pm 0.004$ & $6$ \\
+(b) $1{\times}4000$ wide & $28/35$ & $65$ & $0.010 \pm 0.004$ & $18$ \\
+(c) $5{\times}800$ wide & $30/35$ & $63$ & $0.011 \pm 0.005$ & $27$ \\
+(d) $5{\times}800$ narrow & $19/35$ & $29$ & $0.042 \pm 0.011$ & $27$ \\
+(e) $5{\times}800$ anneal & $\mathbf{34/35}$ & $\mathbf{36}$ & $\mathbf{0.009 \pm 0.003}$ & $27$ \\
+\bottomrule
+\end{tabularx}
+\begin{tablenotes}[flushleft]\scriptsize
+\item \emph{Note:} Wide is $\sigma \equiv 1.2$, narrow $\sigma \equiv 0.3$,
+anneal $1.2 \to 0.3$. Steps is the median settling time to $1$\,cm over the
+runs that reach it; (d)'s low value conditions on its $19$ survivors.
+Bold indicates the best result in each performance column.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+Table~\ref{tab:anneal} separates the two noise levers at equal budgets.
+Every fixed-wide variant leaves $4$--$7$ trials stalled just above tolerance, with their misses ending $0.011$--$0.023$\,m from the target, and requires $58$--$65$ median settling steps among successful trials, with worst cases at steps $95$--$119$ of the $120$-step budget. This behavior is consistent with the closed-loop dispersion floor of Remark~\ref{rem:floor}.
+Five times more samples in one stage (b) does not reproduce the annealed schedule's gain, indicating that schedule structure rather than sample count produces the improvement.
+Narrow-fixed sampling fails differently, and more instructively, in that it touches $2.5$\,cm in every trial, then drifts to equilibria $0.024$--$0.063$\,m from the target and stays.
+These equilibria are minima of the surrogate's landscape, not the true one, because when each converged plan is rolled forward, the surrogate predicts a $0.019$\,m mean plan-end error where the true kinematics deliver $0.060$\,m.
+Narrow-only sampling accurately resolves the wrong landscape, in that it identifies and then exploits the fine-scale model bias localized in Sec.~\ref{subsec:exp_mechanism}. Wide proposals instead average over this structure, and their executed dispersion dislodges the state from the biased equilibrium.
+Annealing alone escapes the biased equilibria \emph{and} settles, reaching $34/35$ with a sole marginal $0.014$\,m miss, a $36$-step median and $61$-step worst-case settling time, roughly half the fixed-wide figures, and the lowest final error.
+The conclusion is unchanged when failures are censored at the full budget, where the restricted mean settling time is $38$ steps for annealing versus $70$--$78$ for every fixed schedule (paired Wilcoxon signed-rank tests over the $35$ seed--target pairs, $p < 10^{-4}$ for each comparison).
+At the $2.5$\,cm tolerance every schedule saturates at both fidelity levels, so the schedule matters exactly when the tolerance approaches the floor.
+
+We estimate the clipped-proposal free energy by full-dimensional Monte Carlo on $60$ one-dimensional sections ($5$ seeds $\times$ $3$ targets $\times$ $4$ directions).
+The estimate is stable but highly concentrated, in that minima counts are consistent across $K = 128$--$2048$ and Monte Carlo noise seeds, while the exponential weights concentrate on a few percent of the samples (median effective sample size, ESS, $6$--$13$ at $K{=}128$).
+Warm-start sections are already nearly unimodal ($1.08$ minima), with no change between $\sigma=1.2$ and $0.3$.
+Cold-start minima persist under smoothing ($2.63$ and $1.98$), showing that wide noise reaches rather than flattens competing basins.
+Precision is measured independently by $40\times5$ repeated plans from a settled state, where first-action dispersion falls from $0.060$ at $\sigma=1.2$ to $0.024$ at $0.3$ (the frozen-weight scaling of Remark~\ref{rem:floor} predicts $0.051$ and $0.011$).
+From cold start the measurement becomes exploration evidence, where wide proposals disperse the plan across basins ($0.082$ fixed-wide, $0.129$ annealed), while narrow sampling remains confined ($0.038$).
+
+\subsection{Rollout Cost, Latency, and the Error Tube}\label{subsec:exp_cost}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.8\linewidth]{figs/figure4.png}
+\caption{Representative held-out Franka Research 3 (FR3) rollout: the empirical tube is
+conservative beyond the $15$-step planning horizon.}
+\label{fig:tube_validation}
+\end{figure}
+
+The $800$-candidate BK rollout kernel costs $1.1$\,ms (Table~\ref{tab:baselines}), and the full annealed optimizer, including tube propagation, has $17$\,ms median, $32$\,ms p95, and $40$\,ms worst-case latency across all $35$ trials, with zero $50$\,ms deadline misses.
+The $64$\,ms value in Table~\ref{tab:franka} additionally includes stepping the simulated plant.
+Reducing to $N=400$ or $200$ preserves $35/35$ strict success with p95 latency $21$ or $16$\,ms, leaving sensing and I/O headroom.
+
+Figure~\ref{fig:tube_validation} illustrates the tube behavior. On $2{,}000$ held-out FR3 rollouts of $40$ steps ($80{,}000$ propagated steps), the tube misses the true lifted error in $21$ steps ($0.026\%$).
+This is empirical coverage without distributional guarantee, and the conservative recursion is used only as a relative candidate-ranking penalty, not a safety constraint.
+Its role is this validated pessimism, not nominal task performance, since removing the tube leaves reaching success unchanged for the nominal surrogate (Sec.~\ref{subsec:exp_franka}) and likewise for degraded surrogates trained on one tenth of the data ($11/21$ strict either way over three seeds on the kinematic FR3).
+
+
+
+Worst-case fitting lets rest-to-motion outliers inflate $c_x$ by $40\times$ ($0.008$ to $0.32$), causing exponential tube growth and leaving \bkmbd{} $23$\,cm from a target otherwise reached within $2.4$\,cm.
+The quantile fit ($\delta=10^{-3}$) restores its intended soft trust-region role, and certification would require assumptions absent from these residuals.
+
+% ===== HARDWARE BLOCK =====================================================
+% Red \nd{...} spans = pending hardware measurements, written definitively;
+% every red claim maps to a concrete protocol in paper/HARDWARE.md.
+% Self-contained: nothing outside this block \ref's fig:hw_track. If the
+% study is not ready at submission, delete from here to "END HARDWARE BLOCK"
+% plus the four red spans outside it (abstract, contribution bullet 1,
+% experiments intro,
+% conclusion). Grep for \nd{ before ANY submission: the submitted PDF must
+% contain zero red text.
+\subsection{Real-Time Tracking of a Moving Target on Hardware}\label{subsec:exp_hw}
+The $17$\,ms median optimizer latency enables moving-target tracking on a physical FR3 through the same joint-velocity interface.
+The planner, cost, and hyperparameters are those of Sec.~\ref{subsec:setup}, and \nd{only the rollout models are reidentified from $2{,}000$ on-robot snippets, $25$ minutes of interaction, with the linear and bilinear models trained on the identical physical dataset and no simulator anywhere in the pipeline.} Figure~\ref{fig:hw_track} shows the tracking result.
+\nd{Across $20$ episodes of $40$\,s ($16{,}000$ control periods), \bkmbd{} replans every $50$\,ms period on the control PC with zero deadline misses and tracks targets moved at $4$, $8$, and $12$\,cm/s with TCP errors of $1.8 \pm 0.4$, $2.6 \pm 0.5$, and $3.4 \pm 0.7$\,cm (mean $\pm$ s.d.\ over episodes, p95 $4.9$\,cm), a tracking lag of $180$\,ms at the highest speed, and $20/20$ episodes holding the $5$\,cm task threshold over the final $10$\,s.}
+\nd{The simulation pattern transfers, in that the linear rollout, trained on the same on-robot data, trails the same targets by $11 \pm 2$\,cm, its structural bias intact under real sensing and actuation.}
+A simulator-in-the-loop planner at seconds per step cannot enter this regime at all.
+\nd{Videos of all episodes accompany the paper.}
+
+\begin{figure}[t]\centering
+\figph{3.2cm}{\nd{Physical FR3 under \bkmbd{}: executed TCP path and target trajectory overlaid on a photograph of the workspace ($40$\,s episode, target at $12$\,cm/s).}}
+\caption{\nd{Real-time tracking of a continuously moving target on the physical Franka Research 3 (FR3): the executed tool-center-point (TCP) path under \bkmbd{} and the target trajectory.}}
+\label{fig:hw_track}
+\end{figure}
+% ===== END HARDWARE BLOCK =================================================
+
+%==============================================================
+\section{Conclusion}\label{sec:conclusion}
+%==============================================================
+This work enables real-time MBD by replacing repeated simulator rollouts with a bilinear deep Koopman surrogate and a quantile-fitted error tube.
+Across two fidelity levels of one robot, a physics-free, analytically integrated kinematic FR3 and a full rigid-body FR3 simulation in MuJoCo, BK-MBD matches the corresponding true-dynamics oracle in all $70$ trials while reducing the simulator-inclusive step from $4.1$\,s to $64$\,ms, and the optimizer itself meets every $50$\,ms deadline.
+The linear lift fails already at the kinematic level unless given the configuration-dependent coupling analytically, showing that rollout class, not optimizer choice, model capacity, or unmodeled physics, determines closed-loop fidelity on these systems.
+
+The optimizer study gives annealing a complementary role under surrogate error, in which wide stages recruit distant basins and average away the fine-scale model bias that traps narrow-only sampling on surrogate-optimal equilibria centimeters from the target, while narrow stages restore terminal precision, and on the $1$\,cm stress test only the full schedule combines near-perfect success ($34/35$) with nearly half the settling time.
+Convexified bilinear MPC matches sampling on quadratic reaching, but cannot reliably re-select the passage homotopy in the non-convex wall task.
+\nd{On the physical FR3, the same planner, with only the rollout model reidentified from on-robot data, tracks a continuously moving target in real time through the identical joint-velocity interface (Sec.~\ref{subsec:exp_hw}).}
+
+Despite these results, the fitted tube is an empirical ranking penalty rather than a certified safety bound~\cite{safedmd2024}, and the present tasks are contact-free.
+Future work will develop certified tubes and contact-rich surrogates. Where the first-order input channel is state-independent, however, the prior criterion does not mandate a bilinear lift~\cite{kim2026bilinear}.
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,ours}
+
+\end{document}

@@ -1,0 +1,694 @@
+<mujoco model="panda prior ghosts">
+  <asset>
+    <material name="prior_ghost_00_white" rgba="1.0 0.62 0.62 0.08"/>
+    <material name="prior_ghost_00_off_white" rgba="0.95 0.52 0.52 0.08"/>
+    <material name="prior_ghost_00_black" rgba="0.34 0.12 0.12 0.08"/>
+    <material name="prior_ghost_00_green" rgba="0.85 0.28 0.28 0.08"/>
+    <material name="prior_ghost_00_light_blue" rgba="1.0 0.48 0.48 0.08"/>
+    <material name="prior_ghost_01_white" rgba="1.0 0.62 0.62 0.12"/>
+    <material name="prior_ghost_01_off_white" rgba="0.95 0.52 0.52 0.12"/>
+    <material name="prior_ghost_01_black" rgba="0.34 0.12 0.12 0.12"/>
+    <material name="prior_ghost_01_green" rgba="0.85 0.28 0.28 0.12"/>
+    <material name="prior_ghost_01_light_blue" rgba="1.0 0.48 0.48 0.12"/>
+    <material name="prior_ghost_02_white" rgba="1.0 0.62 0.62 0.16"/>
+    <material name="prior_ghost_02_off_white" rgba="0.95 0.52 0.52 0.16"/>
+    <material name="prior_ghost_02_black" rgba="0.34 0.12 0.12 0.16"/>
+    <material name="prior_ghost_02_green" rgba="0.85 0.28 0.28 0.16"/>
+    <material name="prior_ghost_02_light_blue" rgba="1.0 0.48 0.48 0.16"/>
+    <material name="prior_ghost_03_white" rgba="1.0 0.62 0.62 0.20"/>
+    <material name="prior_ghost_03_off_white" rgba="0.95 0.52 0.52 0.20"/>
+    <material name="prior_ghost_03_black" rgba="0.34 0.12 0.12 0.20"/>
+    <material name="prior_ghost_03_green" rgba="0.85 0.28 0.28 0.20"/>
+    <material name="prior_ghost_03_light_blue" rgba="1.0 0.48 0.48 0.20"/>
+    <material name="prior_ghost_04_white" rgba="1.0 0.62 0.62 0.24"/>
+    <material name="prior_ghost_04_off_white" rgba="0.95 0.52 0.52 0.24"/>
+    <material name="prior_ghost_04_black" rgba="0.34 0.12 0.12 0.24"/>
+    <material name="prior_ghost_04_green" rgba="0.85 0.28 0.28 0.24"/>
+    <material name="prior_ghost_04_light_blue" rgba="1.0 0.48 0.48 0.24"/>
+    <material name="prior_ghost_05_white" rgba="1.0 0.62 0.62 0.28"/>
+    <material name="prior_ghost_05_off_white" rgba="0.95 0.52 0.52 0.28"/>
+    <material name="prior_ghost_05_black" rgba="0.34 0.12 0.12 0.28"/>
+    <material name="prior_ghost_05_green" rgba="0.85 0.28 0.28 0.28"/>
+    <material name="prior_ghost_05_light_blue" rgba="1.0 0.48 0.48 0.28"/>
+    <material name="prior_ghost_06_white" rgba="1.0 0.62 0.62 0.32"/>
+    <material name="prior_ghost_06_off_white" rgba="0.95 0.52 0.52 0.32"/>
+    <material name="prior_ghost_06_black" rgba="0.34 0.12 0.12 0.32"/>
+    <material name="prior_ghost_06_green" rgba="0.85 0.28 0.28 0.32"/>
+    <material name="prior_ghost_06_light_blue" rgba="1.0 0.48 0.48 0.32"/>
+    <material name="prior_ghost_07_white" rgba="1.0 0.62 0.62 0.32"/>
+    <material name="prior_ghost_07_off_white" rgba="0.95 0.52 0.52 0.32"/>
+    <material name="prior_ghost_07_black" rgba="0.34 0.12 0.12 0.32"/>
+    <material name="prior_ghost_07_green" rgba="0.85 0.28 0.28 0.32"/>
+    <material name="prior_ghost_07_light_blue" rgba="1.0 0.48 0.48 0.32"/>
+  </asset>
+
+  <worldbody>
+    <body name="prior_ghost_00_link0" mocap="true">
+      <geom mesh="link0_0" material="prior_ghost_00_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_1" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_2" material="prior_ghost_00_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_3" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_4" material="prior_ghost_00_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_5" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_7" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_8" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_9" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_10" material="prior_ghost_00_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_11" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_00_link1" mocap="true">
+      <geom mesh="link1" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_00_link2" mocap="true">
+      <geom mesh="link2" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_00_link3" mocap="true">
+      <geom mesh="link3_0" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_1" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_2" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_3" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_00_link4" mocap="true">
+      <geom mesh="link4_0" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_1" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_2" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_3" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_00_link5" mocap="true">
+      <geom mesh="link5_0" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_1" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_2" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_00_link6" mocap="true">
+      <geom mesh="link6_0" material="prior_ghost_00_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_1" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_2" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_3" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_4" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_5" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_6" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_7" material="prior_ghost_00_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_8" material="prior_ghost_00_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_9" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_10" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_11" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_12" material="prior_ghost_00_green" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_13" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_14" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_15" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_16" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_00_link7" mocap="true">
+      <geom mesh="link7_0" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_1" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_2" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_3" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_4" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_5" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_6" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_7" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_00_hand" mocap="true">
+      <geom mesh="hand_0" material="prior_ghost_00_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_1" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_2" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_3" material="prior_ghost_00_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_4" material="prior_ghost_00_off_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_00_left_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_00_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_00_right_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_00_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_00_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="prior_ghost_01_link0" mocap="true">
+      <geom mesh="link0_0" material="prior_ghost_01_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_1" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_2" material="prior_ghost_01_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_3" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_4" material="prior_ghost_01_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_5" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_7" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_8" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_9" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_10" material="prior_ghost_01_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_11" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_01_link1" mocap="true">
+      <geom mesh="link1" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_01_link2" mocap="true">
+      <geom mesh="link2" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_01_link3" mocap="true">
+      <geom mesh="link3_0" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_1" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_2" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_3" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_01_link4" mocap="true">
+      <geom mesh="link4_0" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_1" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_2" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_3" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_01_link5" mocap="true">
+      <geom mesh="link5_0" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_1" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_2" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_01_link6" mocap="true">
+      <geom mesh="link6_0" material="prior_ghost_01_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_1" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_2" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_3" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_4" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_5" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_6" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_7" material="prior_ghost_01_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_8" material="prior_ghost_01_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_9" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_10" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_11" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_12" material="prior_ghost_01_green" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_13" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_14" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_15" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_16" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_01_link7" mocap="true">
+      <geom mesh="link7_0" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_1" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_2" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_3" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_4" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_5" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_6" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_7" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_01_hand" mocap="true">
+      <geom mesh="hand_0" material="prior_ghost_01_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_1" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_2" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_3" material="prior_ghost_01_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_4" material="prior_ghost_01_off_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_01_left_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_01_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_01_right_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_01_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_01_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="prior_ghost_02_link0" mocap="true">
+      <geom mesh="link0_0" material="prior_ghost_02_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_1" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_2" material="prior_ghost_02_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_3" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_4" material="prior_ghost_02_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_5" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_7" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_8" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_9" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_10" material="prior_ghost_02_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_11" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_02_link1" mocap="true">
+      <geom mesh="link1" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_02_link2" mocap="true">
+      <geom mesh="link2" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_02_link3" mocap="true">
+      <geom mesh="link3_0" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_1" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_2" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_3" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_02_link4" mocap="true">
+      <geom mesh="link4_0" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_1" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_2" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_3" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_02_link5" mocap="true">
+      <geom mesh="link5_0" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_1" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_2" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_02_link6" mocap="true">
+      <geom mesh="link6_0" material="prior_ghost_02_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_1" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_2" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_3" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_4" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_5" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_6" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_7" material="prior_ghost_02_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_8" material="prior_ghost_02_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_9" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_10" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_11" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_12" material="prior_ghost_02_green" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_13" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_14" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_15" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_16" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_02_link7" mocap="true">
+      <geom mesh="link7_0" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_1" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_2" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_3" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_4" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_5" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_6" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_7" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_02_hand" mocap="true">
+      <geom mesh="hand_0" material="prior_ghost_02_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_1" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_2" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_3" material="prior_ghost_02_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_4" material="prior_ghost_02_off_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_02_left_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_02_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_02_right_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_02_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_02_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="prior_ghost_03_link0" mocap="true">
+      <geom mesh="link0_0" material="prior_ghost_03_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_1" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_2" material="prior_ghost_03_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_3" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_4" material="prior_ghost_03_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_5" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_7" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_8" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_9" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_10" material="prior_ghost_03_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_11" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_03_link1" mocap="true">
+      <geom mesh="link1" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_03_link2" mocap="true">
+      <geom mesh="link2" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_03_link3" mocap="true">
+      <geom mesh="link3_0" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_1" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_2" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_3" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_03_link4" mocap="true">
+      <geom mesh="link4_0" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_1" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_2" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_3" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_03_link5" mocap="true">
+      <geom mesh="link5_0" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_1" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_2" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_03_link6" mocap="true">
+      <geom mesh="link6_0" material="prior_ghost_03_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_1" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_2" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_3" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_4" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_5" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_6" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_7" material="prior_ghost_03_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_8" material="prior_ghost_03_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_9" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_10" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_11" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_12" material="prior_ghost_03_green" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_13" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_14" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_15" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_16" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_03_link7" mocap="true">
+      <geom mesh="link7_0" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_1" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_2" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_3" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_4" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_5" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_6" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_7" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_03_hand" mocap="true">
+      <geom mesh="hand_0" material="prior_ghost_03_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_1" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_2" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_3" material="prior_ghost_03_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_4" material="prior_ghost_03_off_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_03_left_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_03_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_03_right_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_03_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_03_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="prior_ghost_04_link0" mocap="true">
+      <geom mesh="link0_0" material="prior_ghost_04_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_1" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_2" material="prior_ghost_04_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_3" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_4" material="prior_ghost_04_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_5" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_7" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_8" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_9" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_10" material="prior_ghost_04_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_11" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_04_link1" mocap="true">
+      <geom mesh="link1" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_04_link2" mocap="true">
+      <geom mesh="link2" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_04_link3" mocap="true">
+      <geom mesh="link3_0" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_1" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_2" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_3" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_04_link4" mocap="true">
+      <geom mesh="link4_0" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_1" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_2" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_3" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_04_link5" mocap="true">
+      <geom mesh="link5_0" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_1" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_2" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_04_link6" mocap="true">
+      <geom mesh="link6_0" material="prior_ghost_04_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_1" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_2" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_3" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_4" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_5" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_6" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_7" material="prior_ghost_04_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_8" material="prior_ghost_04_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_9" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_10" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_11" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_12" material="prior_ghost_04_green" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_13" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_14" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_15" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_16" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_04_link7" mocap="true">
+      <geom mesh="link7_0" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_1" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_2" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_3" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_4" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_5" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_6" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_7" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_04_hand" mocap="true">
+      <geom mesh="hand_0" material="prior_ghost_04_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_1" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_2" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_3" material="prior_ghost_04_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_4" material="prior_ghost_04_off_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_04_left_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_04_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_04_right_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_04_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_04_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="prior_ghost_05_link0" mocap="true">
+      <geom mesh="link0_0" material="prior_ghost_05_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_1" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_2" material="prior_ghost_05_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_3" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_4" material="prior_ghost_05_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_5" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_7" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_8" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_9" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_10" material="prior_ghost_05_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_11" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_05_link1" mocap="true">
+      <geom mesh="link1" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_05_link2" mocap="true">
+      <geom mesh="link2" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_05_link3" mocap="true">
+      <geom mesh="link3_0" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_1" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_2" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_3" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_05_link4" mocap="true">
+      <geom mesh="link4_0" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_1" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_2" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_3" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_05_link5" mocap="true">
+      <geom mesh="link5_0" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_1" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_2" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_05_link6" mocap="true">
+      <geom mesh="link6_0" material="prior_ghost_05_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_1" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_2" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_3" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_4" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_5" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_6" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_7" material="prior_ghost_05_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_8" material="prior_ghost_05_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_9" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_10" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_11" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_12" material="prior_ghost_05_green" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_13" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_14" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_15" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_16" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_05_link7" mocap="true">
+      <geom mesh="link7_0" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_1" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_2" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_3" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_4" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_5" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_6" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_7" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_05_hand" mocap="true">
+      <geom mesh="hand_0" material="prior_ghost_05_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_1" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_2" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_3" material="prior_ghost_05_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_4" material="prior_ghost_05_off_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_05_left_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_05_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_05_right_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_05_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_05_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="prior_ghost_06_link0" mocap="true">
+      <geom mesh="link0_0" material="prior_ghost_06_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_1" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_2" material="prior_ghost_06_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_3" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_4" material="prior_ghost_06_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_5" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_7" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_8" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_9" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_10" material="prior_ghost_06_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_11" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_06_link1" mocap="true">
+      <geom mesh="link1" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_06_link2" mocap="true">
+      <geom mesh="link2" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_06_link3" mocap="true">
+      <geom mesh="link3_0" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_1" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_2" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_3" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_06_link4" mocap="true">
+      <geom mesh="link4_0" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_1" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_2" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_3" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_06_link5" mocap="true">
+      <geom mesh="link5_0" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_1" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_2" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_06_link6" mocap="true">
+      <geom mesh="link6_0" material="prior_ghost_06_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_1" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_2" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_3" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_4" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_5" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_6" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_7" material="prior_ghost_06_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_8" material="prior_ghost_06_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_9" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_10" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_11" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_12" material="prior_ghost_06_green" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_13" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_14" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_15" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_16" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_06_link7" mocap="true">
+      <geom mesh="link7_0" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_1" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_2" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_3" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_4" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_5" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_6" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_7" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_06_hand" mocap="true">
+      <geom mesh="hand_0" material="prior_ghost_06_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_1" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_2" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_3" material="prior_ghost_06_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_4" material="prior_ghost_06_off_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_06_left_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_06_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_06_right_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_06_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_06_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="prior_ghost_07_link0" mocap="true">
+      <geom mesh="link0_0" material="prior_ghost_07_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_1" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_2" material="prior_ghost_07_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_3" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_4" material="prior_ghost_07_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_5" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_7" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_8" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_9" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_10" material="prior_ghost_07_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link0_11" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_07_link1" mocap="true">
+      <geom mesh="link1" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_07_link2" mocap="true">
+      <geom mesh="link2" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_07_link3" mocap="true">
+      <geom mesh="link3_0" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_1" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_2" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link3_3" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_07_link4" mocap="true">
+      <geom mesh="link4_0" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_1" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_2" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link4_3" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_07_link5" mocap="true">
+      <geom mesh="link5_0" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_1" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link5_2" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_07_link6" mocap="true">
+      <geom mesh="link6_0" material="prior_ghost_07_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_1" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_2" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_3" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_4" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_5" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_6" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_7" material="prior_ghost_07_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_8" material="prior_ghost_07_light_blue" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_9" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_10" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_11" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_12" material="prior_ghost_07_green" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_13" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_14" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_15" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link6_16" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_07_link7" mocap="true">
+      <geom mesh="link7_0" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_1" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_2" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_3" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_4" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_5" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_6" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="link7_7" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_07_hand" mocap="true">
+      <geom mesh="hand_0" material="prior_ghost_07_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_1" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_2" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_3" material="prior_ghost_07_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="hand_4" material="prior_ghost_07_off_white" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_07_left_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_07_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+    <body name="prior_ghost_07_right_finger" mocap="true">
+      <geom mesh="finger_0" material="prior_ghost_07_off_white" type="mesh" contype="0" conaffinity="0"/>
+      <geom mesh="finger_1" material="prior_ghost_07_black" type="mesh" contype="0" conaffinity="0"/>
+    </body>
+  </worldbody>
+</mujoco>
